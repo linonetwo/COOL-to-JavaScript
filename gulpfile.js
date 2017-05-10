@@ -48,7 +48,7 @@ gulp.task('build-web', ['build-klg'], function () {
 })
 
 gulp.task('build-compiler', function () {
-  return run('antlr -Dlanguage=JavaScript ./src/hello.g4').exec()
+  return run('java org.antlr.v4.Tool -Dlanguage=JavaScript -o ./build/compiler ./src/hello.g4').exec()
 })
 
 gulp.task('inline', ['build-web'], function () {

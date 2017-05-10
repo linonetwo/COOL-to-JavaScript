@@ -18,6 +18,7 @@
     "fetch": true
   },
   "rules": {
+    "space-before-function-paren": 0,
     "babel/object-curly-spacing": 0,
     "babel/arrow-parens": 0,
     "new-cap": 0,
