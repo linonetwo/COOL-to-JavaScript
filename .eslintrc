@@ -1,0 +1,73 @@
+{
+  "extends": [
+    "plugin:flowtype/recommended",
+    "standard"
+  ],
+  "parser": "babel-eslint",
+  "plugins": [
+    "babel",
+    "flowtype"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 7,
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "globals": {
+    "fetch": true
+  },
+  "rules": {
+    "babel/object-curly-spacing": 0,
+    "babel/arrow-parens": 0,
+    "new-cap": 0,
+    "global-require": 0,
+    "react/no-multi-comp": 0,
+    "import/default": 0,
+    "import/no-duplicates": 0,
+    "import/named": 0,
+    "import/namespace": 0,
+    "import/no-unresolved": 0,
+    "import/no-named-as-default": 1,
+    "comma-dangle": 0, // not sure why airbnb turned this on. gross!
+    "indent": [
+      2,
+      2,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "react/jsx-boolean-value": 0,
+    "consistent-return": 0,
+    "no-unused-vars": 0,
+    "no-confusing-arrow": 0,
+    "no-underscore-dangle": 0,
+    "no-console": 1,
+    "no-alert": 0,
+    "max-len": 0,
+    "no-restricted-syntax": 1,
+    "no-multiple-empty-lines": [
+      2,
+      {
+        "max": 4
+      }
+    ],
+    "no-param-reassign": [
+      "error",
+      {
+        "props": false
+      }
+    ],
+    "prefer-template": 0,
+    "react/prefer-stateless-function": 0,
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true,
+        "optionalDependencies": false,
+        "peerDependencies": false
+      }
+    ],
+    "import/extension": 0
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "name": "cool-js",
+  "version": "0.1.0",
+  "description": "Compile ClassroomObjectOrientedLanguage to EcmaScript6+, and provide a single .html playground for GUI user.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/linonetwo/COOL-to-JavaScript.git"
+  },
+  "keywords": [
+    "COOL",
+    "compiler",
+    "playground"
+  ],
+  "author": "linonetwo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/linonetwo/COOL-to-JavaScript/issues"
+  },
+  "homepage": "https://github.com/linonetwo/COOL-to-JavaScript#readme",
+  "dependencies": {
+    "antlr4": "^4.7.0",
+    "bluebird": "^3.5.0",
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "del": "^2.2.2",
+    "eslint": "^3.19.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-flowtype": "^2.32.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-node": "^4.2.2",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "fs-promise": "^2.0.3",
+    "gulp": "^3.9.1",
+    "gulp-inline-source": "^3.1.0",
+    "gulp-replace": "^0.5.4",
+    "gulp-run": "^1.7.1"
+  }
+}
