@@ -17,6 +17,8 @@
         "runtimeArgs": [
             "--nolazy",
             "--require",
+            "babel-polyfill",
+            "--require",
             "babel-register"
         ],
         "env": {
