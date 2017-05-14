@@ -2,6 +2,8 @@
 // jshint ignore: start
 var antlr4 = require('antlr4/index');
 var COOLListener = require('./COOLListener').COOLListener;
+var COOLVisitor = require('./COOLVisitor').COOLVisitor;
+
 var grammarFileName = "COOL.g4";
 
 var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
@@ -284,6 +286,14 @@ ProgContext.prototype.exitRule = function(listener) {
 	}
 };
 
+ProgContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitProg(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 
 
 
@@ -371,6 +381,14 @@ ClassDefineContext.prototype.exitRule = function(listener) {
     if(listener instanceof COOLListener ) {
         listener.exitClassDefine(this);
 	}
+};
+
+ClassDefineContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitClassDefine(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
 };
 
 
@@ -482,6 +500,14 @@ FeatureContext.prototype.exitRule = function(listener) {
     if(listener instanceof COOLListener ) {
         listener.exitFeature(this);
 	}
+};
+
+FeatureContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitFeature(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
 };
 
 
@@ -602,6 +628,14 @@ FormalContext.prototype.exitRule = function(listener) {
     if(listener instanceof COOLListener ) {
         listener.exitFormal(this);
 	}
+};
+
+FormalContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitFormal(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
 };
 
 
@@ -800,6 +834,14 @@ ExpressionContext.prototype.exitRule = function(listener) {
     if(listener instanceof COOLListener ) {
         listener.exitExpression(this);
 	}
+};
+
+ExpressionContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitExpression(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
 };
 
 

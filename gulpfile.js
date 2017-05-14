@@ -50,7 +50,7 @@ gulp.task('build-web', ['build-klg'], function () {
 
 gulp.task('build-compiler', async function () {
   await del('./src/antlrGenerated');
-  execSync('java org.antlr.v4.Tool -Dlanguage=JavaScript -o ./src/antlrGenerated ./src/COOL.g4');
+  execSync('java org.antlr.v4.Tool -Dlanguage=JavaScript -o ./src/antlrGenerated -visitor ./src/COOL.g4');
 });
 
 gulp.task('inline', ['build-web'], function () {
