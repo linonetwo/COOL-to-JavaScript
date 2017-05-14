@@ -1,0 +1,15 @@
+{
+  "presets": [
+    "es2015",
+    "flow",
+    "react",
+    "stage-2"
+  ],
+  "plugins": [
+    ["flow-runtime", {
+      "assert": true,
+      "annotate": true
+    }],
+    "transform-runtime"
+  ]
+}
