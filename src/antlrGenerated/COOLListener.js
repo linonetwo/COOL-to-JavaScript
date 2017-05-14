@@ -29,12 +29,21 @@ COOLListener.prototype.exitClassDefine = function(ctx) {
 };
 
 
-// Enter a parse tree produced by COOLParser#feature.
-COOLListener.prototype.enterFeature = function(ctx) {
+// Enter a parse tree produced by COOLParser#method.
+COOLListener.prototype.enterMethod = function(ctx) {
 };
 
-// Exit a parse tree produced by COOLParser#feature.
-COOLListener.prototype.exitFeature = function(ctx) {
+// Exit a parse tree produced by COOLParser#method.
+COOLListener.prototype.exitMethod = function(ctx) {
+};
+
+
+// Enter a parse tree produced by COOLParser#classVariable.
+COOLListener.prototype.enterClassVariable = function(ctx) {
+};
+
+// Exit a parse tree produced by COOLParser#classVariable.
+COOLListener.prototype.exitClassVariable = function(ctx) {
 };
 
 
@@ -47,12 +56,228 @@ COOLListener.prototype.exitFormal = function(ctx) {
 };
 
 
-// Enter a parse tree produced by COOLParser#expression.
-COOLListener.prototype.enterExpression = function(ctx) {
+// Enter a parse tree produced by COOLParser#letIn.
+COOLListener.prototype.enterLetIn = function(ctx) {
 };
 
-// Exit a parse tree produced by COOLParser#expression.
-COOLListener.prototype.exitExpression = function(ctx) {
+// Exit a parse tree produced by COOLParser#letIn.
+COOLListener.prototype.exitLetIn = function(ctx) {
+};
+
+
+// Enter a parse tree produced by COOLParser#newType.
+COOLListener.prototype.enterNewType = function(ctx) {
+};
+
+// Exit a parse tree produced by COOLParser#newType.
+COOLListener.prototype.exitNewType = function(ctx) {
+};
+
+
+// Enter a parse tree produced by COOLParser#minus.
+COOLListener.prototype.enterMinus = function(ctx) {
+};
+
+// Exit a parse tree produced by COOLParser#minus.
+COOLListener.prototype.exitMinus = function(ctx) {
+};
+
+
+// Enter a parse tree produced by COOLParser#string.
+COOLListener.prototype.enterString = function(ctx) {
+};
+
+// Exit a parse tree produced by COOLParser#string.
+COOLListener.prototype.exitString = function(ctx) {
+};
+
+
+// Enter a parse tree produced by COOLParser#isvoid.
+COOLListener.prototype.enterIsvoid = function(ctx) {
+};
+
+// Exit a parse tree produced by COOLParser#isvoid.
+COOLListener.prototype.exitIsvoid = function(ctx) {
+};
+
+
+// Enter a parse tree produced by COOLParser#whild.
+COOLListener.prototype.enterWhild = function(ctx) {
+};
+
+// Exit a parse tree produced by COOLParser#whild.
+COOLListener.prototype.exitWhild = function(ctx) {
+};
+
+
+// Enter a parse tree produced by COOLParser#division.
+COOLListener.prototype.enterDivision = function(ctx) {
+};
+
+// Exit a parse tree produced by COOLParser#division.
+COOLListener.prototype.exitDivision = function(ctx) {
+};
+
+
+// Enter a parse tree produced by COOLParser#boolNot.
+COOLListener.prototype.enterBoolNot = function(ctx) {
+};
+
+// Exit a parse tree produced by COOLParser#boolNot.
+COOLListener.prototype.exitBoolNot = function(ctx) {
+};
+
+
+// Enter a parse tree produced by COOLParser#lessThan.
+COOLListener.prototype.enterLessThan = function(ctx) {
+};
+
+// Exit a parse tree produced by COOLParser#lessThan.
+COOLListener.prototype.exitLessThan = function(ctx) {
+};
+
+
+// Enter a parse tree produced by COOLParser#superClassMethod.
+COOLListener.prototype.enterSuperClassMethod = function(ctx) {
+};
+
+// Exit a parse tree produced by COOLParser#superClassMethod.
+COOLListener.prototype.exitSuperClassMethod = function(ctx) {
+};
+
+
+// Enter a parse tree produced by COOLParser#id.
+COOLListener.prototype.enterId = function(ctx) {
+};
+
+// Exit a parse tree produced by COOLParser#id.
+COOLListener.prototype.exitId = function(ctx) {
+};
+
+
+// Enter a parse tree produced by COOLParser#multiply.
+COOLListener.prototype.enterMultiply = function(ctx) {
+};
+
+// Exit a parse tree produced by COOLParser#multiply.
+COOLListener.prototype.exitMultiply = function(ctx) {
+};
+
+
+// Enter a parse tree produced by COOLParser#if.
+COOLListener.prototype.enterIf = function(ctx) {
+};
+
+// Exit a parse tree produced by COOLParser#if.
+COOLListener.prototype.exitIf = function(ctx) {
+};
+
+
+// Enter a parse tree produced by COOLParser#case.
+COOLListener.prototype.enterCase = function(ctx) {
+};
+
+// Exit a parse tree produced by COOLParser#case.
+COOLListener.prototype.exitCase = function(ctx) {
+};
+
+
+// Enter a parse tree produced by COOLParser#add.
+COOLListener.prototype.enterAdd = function(ctx) {
+};
+
+// Exit a parse tree produced by COOLParser#add.
+COOLListener.prototype.exitAdd = function(ctx) {
+};
+
+
+// Enter a parse tree produced by COOLParser#parentheses.
+COOLListener.prototype.enterParentheses = function(ctx) {
+};
+
+// Exit a parse tree produced by COOLParser#parentheses.
+COOLListener.prototype.exitParentheses = function(ctx) {
+};
+
+
+// Enter a parse tree produced by COOLParser#assignment.
+COOLListener.prototype.enterAssignment = function(ctx) {
+};
+
+// Exit a parse tree produced by COOLParser#assignment.
+COOLListener.prototype.exitAssignment = function(ctx) {
+};
+
+
+// Enter a parse tree produced by COOLParser#false.
+COOLListener.prototype.enterFalse = function(ctx) {
+};
+
+// Exit a parse tree produced by COOLParser#false.
+COOLListener.prototype.exitFalse = function(ctx) {
+};
+
+
+// Enter a parse tree produced by COOLParser#int.
+COOLListener.prototype.enterInt = function(ctx) {
+};
+
+// Exit a parse tree produced by COOLParser#int.
+COOLListener.prototype.exitInt = function(ctx) {
+};
+
+
+// Enter a parse tree produced by COOLParser#equal.
+COOLListener.prototype.enterEqual = function(ctx) {
+};
+
+// Exit a parse tree produced by COOLParser#equal.
+COOLListener.prototype.exitEqual = function(ctx) {
+};
+
+
+// Enter a parse tree produced by COOLParser#multipleExpression.
+COOLListener.prototype.enterMultipleExpression = function(ctx) {
+};
+
+// Exit a parse tree produced by COOLParser#multipleExpression.
+COOLListener.prototype.exitMultipleExpression = function(ctx) {
+};
+
+
+// Enter a parse tree produced by COOLParser#functionCall.
+COOLListener.prototype.enterFunctionCall = function(ctx) {
+};
+
+// Exit a parse tree produced by COOLParser#functionCall.
+COOLListener.prototype.exitFunctionCall = function(ctx) {
+};
+
+
+// Enter a parse tree produced by COOLParser#true.
+COOLListener.prototype.enterTrue = function(ctx) {
+};
+
+// Exit a parse tree produced by COOLParser#true.
+COOLListener.prototype.exitTrue = function(ctx) {
+};
+
+
+// Enter a parse tree produced by COOLParser#lessEqual.
+COOLListener.prototype.enterLessEqual = function(ctx) {
+};
+
+// Exit a parse tree produced by COOLParser#lessEqual.
+COOLListener.prototype.exitLessEqual = function(ctx) {
+};
+
+
+// Enter a parse tree produced by COOLParser#bitNot.
+COOLListener.prototype.enterBitNot = function(ctx) {
+};
+
+// Exit a parse tree produced by COOLParser#bitNot.
+COOLListener.prototype.exitBitNot = function(ctx) {
 };
 
 

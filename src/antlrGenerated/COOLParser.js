@@ -463,11 +463,29 @@ function FeatureContext(parser, parent, invokingState) {
 FeatureContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
 FeatureContext.prototype.constructor = FeatureContext;
 
-FeatureContext.prototype.OBJECTID = function() {
+
+ 
+FeatureContext.prototype.copyFrom = function(ctx) {
+    antlr4.ParserRuleContext.prototype.copyFrom.call(this, ctx);
+};
+
+
+function MethodContext(parser, ctx) {
+	FeatureContext.call(this, parser);
+    FeatureContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+MethodContext.prototype = Object.create(FeatureContext.prototype);
+MethodContext.prototype.constructor = MethodContext;
+
+COOLParser.MethodContext = MethodContext;
+
+MethodContext.prototype.OBJECTID = function() {
     return this.getToken(COOLParser.OBJECTID, 0);
 };
 
-FeatureContext.prototype.formal = function(i) {
+MethodContext.prototype.formal = function(i) {
     if(i===undefined) {
         i = null;
     }
@@ -478,38 +496,79 @@ FeatureContext.prototype.formal = function(i) {
     }
 };
 
-FeatureContext.prototype.TYPEID = function() {
+MethodContext.prototype.TYPEID = function() {
     return this.getToken(COOLParser.TYPEID, 0);
 };
 
-FeatureContext.prototype.expression = function() {
+MethodContext.prototype.expression = function() {
     return this.getTypedRuleContext(ExpressionContext,0);
 };
-
-FeatureContext.prototype.ASSIGNMENT = function() {
-    return this.getToken(COOLParser.ASSIGNMENT, 0);
-};
-
-FeatureContext.prototype.enterRule = function(listener) {
+MethodContext.prototype.enterRule = function(listener) {
     if(listener instanceof COOLListener ) {
-        listener.enterFeature(this);
+        listener.enterMethod(this);
 	}
 };
 
-FeatureContext.prototype.exitRule = function(listener) {
+MethodContext.prototype.exitRule = function(listener) {
     if(listener instanceof COOLListener ) {
-        listener.exitFeature(this);
+        listener.exitMethod(this);
 	}
 };
 
-FeatureContext.prototype.accept = function(visitor) {
+MethodContext.prototype.accept = function(visitor) {
     if ( visitor instanceof COOLVisitor ) {
-        return visitor.visitFeature(this);
+        return visitor.visitMethod(this);
     } else {
         return visitor.visitChildren(this);
     }
 };
 
+
+function ClassVariableContext(parser, ctx) {
+	FeatureContext.call(this, parser);
+    FeatureContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+ClassVariableContext.prototype = Object.create(FeatureContext.prototype);
+ClassVariableContext.prototype.constructor = ClassVariableContext;
+
+COOLParser.ClassVariableContext = ClassVariableContext;
+
+ClassVariableContext.prototype.OBJECTID = function() {
+    return this.getToken(COOLParser.OBJECTID, 0);
+};
+
+ClassVariableContext.prototype.TYPEID = function() {
+    return this.getToken(COOLParser.TYPEID, 0);
+};
+
+ClassVariableContext.prototype.ASSIGNMENT = function() {
+    return this.getToken(COOLParser.ASSIGNMENT, 0);
+};
+
+ClassVariableContext.prototype.expression = function() {
+    return this.getTypedRuleContext(ExpressionContext,0);
+};
+ClassVariableContext.prototype.enterRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.enterClassVariable(this);
+	}
+};
+
+ClassVariableContext.prototype.exitRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.exitClassVariable(this);
+	}
+};
+
+ClassVariableContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitClassVariable(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
 
 
 
@@ -526,6 +585,7 @@ COOLParser.prototype.feature = function() {
         var la_ = this._interp.adaptivePredict(this._input,5,this._ctx);
         switch(la_) {
         case 1:
+            localctx = new MethodContext(this, localctx);
             this.enterOuterAlt(localctx, 1);
             this.state = 34;
             this.match(COOLParser.OBJECTID);
@@ -560,6 +620,7 @@ COOLParser.prototype.feature = function() {
             break;
 
         case 2:
+            localctx = new ClassVariableContext(this, localctx);
             this.enterOuterAlt(localctx, 2);
             this.state = 51;
             this.match(COOLParser.OBJECTID);
@@ -685,7 +746,28 @@ function ExpressionContext(parser, parent, invokingState) {
 ExpressionContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
 ExpressionContext.prototype.constructor = ExpressionContext;
 
-ExpressionContext.prototype.OBJECTID = function(i) {
+
+ 
+ExpressionContext.prototype.copyFrom = function(ctx) {
+    antlr4.ParserRuleContext.prototype.copyFrom.call(this, ctx);
+};
+
+function LetInContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+LetInContext.prototype = Object.create(ExpressionContext.prototype);
+LetInContext.prototype.constructor = LetInContext;
+
+COOLParser.LetInContext = LetInContext;
+
+LetInContext.prototype.LET = function() {
+    return this.getToken(COOLParser.LET, 0);
+};
+
+LetInContext.prototype.OBJECTID = function(i) {
 	if(i===undefined) {
 		i = null;
 	}
@@ -697,62 +779,7 @@ ExpressionContext.prototype.OBJECTID = function(i) {
 };
 
 
-ExpressionContext.prototype.ASSIGNMENT = function(i) {
-	if(i===undefined) {
-		i = null;
-	}
-    if(i===null) {
-        return this.getTokens(COOLParser.ASSIGNMENT);
-    } else {
-        return this.getToken(COOLParser.ASSIGNMENT, i);
-    }
-};
-
-
-ExpressionContext.prototype.expression = function(i) {
-    if(i===undefined) {
-        i = null;
-    }
-    if(i===null) {
-        return this.getTypedRuleContexts(ExpressionContext);
-    } else {
-        return this.getTypedRuleContext(ExpressionContext,i);
-    }
-};
-
-ExpressionContext.prototype.IF = function() {
-    return this.getToken(COOLParser.IF, 0);
-};
-
-ExpressionContext.prototype.THEN = function() {
-    return this.getToken(COOLParser.THEN, 0);
-};
-
-ExpressionContext.prototype.ELSE = function() {
-    return this.getToken(COOLParser.ELSE, 0);
-};
-
-ExpressionContext.prototype.FI = function() {
-    return this.getToken(COOLParser.FI, 0);
-};
-
-ExpressionContext.prototype.WHILE = function() {
-    return this.getToken(COOLParser.WHILE, 0);
-};
-
-ExpressionContext.prototype.LOOP = function() {
-    return this.getToken(COOLParser.LOOP, 0);
-};
-
-ExpressionContext.prototype.POOL = function() {
-    return this.getToken(COOLParser.POOL, 0);
-};
-
-ExpressionContext.prototype.LET = function() {
-    return this.getToken(COOLParser.LET, 0);
-};
-
-ExpressionContext.prototype.TYPEID = function(i) {
+LetInContext.prototype.TYPEID = function(i) {
 	if(i===undefined) {
 		i = null;
 	}
@@ -764,23 +791,629 @@ ExpressionContext.prototype.TYPEID = function(i) {
 };
 
 
-ExpressionContext.prototype.IN = function() {
+LetInContext.prototype.IN = function() {
     return this.getToken(COOLParser.IN, 0);
 };
 
-ExpressionContext.prototype.CASE = function() {
+LetInContext.prototype.expression = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(ExpressionContext);
+    } else {
+        return this.getTypedRuleContext(ExpressionContext,i);
+    }
+};
+
+LetInContext.prototype.ASSIGNMENT = function(i) {
+	if(i===undefined) {
+		i = null;
+	}
+    if(i===null) {
+        return this.getTokens(COOLParser.ASSIGNMENT);
+    } else {
+        return this.getToken(COOLParser.ASSIGNMENT, i);
+    }
+};
+
+LetInContext.prototype.enterRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.enterLetIn(this);
+	}
+};
+
+LetInContext.prototype.exitRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.exitLetIn(this);
+	}
+};
+
+LetInContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitLetIn(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+function NewTypeContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+NewTypeContext.prototype = Object.create(ExpressionContext.prototype);
+NewTypeContext.prototype.constructor = NewTypeContext;
+
+COOLParser.NewTypeContext = NewTypeContext;
+
+NewTypeContext.prototype.NEW = function() {
+    return this.getToken(COOLParser.NEW, 0);
+};
+
+NewTypeContext.prototype.TYPEID = function() {
+    return this.getToken(COOLParser.TYPEID, 0);
+};
+NewTypeContext.prototype.enterRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.enterNewType(this);
+	}
+};
+
+NewTypeContext.prototype.exitRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.exitNewType(this);
+	}
+};
+
+NewTypeContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitNewType(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+function MinusContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+MinusContext.prototype = Object.create(ExpressionContext.prototype);
+MinusContext.prototype.constructor = MinusContext;
+
+COOLParser.MinusContext = MinusContext;
+
+MinusContext.prototype.expression = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(ExpressionContext);
+    } else {
+        return this.getTypedRuleContext(ExpressionContext,i);
+    }
+};
+MinusContext.prototype.enterRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.enterMinus(this);
+	}
+};
+
+MinusContext.prototype.exitRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.exitMinus(this);
+	}
+};
+
+MinusContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitMinus(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+function StringContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+StringContext.prototype = Object.create(ExpressionContext.prototype);
+StringContext.prototype.constructor = StringContext;
+
+COOLParser.StringContext = StringContext;
+
+StringContext.prototype.STRING_CONST = function() {
+    return this.getToken(COOLParser.STRING_CONST, 0);
+};
+StringContext.prototype.enterRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.enterString(this);
+	}
+};
+
+StringContext.prototype.exitRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.exitString(this);
+	}
+};
+
+StringContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitString(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+function IsvoidContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+IsvoidContext.prototype = Object.create(ExpressionContext.prototype);
+IsvoidContext.prototype.constructor = IsvoidContext;
+
+COOLParser.IsvoidContext = IsvoidContext;
+
+IsvoidContext.prototype.ISVOID = function() {
+    return this.getToken(COOLParser.ISVOID, 0);
+};
+
+IsvoidContext.prototype.expression = function() {
+    return this.getTypedRuleContext(ExpressionContext,0);
+};
+IsvoidContext.prototype.enterRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.enterIsvoid(this);
+	}
+};
+
+IsvoidContext.prototype.exitRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.exitIsvoid(this);
+	}
+};
+
+IsvoidContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitIsvoid(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+function WhildContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+WhildContext.prototype = Object.create(ExpressionContext.prototype);
+WhildContext.prototype.constructor = WhildContext;
+
+COOLParser.WhildContext = WhildContext;
+
+WhildContext.prototype.WHILE = function() {
+    return this.getToken(COOLParser.WHILE, 0);
+};
+
+WhildContext.prototype.expression = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(ExpressionContext);
+    } else {
+        return this.getTypedRuleContext(ExpressionContext,i);
+    }
+};
+
+WhildContext.prototype.LOOP = function() {
+    return this.getToken(COOLParser.LOOP, 0);
+};
+
+WhildContext.prototype.POOL = function() {
+    return this.getToken(COOLParser.POOL, 0);
+};
+WhildContext.prototype.enterRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.enterWhild(this);
+	}
+};
+
+WhildContext.prototype.exitRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.exitWhild(this);
+	}
+};
+
+WhildContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitWhild(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+function DivisionContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+DivisionContext.prototype = Object.create(ExpressionContext.prototype);
+DivisionContext.prototype.constructor = DivisionContext;
+
+COOLParser.DivisionContext = DivisionContext;
+
+DivisionContext.prototype.expression = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(ExpressionContext);
+    } else {
+        return this.getTypedRuleContext(ExpressionContext,i);
+    }
+};
+DivisionContext.prototype.enterRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.enterDivision(this);
+	}
+};
+
+DivisionContext.prototype.exitRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.exitDivision(this);
+	}
+};
+
+DivisionContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitDivision(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+function BoolNotContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+BoolNotContext.prototype = Object.create(ExpressionContext.prototype);
+BoolNotContext.prototype.constructor = BoolNotContext;
+
+COOLParser.BoolNotContext = BoolNotContext;
+
+BoolNotContext.prototype.NOT = function() {
+    return this.getToken(COOLParser.NOT, 0);
+};
+
+BoolNotContext.prototype.expression = function() {
+    return this.getTypedRuleContext(ExpressionContext,0);
+};
+BoolNotContext.prototype.enterRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.enterBoolNot(this);
+	}
+};
+
+BoolNotContext.prototype.exitRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.exitBoolNot(this);
+	}
+};
+
+BoolNotContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitBoolNot(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+function LessThanContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+LessThanContext.prototype = Object.create(ExpressionContext.prototype);
+LessThanContext.prototype.constructor = LessThanContext;
+
+COOLParser.LessThanContext = LessThanContext;
+
+LessThanContext.prototype.expression = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(ExpressionContext);
+    } else {
+        return this.getTypedRuleContext(ExpressionContext,i);
+    }
+};
+LessThanContext.prototype.enterRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.enterLessThan(this);
+	}
+};
+
+LessThanContext.prototype.exitRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.exitLessThan(this);
+	}
+};
+
+LessThanContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitLessThan(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+function SuperClassMethodContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+SuperClassMethodContext.prototype = Object.create(ExpressionContext.prototype);
+SuperClassMethodContext.prototype.constructor = SuperClassMethodContext;
+
+COOLParser.SuperClassMethodContext = SuperClassMethodContext;
+
+SuperClassMethodContext.prototype.expression = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(ExpressionContext);
+    } else {
+        return this.getTypedRuleContext(ExpressionContext,i);
+    }
+};
+
+SuperClassMethodContext.prototype.OBJECTID = function() {
+    return this.getToken(COOLParser.OBJECTID, 0);
+};
+
+SuperClassMethodContext.prototype.TYPEID = function() {
+    return this.getToken(COOLParser.TYPEID, 0);
+};
+SuperClassMethodContext.prototype.enterRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.enterSuperClassMethod(this);
+	}
+};
+
+SuperClassMethodContext.prototype.exitRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.exitSuperClassMethod(this);
+	}
+};
+
+SuperClassMethodContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitSuperClassMethod(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+function IdContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+IdContext.prototype = Object.create(ExpressionContext.prototype);
+IdContext.prototype.constructor = IdContext;
+
+COOLParser.IdContext = IdContext;
+
+IdContext.prototype.OBJECTID = function() {
+    return this.getToken(COOLParser.OBJECTID, 0);
+};
+IdContext.prototype.enterRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.enterId(this);
+	}
+};
+
+IdContext.prototype.exitRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.exitId(this);
+	}
+};
+
+IdContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitId(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+function MultiplyContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+MultiplyContext.prototype = Object.create(ExpressionContext.prototype);
+MultiplyContext.prototype.constructor = MultiplyContext;
+
+COOLParser.MultiplyContext = MultiplyContext;
+
+MultiplyContext.prototype.expression = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(ExpressionContext);
+    } else {
+        return this.getTypedRuleContext(ExpressionContext,i);
+    }
+};
+MultiplyContext.prototype.enterRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.enterMultiply(this);
+	}
+};
+
+MultiplyContext.prototype.exitRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.exitMultiply(this);
+	}
+};
+
+MultiplyContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitMultiply(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+function IfContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+IfContext.prototype = Object.create(ExpressionContext.prototype);
+IfContext.prototype.constructor = IfContext;
+
+COOLParser.IfContext = IfContext;
+
+IfContext.prototype.IF = function() {
+    return this.getToken(COOLParser.IF, 0);
+};
+
+IfContext.prototype.expression = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(ExpressionContext);
+    } else {
+        return this.getTypedRuleContext(ExpressionContext,i);
+    }
+};
+
+IfContext.prototype.THEN = function() {
+    return this.getToken(COOLParser.THEN, 0);
+};
+
+IfContext.prototype.ELSE = function() {
+    return this.getToken(COOLParser.ELSE, 0);
+};
+
+IfContext.prototype.FI = function() {
+    return this.getToken(COOLParser.FI, 0);
+};
+IfContext.prototype.enterRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.enterIf(this);
+	}
+};
+
+IfContext.prototype.exitRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.exitIf(this);
+	}
+};
+
+IfContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitIf(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+function CaseContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+CaseContext.prototype = Object.create(ExpressionContext.prototype);
+CaseContext.prototype.constructor = CaseContext;
+
+COOLParser.CaseContext = CaseContext;
+
+CaseContext.prototype.CASE = function() {
     return this.getToken(COOLParser.CASE, 0);
 };
 
-ExpressionContext.prototype.OF = function() {
+CaseContext.prototype.expression = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(ExpressionContext);
+    } else {
+        return this.getTypedRuleContext(ExpressionContext,i);
+    }
+};
+
+CaseContext.prototype.OF = function() {
     return this.getToken(COOLParser.OF, 0);
 };
 
-ExpressionContext.prototype.ESAC = function() {
+CaseContext.prototype.ESAC = function() {
     return this.getToken(COOLParser.ESAC, 0);
 };
 
-ExpressionContext.prototype.CASE_ARROW = function(i) {
+CaseContext.prototype.OBJECTID = function(i) {
+	if(i===undefined) {
+		i = null;
+	}
+    if(i===null) {
+        return this.getTokens(COOLParser.OBJECTID);
+    } else {
+        return this.getToken(COOLParser.OBJECTID, i);
+    }
+};
+
+
+CaseContext.prototype.TYPEID = function(i) {
+	if(i===undefined) {
+		i = null;
+	}
+    if(i===null) {
+        return this.getTokens(COOLParser.TYPEID);
+    } else {
+        return this.getToken(COOLParser.TYPEID, i);
+    }
+};
+
+
+CaseContext.prototype.CASE_ARROW = function(i) {
 	if(i===undefined) {
 		i = null;
 	}
@@ -791,54 +1424,457 @@ ExpressionContext.prototype.CASE_ARROW = function(i) {
     }
 };
 
-
-ExpressionContext.prototype.NEW = function() {
-    return this.getToken(COOLParser.NEW, 0);
+CaseContext.prototype.enterRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.enterCase(this);
+	}
 };
 
-ExpressionContext.prototype.ISVOID = function() {
-    return this.getToken(COOLParser.ISVOID, 0);
+CaseContext.prototype.exitRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.exitCase(this);
+	}
 };
 
-ExpressionContext.prototype.NOT = function() {
-    return this.getToken(COOLParser.NOT, 0);
+CaseContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitCase(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
 };
 
-ExpressionContext.prototype.INT_CONST = function() {
-    return this.getToken(COOLParser.INT_CONST, 0);
+
+function AddContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+AddContext.prototype = Object.create(ExpressionContext.prototype);
+AddContext.prototype.constructor = AddContext;
+
+COOLParser.AddContext = AddContext;
+
+AddContext.prototype.expression = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(ExpressionContext);
+    } else {
+        return this.getTypedRuleContext(ExpressionContext,i);
+    }
+};
+AddContext.prototype.enterRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.enterAdd(this);
+	}
 };
 
-ExpressionContext.prototype.STRING_CONST = function() {
-    return this.getToken(COOLParser.STRING_CONST, 0);
+AddContext.prototype.exitRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.exitAdd(this);
+	}
 };
 
-ExpressionContext.prototype.TRUE = function() {
-    return this.getToken(COOLParser.TRUE, 0);
+AddContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitAdd(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
 };
 
-ExpressionContext.prototype.FALSE = function() {
+
+function ParenthesesContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+ParenthesesContext.prototype = Object.create(ExpressionContext.prototype);
+ParenthesesContext.prototype.constructor = ParenthesesContext;
+
+COOLParser.ParenthesesContext = ParenthesesContext;
+
+ParenthesesContext.prototype.expression = function() {
+    return this.getTypedRuleContext(ExpressionContext,0);
+};
+ParenthesesContext.prototype.enterRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.enterParentheses(this);
+	}
+};
+
+ParenthesesContext.prototype.exitRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.exitParentheses(this);
+	}
+};
+
+ParenthesesContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitParentheses(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+function AssignmentContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+AssignmentContext.prototype = Object.create(ExpressionContext.prototype);
+AssignmentContext.prototype.constructor = AssignmentContext;
+
+COOLParser.AssignmentContext = AssignmentContext;
+
+AssignmentContext.prototype.OBJECTID = function() {
+    return this.getToken(COOLParser.OBJECTID, 0);
+};
+
+AssignmentContext.prototype.ASSIGNMENT = function() {
+    return this.getToken(COOLParser.ASSIGNMENT, 0);
+};
+
+AssignmentContext.prototype.expression = function() {
+    return this.getTypedRuleContext(ExpressionContext,0);
+};
+AssignmentContext.prototype.enterRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.enterAssignment(this);
+	}
+};
+
+AssignmentContext.prototype.exitRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.exitAssignment(this);
+	}
+};
+
+AssignmentContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitAssignment(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+function FalseContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+FalseContext.prototype = Object.create(ExpressionContext.prototype);
+FalseContext.prototype.constructor = FalseContext;
+
+COOLParser.FalseContext = FalseContext;
+
+FalseContext.prototype.FALSE = function() {
     return this.getToken(COOLParser.FALSE, 0);
 };
+FalseContext.prototype.enterRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.enterFalse(this);
+	}
+};
 
-ExpressionContext.prototype.LESS_EQUAL = function() {
+FalseContext.prototype.exitRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.exitFalse(this);
+	}
+};
+
+FalseContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitFalse(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+function IntContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+IntContext.prototype = Object.create(ExpressionContext.prototype);
+IntContext.prototype.constructor = IntContext;
+
+COOLParser.IntContext = IntContext;
+
+IntContext.prototype.INT_CONST = function() {
+    return this.getToken(COOLParser.INT_CONST, 0);
+};
+IntContext.prototype.enterRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.enterInt(this);
+	}
+};
+
+IntContext.prototype.exitRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.exitInt(this);
+	}
+};
+
+IntContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitInt(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+function EqualContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+EqualContext.prototype = Object.create(ExpressionContext.prototype);
+EqualContext.prototype.constructor = EqualContext;
+
+COOLParser.EqualContext = EqualContext;
+
+EqualContext.prototype.expression = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(ExpressionContext);
+    } else {
+        return this.getTypedRuleContext(ExpressionContext,i);
+    }
+};
+EqualContext.prototype.enterRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.enterEqual(this);
+	}
+};
+
+EqualContext.prototype.exitRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.exitEqual(this);
+	}
+};
+
+EqualContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitEqual(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+function MultipleExpressionContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+MultipleExpressionContext.prototype = Object.create(ExpressionContext.prototype);
+MultipleExpressionContext.prototype.constructor = MultipleExpressionContext;
+
+COOLParser.MultipleExpressionContext = MultipleExpressionContext;
+
+MultipleExpressionContext.prototype.expression = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(ExpressionContext);
+    } else {
+        return this.getTypedRuleContext(ExpressionContext,i);
+    }
+};
+MultipleExpressionContext.prototype.enterRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.enterMultipleExpression(this);
+	}
+};
+
+MultipleExpressionContext.prototype.exitRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.exitMultipleExpression(this);
+	}
+};
+
+MultipleExpressionContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitMultipleExpression(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+function FunctionCallContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+FunctionCallContext.prototype = Object.create(ExpressionContext.prototype);
+FunctionCallContext.prototype.constructor = FunctionCallContext;
+
+COOLParser.FunctionCallContext = FunctionCallContext;
+
+FunctionCallContext.prototype.OBJECTID = function() {
+    return this.getToken(COOLParser.OBJECTID, 0);
+};
+
+FunctionCallContext.prototype.expression = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(ExpressionContext);
+    } else {
+        return this.getTypedRuleContext(ExpressionContext,i);
+    }
+};
+FunctionCallContext.prototype.enterRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.enterFunctionCall(this);
+	}
+};
+
+FunctionCallContext.prototype.exitRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.exitFunctionCall(this);
+	}
+};
+
+FunctionCallContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitFunctionCall(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+function TrueContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+TrueContext.prototype = Object.create(ExpressionContext.prototype);
+TrueContext.prototype.constructor = TrueContext;
+
+COOLParser.TrueContext = TrueContext;
+
+TrueContext.prototype.TRUE = function() {
+    return this.getToken(COOLParser.TRUE, 0);
+};
+TrueContext.prototype.enterRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.enterTrue(this);
+	}
+};
+
+TrueContext.prototype.exitRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.exitTrue(this);
+	}
+};
+
+TrueContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitTrue(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+function LessEqualContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+LessEqualContext.prototype = Object.create(ExpressionContext.prototype);
+LessEqualContext.prototype.constructor = LessEqualContext;
+
+COOLParser.LessEqualContext = LessEqualContext;
+
+LessEqualContext.prototype.expression = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(ExpressionContext);
+    } else {
+        return this.getTypedRuleContext(ExpressionContext,i);
+    }
+};
+
+LessEqualContext.prototype.LESS_EQUAL = function() {
     return this.getToken(COOLParser.LESS_EQUAL, 0);
 };
-
-ExpressionContext.prototype.enterRule = function(listener) {
+LessEqualContext.prototype.enterRule = function(listener) {
     if(listener instanceof COOLListener ) {
-        listener.enterExpression(this);
+        listener.enterLessEqual(this);
 	}
 };
 
-ExpressionContext.prototype.exitRule = function(listener) {
+LessEqualContext.prototype.exitRule = function(listener) {
     if(listener instanceof COOLListener ) {
-        listener.exitExpression(this);
+        listener.exitLessEqual(this);
 	}
 };
 
-ExpressionContext.prototype.accept = function(visitor) {
+LessEqualContext.prototype.accept = function(visitor) {
     if ( visitor instanceof COOLVisitor ) {
-        return visitor.visitExpression(this);
+        return visitor.visitLessEqual(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+function BitNotContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+BitNotContext.prototype = Object.create(ExpressionContext.prototype);
+BitNotContext.prototype.constructor = BitNotContext;
+
+COOLParser.BitNotContext = BitNotContext;
+
+BitNotContext.prototype.expression = function() {
+    return this.getTypedRuleContext(ExpressionContext,0);
+};
+BitNotContext.prototype.enterRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.enterBitNot(this);
+	}
+};
+
+BitNotContext.prototype.exitRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.exitBitNot(this);
+	}
+};
+
+BitNotContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitBitNot(this);
     } else {
         return visitor.visitChildren(this);
     }
@@ -864,6 +1900,10 @@ COOLParser.prototype.expression = function(_p) {
         var la_ = this._interp.adaptivePredict(this._input,12,this._ctx);
         switch(la_) {
         case 1:
+            localctx = new AssignmentContext(this, localctx);
+            this._ctx = localctx;
+            _prevctx = localctx;
+
             this.state = 65;
             this.match(COOLParser.OBJECTID);
             this.state = 66;
@@ -873,6 +1913,9 @@ COOLParser.prototype.expression = function(_p) {
             break;
 
         case 2:
+            localctx = new FunctionCallContext(this, localctx);
+            this._ctx = localctx;
+            _prevctx = localctx;
             this.state = 68;
             this.match(COOLParser.OBJECTID);
             this.state = 69;
@@ -894,6 +1937,9 @@ COOLParser.prototype.expression = function(_p) {
             break;
 
         case 3:
+            localctx = new IfContext(this, localctx);
+            this._ctx = localctx;
+            _prevctx = localctx;
             this.state = 77;
             this.match(COOLParser.IF);
             this.state = 78;
@@ -909,6 +1955,9 @@ COOLParser.prototype.expression = function(_p) {
             break;
 
         case 4:
+            localctx = new WhildContext(this, localctx);
+            this._ctx = localctx;
+            _prevctx = localctx;
             this.state = 84;
             this.match(COOLParser.WHILE);
             this.state = 85;
@@ -922,6 +1971,9 @@ COOLParser.prototype.expression = function(_p) {
             break;
 
         case 5:
+            localctx = new MultipleExpressionContext(this, localctx);
+            this._ctx = localctx;
+            _prevctx = localctx;
             this.state = 90;
             this.match(COOLParser.T__3);
             this.state = 94; 
@@ -941,6 +1993,9 @@ COOLParser.prototype.expression = function(_p) {
             break;
 
         case 6:
+            localctx = new LetInContext(this, localctx);
+            this._ctx = localctx;
+            _prevctx = localctx;
             this.state = 100;
             this.match(COOLParser.LET);
             this.state = 101;
@@ -992,6 +2047,9 @@ COOLParser.prototype.expression = function(_p) {
             break;
 
         case 7:
+            localctx = new CaseContext(this, localctx);
+            this._ctx = localctx;
+            _prevctx = localctx;
             this.state = 123;
             this.match(COOLParser.CASE);
             this.state = 124;
@@ -1023,6 +2081,9 @@ COOLParser.prototype.expression = function(_p) {
             break;
 
         case 8:
+            localctx = new NewTypeContext(this, localctx);
+            this._ctx = localctx;
+            _prevctx = localctx;
             this.state = 139;
             this.match(COOLParser.NEW);
             this.state = 140;
@@ -1030,6 +2091,9 @@ COOLParser.prototype.expression = function(_p) {
             break;
 
         case 9:
+            localctx = new IsvoidContext(this, localctx);
+            this._ctx = localctx;
+            _prevctx = localctx;
             this.state = 141;
             this.match(COOLParser.ISVOID);
             this.state = 142;
@@ -1037,6 +2101,9 @@ COOLParser.prototype.expression = function(_p) {
             break;
 
         case 10:
+            localctx = new BitNotContext(this, localctx);
+            this._ctx = localctx;
+            _prevctx = localctx;
             this.state = 143;
             this.match(COOLParser.T__15);
             this.state = 144;
@@ -1044,6 +2111,9 @@ COOLParser.prototype.expression = function(_p) {
             break;
 
         case 11:
+            localctx = new BoolNotContext(this, localctx);
+            this._ctx = localctx;
+            _prevctx = localctx;
             this.state = 145;
             this.match(COOLParser.NOT);
             this.state = 146;
@@ -1051,6 +2121,9 @@ COOLParser.prototype.expression = function(_p) {
             break;
 
         case 12:
+            localctx = new ParenthesesContext(this, localctx);
+            this._ctx = localctx;
+            _prevctx = localctx;
             this.state = 147;
             this.match(COOLParser.T__5);
             this.state = 148;
@@ -1060,26 +2133,41 @@ COOLParser.prototype.expression = function(_p) {
             break;
 
         case 13:
+            localctx = new IdContext(this, localctx);
+            this._ctx = localctx;
+            _prevctx = localctx;
             this.state = 151;
             this.match(COOLParser.OBJECTID);
             break;
 
         case 14:
+            localctx = new IntContext(this, localctx);
+            this._ctx = localctx;
+            _prevctx = localctx;
             this.state = 152;
             this.match(COOLParser.INT_CONST);
             break;
 
         case 15:
+            localctx = new StringContext(this, localctx);
+            this._ctx = localctx;
+            _prevctx = localctx;
             this.state = 153;
             this.match(COOLParser.STRING_CONST);
             break;
 
         case 16:
+            localctx = new TrueContext(this, localctx);
+            this._ctx = localctx;
+            _prevctx = localctx;
             this.state = 154;
             this.match(COOLParser.TRUE);
             break;
 
         case 17:
+            localctx = new FalseContext(this, localctx);
+            this._ctx = localctx;
+            _prevctx = localctx;
             this.state = 155;
             this.match(COOLParser.FALSE);
             break;
@@ -1100,7 +2188,7 @@ COOLParser.prototype.expression = function(_p) {
                 var la_ = this._interp.adaptivePredict(this._input,15,this._ctx);
                 switch(la_) {
                 case 1:
-                    localctx = new ExpressionContext(this, _parentctx, _parentState);
+                    localctx = new AddContext(this, new ExpressionContext(this, _parentctx, _parentState));
                     this.pushNewRecursionContext(localctx, _startState, COOLParser.RULE_expression);
                     this.state = 158;
                     if (!( this.precpred(this._ctx, 15))) {
@@ -1113,7 +2201,7 @@ COOLParser.prototype.expression = function(_p) {
                     break;
 
                 case 2:
-                    localctx = new ExpressionContext(this, _parentctx, _parentState);
+                    localctx = new MinusContext(this, new ExpressionContext(this, _parentctx, _parentState));
                     this.pushNewRecursionContext(localctx, _startState, COOLParser.RULE_expression);
                     this.state = 161;
                     if (!( this.precpred(this._ctx, 14))) {
@@ -1126,7 +2214,7 @@ COOLParser.prototype.expression = function(_p) {
                     break;
 
                 case 3:
-                    localctx = new ExpressionContext(this, _parentctx, _parentState);
+                    localctx = new MultiplyContext(this, new ExpressionContext(this, _parentctx, _parentState));
                     this.pushNewRecursionContext(localctx, _startState, COOLParser.RULE_expression);
                     this.state = 164;
                     if (!( this.precpred(this._ctx, 13))) {
@@ -1139,7 +2227,7 @@ COOLParser.prototype.expression = function(_p) {
                     break;
 
                 case 4:
-                    localctx = new ExpressionContext(this, _parentctx, _parentState);
+                    localctx = new DivisionContext(this, new ExpressionContext(this, _parentctx, _parentState));
                     this.pushNewRecursionContext(localctx, _startState, COOLParser.RULE_expression);
                     this.state = 167;
                     if (!( this.precpred(this._ctx, 12))) {
@@ -1152,7 +2240,7 @@ COOLParser.prototype.expression = function(_p) {
                     break;
 
                 case 5:
-                    localctx = new ExpressionContext(this, _parentctx, _parentState);
+                    localctx = new LessThanContext(this, new ExpressionContext(this, _parentctx, _parentState));
                     this.pushNewRecursionContext(localctx, _startState, COOLParser.RULE_expression);
                     this.state = 170;
                     if (!( this.precpred(this._ctx, 10))) {
@@ -1165,7 +2253,7 @@ COOLParser.prototype.expression = function(_p) {
                     break;
 
                 case 6:
-                    localctx = new ExpressionContext(this, _parentctx, _parentState);
+                    localctx = new LessEqualContext(this, new ExpressionContext(this, _parentctx, _parentState));
                     this.pushNewRecursionContext(localctx, _startState, COOLParser.RULE_expression);
                     this.state = 173;
                     if (!( this.precpred(this._ctx, 9))) {
@@ -1178,7 +2266,7 @@ COOLParser.prototype.expression = function(_p) {
                     break;
 
                 case 7:
-                    localctx = new ExpressionContext(this, _parentctx, _parentState);
+                    localctx = new EqualContext(this, new ExpressionContext(this, _parentctx, _parentState));
                     this.pushNewRecursionContext(localctx, _startState, COOLParser.RULE_expression);
                     this.state = 176;
                     if (!( this.precpred(this._ctx, 8))) {
@@ -1191,7 +2279,7 @@ COOLParser.prototype.expression = function(_p) {
                     break;
 
                 case 8:
-                    localctx = new ExpressionContext(this, _parentctx, _parentState);
+                    localctx = new SuperClassMethodContext(this, new ExpressionContext(this, _parentctx, _parentState));
                     this.pushNewRecursionContext(localctx, _startState, COOLParser.RULE_expression);
                     this.state = 179;
                     if (!( this.precpred(this._ctx, 24))) {

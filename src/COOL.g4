@@ -2,35 +2,35 @@ grammar COOL;
 
 prog: (classDefine ';')+;
 classDefine: 'class' TYPEID ('inherits' TYPEID)? '{' (feature ';')* '}';
-feature:  OBJECTID '(' formal (',' formal)* ')' ':' TYPEID '{' expression '}' // method
-        | OBJECTID ':' TYPEID (ASSIGNMENT expression)? // class member
+feature:  OBJECTID '(' formal (',' formal)* ')' ':' TYPEID '{' expression '}' #method
+        | OBJECTID ':' TYPEID (ASSIGNMENT expression)? /* class member variable */ #classVariable
         ;
-formal: OBJECTID ':' TYPEID; // method argument
-expression: OBJECTID ASSIGNMENT expression
-          | expression ('@' TYPEID)? '.' OBJECTID '(' expression (',' expression)? ')' // call super class method
-          | OBJECTID '(' expression (',' expression)? ')' // call function that refered by variable
-          | IF expression THEN expression ELSE FI
-          | WHILE expression LOOP expression POOL
-          | '{' (expression ';')+ '}'
-          | LET OBJECTID ':' TYPEID (ASSIGNMENT expression)? (',' OBJECTID ':' TYPEID (ASSIGNMENT expression)?)* IN expression // let num : Int <- num_cells() in
-          | CASE expression OF (OBJECTID ':' TYPEID CASE_ARROW expression ';')+ ESAC
-          | NEW TYPEID
-          | ISVOID expression
-          | expression '+' expression
-          | expression '-' expression
-          | expression '*' expression
-          | expression '/' expression
-          | '~' expression
-          | expression '<' expression
-          | expression LESS_EQUAL expression
-          | expression '=' expression
-          | NOT expression
-          | '(' expression ')'
-          | OBJECTID
-          | INT_CONST
-          | STRING_CONST
-          | TRUE
-          | FALSE
+formal: OBJECTID ':' TYPEID; /* method argument */
+expression: OBJECTID ASSIGNMENT expression #assignment
+          | expression ('@' TYPEID)? '.' OBJECTID '(' expression (',' expression)? ')' /* call super class method */ #superClassMethod
+          | OBJECTID '(' expression (',' expression)? ')' /* call function that refered by variable */ #functionCall
+          | IF expression THEN expression ELSE FI #if
+          | WHILE expression LOOP expression POOL #whild
+          | '{' (expression ';')+ '}' #multipleExpression
+          | LET OBJECTID ':' TYPEID (ASSIGNMENT expression)? (',' OBJECTID ':' TYPEID (ASSIGNMENT expression)?)* IN expression /* let num : Int <- num_cells() in */ #letIn
+          | CASE expression OF (OBJECTID ':' TYPEID CASE_ARROW expression ';')+ ESAC #case
+          | NEW TYPEID #newType
+          | ISVOID expression #isvoid
+          | expression '+' expression #add
+          | expression '-' expression #minus
+          | expression '*' expression #multiply
+          | expression '/' expression #division
+          | '~' expression #bitNot
+          | expression '<' expression #lessThan
+          | expression LESS_EQUAL expression #lessEqual
+          | expression '=' expression #equal
+          | NOT expression #boolNot
+          | '(' expression ')' #parentheses
+          | OBJECTID #id
+          | INT_CONST #int
+          | STRING_CONST #string
+          | TRUE #true
+          | FALSE #false
           ;
 
 
