@@ -1,7 +1,18 @@
-var input = 'your text to parse here'
-var chars = CharStreams.fromString(input)
-var lexer = new MyGrammarLexer.MyGrammarLexer(chars)
-var tokens = new antlr4.CommonTokenStream(lexer)
-var parser = new MyGrammarParser.MyGrammarParser(tokens)
-parser.buildParseTrees = true
-var tree = parser.MyStartRule()
+// @ts-check @flow
+import antlr4, {InputStream, CommonTokenStream} from 'antlr4';
+import {COOLLexer} from './antlrGenerated/COOLLexer';
+import {COOLParser} from './antlrGenerated/COOLParser';
+import COOLListener from './antlrGenerated/COOLListener';
+
+
+const input: string = 'hello parrt';
+const inputStream = new InputStream(input);
+const lexer = new COOLLexer(inputStream);
+const tokenStream = new CommonTokenStream(lexer);
+const parser = new COOLParser(tokenStream);
+
+
+// Parse the input, where `compilationUnit` is whatever entry point you defined
+let result = parser.r();
+
+console.log(result.toStringTree());
