@@ -25,6 +25,8 @@
   "dependencies": {
     "antlr4": "^4.7.0",
     "babel-generator": "^6.24.1",
+    "babel-template": "^6.24.1",
+    "babel-traverse": "^6.24.1",
     "babel-types": "^6.24.1",
     "bluebird": "^3.5.0",
     "flow-runtime": "^0.12.0",

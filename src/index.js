@@ -7,7 +7,7 @@ import parseCOOL from './parseCOOL';
 import GenerateJSListener from './GenerateJSListener';
 
 async function readFile(): Promise<string> {
-  const filePath: string = path.resolve(process.cwd(), './examples/hello_world.cl');
+  const filePath: string = path.resolve(process.cwd(), './examples/io.cl');
   const program: string = await fs.readFile(filePath, 'utf-8');
   return program;
 }
@@ -19,5 +19,4 @@ function visitCOOL(ast) {
   console.log(generateJSListener.getJS());
 }
 
-readFile().then(parseCOOL).then(visitCOOL)
-.catch(error => console.error(error));
+readFile().then(parseCOOL).then(visitCOOL).catch(error => console.error(error));
