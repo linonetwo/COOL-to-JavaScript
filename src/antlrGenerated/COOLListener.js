@@ -47,12 +47,12 @@ COOLListener.prototype.exitMethod = function(ctx) {
 };
 
 
-// Enter a parse tree produced by COOLParser#classVariable.
-COOLListener.prototype.enterClassVariable = function(ctx) {
+// Enter a parse tree produced by COOLParser#classProperty.
+COOLListener.prototype.enterClassProperty = function(ctx) {
 };
 
-// Exit a parse tree produced by COOLParser#classVariable.
-COOLListener.prototype.exitClassVariable = function(ctx) {
+// Exit a parse tree produced by COOLParser#classProperty.
+COOLListener.prototype.exitClassProperty = function(ctx) {
 };
 
 

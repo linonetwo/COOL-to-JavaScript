@@ -36,8 +36,8 @@ COOLVisitor.prototype.visitMethod = function(ctx) {
 };
 
 
-// Visit a parse tree produced by COOLParser#classVariable.
-COOLVisitor.prototype.visitClassVariable = function(ctx) {
+// Visit a parse tree produced by COOLParser#classProperty.
+COOLVisitor.prototype.visitClassProperty = function(ctx) {
   return this.visitChildren(ctx);
 };
 

@@ -12,7 +12,7 @@ program
 classDefine: CLASS TYPEID (INHERITS TYPEID)? '{' (feature ';')* '}';
 feature
   : OBJECTID '(' (formal (',' formal)*)* ')' ':' TYPEID '{' expression '}' #method
-  | OBJECTID ':' TYPEID (ASSIGNMENT expression)? /* class member variable */ #classVariable
+  | OBJECTID ':' TYPEID (ASSIGNMENT expression)? /* class member variable */ #classProperty
   ;
 formal: OBJECTID ':' TYPEID; /* method argument */
 expression

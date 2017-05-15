@@ -597,47 +597,47 @@ MethodContext.prototype.accept = function(visitor) {
 };
 
 
-function ClassVariableContext(parser, ctx) {
+function ClassPropertyContext(parser, ctx) {
 	FeatureContext.call(this, parser);
     FeatureContext.prototype.copyFrom.call(this, ctx);
     return this;
 }
 
-ClassVariableContext.prototype = Object.create(FeatureContext.prototype);
-ClassVariableContext.prototype.constructor = ClassVariableContext;
+ClassPropertyContext.prototype = Object.create(FeatureContext.prototype);
+ClassPropertyContext.prototype.constructor = ClassPropertyContext;
 
-COOLParser.ClassVariableContext = ClassVariableContext;
+COOLParser.ClassPropertyContext = ClassPropertyContext;
 
-ClassVariableContext.prototype.OBJECTID = function() {
+ClassPropertyContext.prototype.OBJECTID = function() {
     return this.getToken(COOLParser.OBJECTID, 0);
 };
 
-ClassVariableContext.prototype.TYPEID = function() {
+ClassPropertyContext.prototype.TYPEID = function() {
     return this.getToken(COOLParser.TYPEID, 0);
 };
 
-ClassVariableContext.prototype.ASSIGNMENT = function() {
+ClassPropertyContext.prototype.ASSIGNMENT = function() {
     return this.getToken(COOLParser.ASSIGNMENT, 0);
 };
 
-ClassVariableContext.prototype.expression = function() {
+ClassPropertyContext.prototype.expression = function() {
     return this.getTypedRuleContext(ExpressionContext,0);
 };
-ClassVariableContext.prototype.enterRule = function(listener) {
+ClassPropertyContext.prototype.enterRule = function(listener) {
     if(listener instanceof COOLListener ) {
-        listener.enterClassVariable(this);
+        listener.enterClassProperty(this);
 	}
 };
 
-ClassVariableContext.prototype.exitRule = function(listener) {
+ClassPropertyContext.prototype.exitRule = function(listener) {
     if(listener instanceof COOLListener ) {
-        listener.exitClassVariable(this);
+        listener.exitClassProperty(this);
 	}
 };
 
-ClassVariableContext.prototype.accept = function(visitor) {
+ClassPropertyContext.prototype.accept = function(visitor) {
     if ( visitor instanceof COOLVisitor ) {
-        return visitor.visitClassVariable(this);
+        return visitor.visitClassProperty(this);
     } else {
         return visitor.visitChildren(this);
     }
@@ -701,7 +701,7 @@ COOLParser.prototype.feature = function() {
             break;
 
         case 2:
-            localctx = new ClassVariableContext(this, localctx);
+            localctx = new ClassPropertyContext(this, localctx);
             this.enterOuterAlt(localctx, 2);
             this.state = 56;
             this.match(COOLParser.OBJECTID);
