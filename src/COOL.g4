@@ -1,3 +1,8 @@
+/*
+To generate JS file, install gulp first, then run:
+  gulp build-compiler
+generated js files will be placed in ./antlrGenerated
+*/
 grammar COOL;
 
 program
