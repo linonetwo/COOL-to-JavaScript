@@ -1,49 +1,52 @@
 grammar COOL;
 
-program: (classDefine ';')+;
-classDefine: 'class' TYPEID ('inherits' TYPEID)? '{' (feature ';')* '}';
-feature:  OBJECTID '(' formal (',' formal)* ')' ':' TYPEID '{' expression '}' #method
-        | OBJECTID ':' TYPEID (ASSIGNMENT expression)? /* class member variable */ #classVariable
-        ;
+program
+  : classDefine ';' program #class
+  | EOF #eof
+  ;
+classDefine: CLASS TYPEID (INHERITS TYPEID)? '{' (feature ';')* '}';
+feature
+  : OBJECTID '(' (formal (',' formal)*)* ')' ':' TYPEID '{' expression '}' #method
+  | OBJECTID ':' TYPEID (ASSIGNMENT expression)? /* class member variable */ #classVariable
+  ;
 formal: OBJECTID ':' TYPEID; /* method argument */
-expression: OBJECTID ASSIGNMENT expression #assignment
-          | expression ('@' TYPEID)? '.' OBJECTID '(' expression (',' expression)? ')' /* call super class method */ #superClassMethod
-          | OBJECTID '(' expression (',' expression)? ')' /* call function that refered by variable */ #functionCall
-          | IF expression THEN expression ELSE FI #if
-          | WHILE expression LOOP expression POOL #whild
-          | '{' (expression ';')+ '}' #multipleExpression
-          | LET OBJECTID ':' TYPEID (ASSIGNMENT expression)? (',' OBJECTID ':' TYPEID (ASSIGNMENT expression)?)* IN expression /* let num : Int <- num_cells() in */ #letIn
-          | CASE expression OF (OBJECTID ':' TYPEID CASE_ARROW expression ';')+ ESAC #case
-          | NEW TYPEID #newType
-          | ISVOID expression #isvoid
-          | expression '+' expression #add
-          | expression '-' expression #minus
-          | expression '*' expression #multiply
-          | expression '/' expression #division
-          | '~' expression #bitNot
-          | expression '<' expression #lessThan
-          | expression LESS_EQUAL expression #lessEqual
-          | expression '=' expression #equal
-          | NOT expression #boolNot
-          | '(' expression ')' #parentheses
-          | OBJECTID #id
-          | INT_CONST #int
-          | STRING_CONST #string
-          | TRUE #true
-          | FALSE #false
-          ;
+expression
+  : OBJECTID ASSIGNMENT expression #assignment
+  | expression ('@' TYPEID)? '.' OBJECTID '(' (expression (',' expression)*)* ')' /* call super class method */ #superClassMethod
+  | OBJECTID '(' (expression (',' expression)*)* ')' /* call function that refered by variable */ #functionCall
+  | IF expression THEN expression ELSE expression FI #if
+  | WHILE expression LOOP expression POOL #whild
+  | '{' (expression ';')+ '}' #multipleExpression
+  | LET OBJECTID ':' TYPEID (ASSIGNMENT expression)? (',' OBJECTID ':' TYPEID (ASSIGNMENT expression)?)* IN expression /* let num : Int <- num_cells() in */ #letIn
+  | CASE expression OF (OBJECTID ':' TYPEID CASE_ARROW expression ';')+ ESAC #case
+  | NEW TYPEID #newType
+  | ISVOID expression #isvoid
+  | expression '+' expression #add
+  | expression '-' expression #minus
+  | expression '*' expression #multiply
+  | expression '/' expression #division
+  | '~' expression #bitNot
+  | expression '<' expression #lessThan
+  | expression '<=' expression #lessEqual
+  | expression '=' expression #equal
+  | NOT expression #boolNot
+  | '(' expression ')' #parentheses
+  | OBJECTID #id
+  | INT_CONST #int
+  | STRING_CONST #string
+  | TRUE #true
+  | FALSE #false
+  ;
 
 
-// basics
-DIGIT: ('0'..'9');
-LETTER: ('a'..'z'|'A'..'Z');
-WHITESPACE: (' '|'\t'|'\r'|'\n'|'\f')+ -> skip; // skip spaces, tabs, newlines, note that \v is not suppoted in antlr
+// skip spaces, tabs, newlines, note that \v is not suppoted in antlr
+WHITESPACE: [ \t\r\n\f]+ -> skip; 
 
 // comments
-ONE_LINE_COMMENT: '--'.*?'\n';
 OPEN_COMMENT: '(*';
 CLOSE_COMMENT: '*)';
-
+COMMENT: OPEN_COMMENT (COMMENT|.)*? CLOSE_COMMENT -> channel(HIDDEN);
+ONE_LINE_COMMENT: '--' .*? '\n' -> channel(HIDDEN);
 
 // key words
 CLASS: ('C'|'c')('L'|'l')('A'|'a')('S'|'s')('S'|'s');
@@ -68,13 +71,8 @@ TRUE: 't'('R'|'r')('U'|'u')('E'|'e');
 
 // premitives
 STRING_CONST: '"'.*?'"'; // non-greedy matching one line string
-INT_CONST: DIGIT+;
-TYPEID: [A-Z](LETTER|DIGIT|'_')*;
-OBJECTID: [a-z](LETTER|DIGIT|'_')*;
+INT_CONST: [0-9]+;
+TYPEID: [A-Z][_0-9A-Za-z]*;
+OBJECTID: [a-z][_0-9A-Za-z]*;
 ASSIGNMENT: '<-';
-LESS_EQUAL: '<=';
 CASE_ARROW: '=>';
-NEWLINE: '\n';
-
-// error
-ERROR: .;

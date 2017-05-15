@@ -12,8 +12,14 @@ function COOLVisitor() {
 COOLVisitor.prototype = Object.create(antlr4.tree.ParseTreeVisitor.prototype);
 COOLVisitor.prototype.constructor = COOLVisitor;
 
-// Visit a parse tree produced by COOLParser#program.
-COOLVisitor.prototype.visitProgram = function(ctx) {
+// Visit a parse tree produced by COOLParser#class.
+COOLVisitor.prototype.visitClass = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
+// Visit a parse tree produced by COOLParser#eof.
+COOLVisitor.prototype.visitEof = function(ctx) {
   return this.visitChildren(ctx);
 };
 
