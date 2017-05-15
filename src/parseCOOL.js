@@ -3,7 +3,7 @@ import antlr4, {InputStream, CommonTokenStream} from 'antlr4';
 import {COOLLexer} from './antlrGenerated/COOLLexer';
 import {COOLParser} from './antlrGenerated/COOLParser';
 
-export function parseCOOL(coolProgram: string) {
+export default function parseCOOL(coolProgram: string) {
   const inputStream = new InputStream(coolProgram);
   const lexer = new COOLLexer(inputStream);
   const tokenStream = new CommonTokenStream(lexer);

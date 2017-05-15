@@ -1,10 +1,10 @@
 // @ts-check @flow
-import COOLListener from './antlrGenerated/COOLListener';
 import fs from 'fs-transaction';
 import path from 'path';
+import { ParseTreeWalker } from 'antlr4/tree';
 
-import { parseCOOL } from './parseCOOL';
-import { JSBuilderVisitor } from './visitor';
+import parseCOOL from './parseCOOL';
+import GenerateJSListener from './GenerateJSListener';
 
 async function readFile(): Promise<string> {
   const filePath: string = path.resolve(process.cwd(), './examples/hello_world.cl');
@@ -13,8 +13,11 @@ async function readFile(): Promise<string> {
 }
 
 function visitCOOL(ast) {
-  const visitor = new JSBuilderVisitor();
-  visitor.visit(ast);
+  const generateJSListener = new GenerateJSListener();
+  const walker = new ParseTreeWalker();
+  walker.walk(generateJSListener, ast);
+  console.log(generateJSListener.getJS());
 }
 
-readFile().then(parseCOOL).then(visitCOOL);
+readFile().then(parseCOOL).then(visitCOOL)
+.catch(error => console.error(error));
