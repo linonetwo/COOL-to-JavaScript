@@ -4,7 +4,7 @@
   "description": "Compile ClassroomObjectOrientedLanguage to EcmaScript6+, and provide a single .html playground for GUI user.",
   "main": "index.js",
   "scripts": {
-    "start": "node -r \"./node_modules/babel-core/register\" -r \"./node_modules/babel-polyfill/lib/index.js\" ./src/try.js",
+    "start": "node -r \"./node_modules/babel-core/register\" -r \"./node_modules/babel-polyfill/lib/index.js\" ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,8 +24,11 @@
   "homepage": "https://github.com/linonetwo/COOL-to-JavaScript#readme",
   "dependencies": {
     "antlr4": "^4.7.0",
+    "babel-generator": "^6.24.1",
+    "babel-types": "^6.24.1",
     "bluebird": "^3.5.0",
     "flow-runtime": "^0.12.0",
+    "fs-transaction": "^1.0.10",
     "lodash": "^4.17.4"
   },
   "devDependencies": {
@@ -38,6 +41,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "babel-register": "^6.24.1",
+    "babylon": "^6.17.1",
     "del": "^2.2.2",
     "eslint": "^3.19.0",
     "eslint-config-standard": "^10.2.1",

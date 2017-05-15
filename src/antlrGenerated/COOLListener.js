@@ -11,12 +11,12 @@ function COOLListener() {
 COOLListener.prototype = Object.create(antlr4.tree.ParseTreeListener.prototype);
 COOLListener.prototype.constructor = COOLListener;
 
-// Enter a parse tree produced by COOLParser#prog.
-COOLListener.prototype.enterProg = function(ctx) {
+// Enter a parse tree produced by COOLParser#program.
+COOLListener.prototype.enterProgram = function(ctx) {
 };
 
-// Exit a parse tree produced by COOLParser#prog.
-COOLListener.prototype.exitProg = function(ctx) {
+// Exit a parse tree produced by COOLParser#program.
+COOLListener.prototype.exitProgram = function(ctx) {
 };
 
 

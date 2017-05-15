@@ -167,7 +167,7 @@ var symbolicNames = [ null, null, null, null, null, null, null, null, null,
                       "TYPEID", "OBJECTID", "ASSIGNMENT", "LESS_EQUAL", 
                       "CASE_ARROW", "NEWLINE", "ERROR" ];
 
-var ruleNames =  [ "prog", "classDefine", "feature", "formal", "expression" ];
+var ruleNames =  [ "program", "classDefine", "feature", "formal", "expression" ];
 
 function COOLParser (input) {
 	antlr4.Parser.call(this, input);
@@ -241,13 +241,13 @@ COOLParser.CASE_ARROW = 50;
 COOLParser.NEWLINE = 51;
 COOLParser.ERROR = 52;
 
-COOLParser.RULE_prog = 0;
+COOLParser.RULE_program = 0;
 COOLParser.RULE_classDefine = 1;
 COOLParser.RULE_feature = 2;
 COOLParser.RULE_formal = 3;
 COOLParser.RULE_expression = 4;
 
-function ProgContext(parser, parent, invokingState) {
+function ProgramContext(parser, parent, invokingState) {
 	if(parent===undefined) {
 	    parent = null;
 	}
@@ -256,14 +256,14 @@ function ProgContext(parser, parent, invokingState) {
 	}
 	antlr4.ParserRuleContext.call(this, parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = COOLParser.RULE_prog;
+    this.ruleIndex = COOLParser.RULE_program;
     return this;
 }
 
-ProgContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-ProgContext.prototype.constructor = ProgContext;
+ProgramContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+ProgramContext.prototype.constructor = ProgramContext;
 
-ProgContext.prototype.classDefine = function(i) {
+ProgramContext.prototype.classDefine = function(i) {
     if(i===undefined) {
         i = null;
     }
@@ -274,21 +274,21 @@ ProgContext.prototype.classDefine = function(i) {
     }
 };
 
-ProgContext.prototype.enterRule = function(listener) {
+ProgramContext.prototype.enterRule = function(listener) {
     if(listener instanceof COOLListener ) {
-        listener.enterProg(this);
+        listener.enterProgram(this);
 	}
 };
 
-ProgContext.prototype.exitRule = function(listener) {
+ProgramContext.prototype.exitRule = function(listener) {
     if(listener instanceof COOLListener ) {
-        listener.exitProg(this);
+        listener.exitProgram(this);
 	}
 };
 
-ProgContext.prototype.accept = function(visitor) {
+ProgramContext.prototype.accept = function(visitor) {
     if ( visitor instanceof COOLVisitor ) {
-        return visitor.visitProg(this);
+        return visitor.visitProgram(this);
     } else {
         return visitor.visitChildren(this);
     }
@@ -297,12 +297,12 @@ ProgContext.prototype.accept = function(visitor) {
 
 
 
-COOLParser.ProgContext = ProgContext;
+COOLParser.ProgramContext = ProgramContext;
 
-COOLParser.prototype.prog = function() {
+COOLParser.prototype.program = function() {
 
-    var localctx = new ProgContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 0, COOLParser.RULE_prog);
+    var localctx = new ProgramContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 0, COOLParser.RULE_program);
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);

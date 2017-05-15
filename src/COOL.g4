@@ -1,6 +1,6 @@
 grammar COOL;
 
-prog: (classDefine ';')+;
+program: (classDefine ';')+;
 classDefine: 'class' TYPEID ('inherits' TYPEID)? '{' (feature ';')* '}';
 feature:  OBJECTID '(' formal (',' formal)* ')' ':' TYPEID '{' expression '}' #method
         | OBJECTID ':' TYPEID (ASSIGNMENT expression)? /* class member variable */ #classVariable
