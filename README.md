@@ -22,7 +22,7 @@ Compile ClassroomObjectOrientedLanguage to EcmaScript6+, and provide a single .h
 [剖析Babel——Babel总览](http://www.alloyteam.com/2017/04/analysis-of-babel-babel-overview/)
 [babel-types at npm](https://www.npmjs.com/package/babel-types)
 [babel-types usage at its test](https://github.com/babel/babel/blob/7.0/packages/babel-types/test/converters.js)
-[Understanding ASTs by Building Your Own Babel Plugin（图解 ES AST）](https://www.sitepoint.com/understanding-asts-building-babel-plugin/)
+[Understanding ASTs by Building Your Own Babel Plugin（illustrating ES AST）](https://www.sitepoint.com/understanding-asts-building-babel-plugin/)
 
 ## sponsor
 
