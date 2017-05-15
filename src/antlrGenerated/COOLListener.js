@@ -281,12 +281,12 @@ COOLListener.prototype.exitLessEqual = function(ctx) {
 };
 
 
-// Enter a parse tree produced by COOLParser#bitNot.
-COOLListener.prototype.enterBitNot = function(ctx) {
+// Enter a parse tree produced by COOLParser#integerComplement.
+COOLListener.prototype.enterIntegerComplement = function(ctx) {
 };
 
-// Exit a parse tree produced by COOLParser#bitNot.
-COOLListener.prototype.exitBitNot = function(ctx) {
+// Exit a parse tree produced by COOLParser#integerComplement.
+COOLListener.prototype.exitIntegerComplement = function(ctx) {
 };
 
 

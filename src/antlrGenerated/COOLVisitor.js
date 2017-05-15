@@ -192,8 +192,8 @@ COOLVisitor.prototype.visitLessEqual = function(ctx) {
 };
 
 
-// Visit a parse tree produced by COOLParser#bitNot.
-COOLVisitor.prototype.visitBitNot = function(ctx) {
+// Visit a parse tree produced by COOLParser#integerComplement.
+COOLVisitor.prototype.visitIntegerComplement = function(ctx) {
   return this.visitChildren(ctx);
 };
 

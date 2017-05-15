@@ -21,14 +21,14 @@ expression
   | CASE expression OF (OBJECTID ':' TYPEID CASE_ARROW expression ';')+ ESAC #case
   | NEW TYPEID #newType
   | ISVOID expression #isvoid
-  | expression '+' expression #add
-  | expression '-' expression #minus
-  | expression '*' expression #multiply
-  | expression '/' expression #division
-  | '~' expression #bitNot
-  | expression '<' expression #lessThan
-  | expression '<=' expression #lessEqual
-  | expression '=' expression #equal
+  | expression ADD expression #add
+  | expression MINUS expression #minus
+  | expression MULTIPLY expression #multiply
+  | expression DIVISION expression #division
+  | INTEGER_COMPLEMENT expression #integerComplement
+  | expression LESS_THAN expression #lessThan
+  | expression LESS_EQUAL expression #lessEqual
+  | expression EQUAL expression #equal
   | NOT expression #boolNot
   | '(' expression ')' #parentheses
   | OBJECTID #id
@@ -76,6 +76,14 @@ TYPEID: [A-Z][_0-9A-Za-z]*;
 OBJECTID: [a-z][_0-9A-Za-z]*;
 ASSIGNMENT: '<-';
 CASE_ARROW: '=>';
+ADD: '+';
+MINUS: '-';
+MULTIPLY: '*';
+DIVISION: '/';
+LESS_THAN: '<';
+LESS_EQUAL: '<=';
+EQUAL: '=';
+INTEGER_COMPLEMENT: '~';
 
 fragment ESC: '\\' (["\\/bfnrt] | UNICODE);
 fragment UNICODE: 'u' HEX HEX HEX HEX;
