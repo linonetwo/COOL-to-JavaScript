@@ -14,7 +14,7 @@ export default class GenerateJSListener extends COOLListener {
   jsAST: any = types.file(types.program([]))
 
   enterClassDefine(context: COOLParser.ClassDefineContext): void {
-    // from 'class Main inherits IO' get 'Main' and 'IO'
+    // from 'class Main inherits IO' get 'Main' and 'IO', though some class may not have superClassName
     const [ className, superClassName ]: ClassNames = context.TYPEID().filter(i => i).map(item => item.symbol.text);
     // 1. get JS AST
     let classDeclaration;
@@ -47,8 +47,22 @@ export default class GenerateJSListener extends COOLListener {
     });
   }
 
-  exitInt(context: COOLParser.IntContext): void {
+  enterMethod(context: COOLParser.MethodContext): void {
+    const methodName: string = context.OBJECTID().symbol.text;
+    const method = types.classMethod(
+      'method',
+      types.Identifier(methodName),
+      [],
+      types.blockStatement([], [])
+    );
 
+    traverse(this.jsAST, {
+      enter(path) {
+        if (types.isClassDeclaration(path.node)) {
+          path.node.body.body.push(method);
+        }
+      }
+    });
   }
 
   getJS(): string {
