@@ -48,6 +48,8 @@ export default class GenerateJSListener extends COOLListener {
   }
 
   enterMethod(context: COOLParser.MethodContext): void {
+    // 1. prepare class method AST
+    const className = context.parentCtx.TYPEID(0).symbol.text;
     const methodName: string = context.OBJECTID().symbol.text;
     const method = types.classMethod(
       'method',
@@ -55,11 +57,33 @@ export default class GenerateJSListener extends COOLListener {
       [],
       types.blockStatement([], [])
     );
-
+    // 2. for each method we found, found the class it belongs to, then put it in
     traverse(this.jsAST, {
       enter(path) {
-        if (types.isClassDeclaration(path.node)) {
+        if (types.isClassDeclaration(path.node) && path.node.id.name === className) {
           path.node.body.body.push(method);
+        }
+      }
+    });
+  }
+
+  enterClassProperty(context: COOLParser.ClassPropertyContext): void {
+    // 1. prepare class property AST
+    const className = context.parentCtx.TYPEID(0).symbol.text;
+    const objectName: string = context.OBJECTID().symbol.text;
+    // const value: string = context.expression().symbol.text; // ?
+    const typeName: string = context.TYPEID().symbol.text;
+    const property = types.classProperty(
+      types.Identifier(objectName),
+      null,
+      types.Identifier(typeName),
+      []
+    );
+    // 2. for each property we found, found the class it belongs to, then put it in
+    traverse(this.jsAST, {
+      enter(path) {
+        if (types.isClassDeclaration(path.node) && path.node.id.name === className) {
+          path.node.body.body.push(property);
         }
       }
     });
