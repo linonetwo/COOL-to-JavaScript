@@ -178,8 +178,8 @@ var symbolicNames = [ null, null, null, null, null, null, null, null, null,
                       "ONE_LINE_COMMENT", "CLASS", "ELSE", "FALSE", "FI", 
                       "IF", "IN", "INHERITS", "ISVOID", "LET", "LOOP", "POOL", 
                       "THEN", "WHILE", "CASE", "ESAC", "NEW", "OF", "NOT", 
-                      "TRUE", "STRING_CONST", "INT_CONST", "TYPEID", "OBJECTID", 
-                      "ASSIGNMENT", "CASE_ARROW" ];
+                      "TRUE", "STRING", "INT", "TYPEID", "OBJECTID", "ASSIGNMENT", 
+                      "CASE_ARROW" ];
 
 var ruleNames =  [ "program", "classDefine", "feature", "formal", "expression" ];
 
@@ -243,8 +243,8 @@ COOLParser.NEW = 38;
 COOLParser.OF = 39;
 COOLParser.NOT = 40;
 COOLParser.TRUE = 41;
-COOLParser.STRING_CONST = 42;
-COOLParser.INT_CONST = 43;
+COOLParser.STRING = 42;
+COOLParser.INT = 43;
 COOLParser.TYPEID = 44;
 COOLParser.OBJECTID = 45;
 COOLParser.ASSIGNMENT = 46;
@@ -1011,8 +1011,8 @@ StringContext.prototype.constructor = StringContext;
 
 COOLParser.StringContext = StringContext;
 
-StringContext.prototype.STRING_CONST = function() {
-    return this.getToken(COOLParser.STRING_CONST, 0);
+StringContext.prototype.STRING = function() {
+    return this.getToken(COOLParser.STRING, 0);
 };
 StringContext.prototype.enterRule = function(listener) {
     if(listener instanceof COOLListener ) {
@@ -1692,8 +1692,8 @@ IntContext.prototype.constructor = IntContext;
 
 COOLParser.IntContext = IntContext;
 
-IntContext.prototype.INT_CONST = function() {
-    return this.getToken(COOLParser.INT_CONST, 0);
+IntContext.prototype.INT = function() {
+    return this.getToken(COOLParser.INT, 0);
 };
 IntContext.prototype.enterRule = function(listener) {
     if(listener instanceof COOLListener ) {
@@ -2000,7 +2000,7 @@ COOLParser.prototype.expression = function(_p) {
             this.state = 85;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
-            while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << COOLParser.T__1) | (1 << COOLParser.T__3) | (1 << COOLParser.T__13) | (1 << COOLParser.FALSE) | (1 << COOLParser.IF) | (1 << COOLParser.ISVOID) | (1 << COOLParser.LET))) !== 0) || ((((_la - 35)) & ~0x1f) == 0 && ((1 << (_la - 35)) & ((1 << (COOLParser.WHILE - 35)) | (1 << (COOLParser.CASE - 35)) | (1 << (COOLParser.NEW - 35)) | (1 << (COOLParser.NOT - 35)) | (1 << (COOLParser.TRUE - 35)) | (1 << (COOLParser.STRING_CONST - 35)) | (1 << (COOLParser.INT_CONST - 35)) | (1 << (COOLParser.OBJECTID - 35)))) !== 0)) {
+            while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << COOLParser.T__1) | (1 << COOLParser.T__3) | (1 << COOLParser.T__13) | (1 << COOLParser.FALSE) | (1 << COOLParser.IF) | (1 << COOLParser.ISVOID) | (1 << COOLParser.LET))) !== 0) || ((((_la - 35)) & ~0x1f) == 0 && ((1 << (_la - 35)) & ((1 << (COOLParser.WHILE - 35)) | (1 << (COOLParser.CASE - 35)) | (1 << (COOLParser.NEW - 35)) | (1 << (COOLParser.NOT - 35)) | (1 << (COOLParser.TRUE - 35)) | (1 << (COOLParser.STRING - 35)) | (1 << (COOLParser.INT - 35)) | (1 << (COOLParser.OBJECTID - 35)))) !== 0)) {
                 this.state = 75;
                 this.expression(0);
                 this.state = 80;
@@ -2076,7 +2076,7 @@ COOLParser.prototype.expression = function(_p) {
                 this.state = 109; 
                 this._errHandler.sync(this);
                 _la = this._input.LA(1);
-            } while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << COOLParser.T__1) | (1 << COOLParser.T__3) | (1 << COOLParser.T__13) | (1 << COOLParser.FALSE) | (1 << COOLParser.IF) | (1 << COOLParser.ISVOID) | (1 << COOLParser.LET))) !== 0) || ((((_la - 35)) & ~0x1f) == 0 && ((1 << (_la - 35)) & ((1 << (COOLParser.WHILE - 35)) | (1 << (COOLParser.CASE - 35)) | (1 << (COOLParser.NEW - 35)) | (1 << (COOLParser.NOT - 35)) | (1 << (COOLParser.TRUE - 35)) | (1 << (COOLParser.STRING_CONST - 35)) | (1 << (COOLParser.INT_CONST - 35)) | (1 << (COOLParser.OBJECTID - 35)))) !== 0));
+            } while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << COOLParser.T__1) | (1 << COOLParser.T__3) | (1 << COOLParser.T__13) | (1 << COOLParser.FALSE) | (1 << COOLParser.IF) | (1 << COOLParser.ISVOID) | (1 << COOLParser.LET))) !== 0) || ((((_la - 35)) & ~0x1f) == 0 && ((1 << (_la - 35)) & ((1 << (COOLParser.WHILE - 35)) | (1 << (COOLParser.CASE - 35)) | (1 << (COOLParser.NEW - 35)) | (1 << (COOLParser.NOT - 35)) | (1 << (COOLParser.TRUE - 35)) | (1 << (COOLParser.STRING - 35)) | (1 << (COOLParser.INT - 35)) | (1 << (COOLParser.OBJECTID - 35)))) !== 0));
             this.state = 111;
             this.match(COOLParser.T__2);
             break;
@@ -2234,7 +2234,7 @@ COOLParser.prototype.expression = function(_p) {
             this._ctx = localctx;
             _prevctx = localctx;
             this.state = 165;
-            this.match(COOLParser.INT_CONST);
+            this.match(COOLParser.INT);
             break;
 
         case 15:
@@ -2242,7 +2242,7 @@ COOLParser.prototype.expression = function(_p) {
             this._ctx = localctx;
             _prevctx = localctx;
             this.state = 166;
-            this.match(COOLParser.STRING_CONST);
+            this.match(COOLParser.STRING);
             break;
 
         case 16:
@@ -2393,7 +2393,7 @@ COOLParser.prototype.expression = function(_p) {
                     this.state = 210;
                     this._errHandler.sync(this);
                     _la = this._input.LA(1);
-                    while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << COOLParser.T__1) | (1 << COOLParser.T__3) | (1 << COOLParser.T__13) | (1 << COOLParser.FALSE) | (1 << COOLParser.IF) | (1 << COOLParser.ISVOID) | (1 << COOLParser.LET))) !== 0) || ((((_la - 35)) & ~0x1f) == 0 && ((1 << (_la - 35)) & ((1 << (COOLParser.WHILE - 35)) | (1 << (COOLParser.CASE - 35)) | (1 << (COOLParser.NEW - 35)) | (1 << (COOLParser.NOT - 35)) | (1 << (COOLParser.TRUE - 35)) | (1 << (COOLParser.STRING_CONST - 35)) | (1 << (COOLParser.INT_CONST - 35)) | (1 << (COOLParser.OBJECTID - 35)))) !== 0)) {
+                    while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << COOLParser.T__1) | (1 << COOLParser.T__3) | (1 << COOLParser.T__13) | (1 << COOLParser.FALSE) | (1 << COOLParser.IF) | (1 << COOLParser.ISVOID) | (1 << COOLParser.LET))) !== 0) || ((((_la - 35)) & ~0x1f) == 0 && ((1 << (_la - 35)) & ((1 << (COOLParser.WHILE - 35)) | (1 << (COOLParser.CASE - 35)) | (1 << (COOLParser.NEW - 35)) | (1 << (COOLParser.NOT - 35)) | (1 << (COOLParser.TRUE - 35)) | (1 << (COOLParser.STRING - 35)) | (1 << (COOLParser.INT - 35)) | (1 << (COOLParser.OBJECTID - 35)))) !== 0)) {
                         this.state = 200;
                         this.expression(0);
                         this.state = 205;

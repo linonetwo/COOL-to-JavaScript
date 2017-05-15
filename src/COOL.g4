@@ -32,8 +32,8 @@ expression
   | NOT expression #boolNot
   | '(' expression ')' #parentheses
   | OBJECTID #id
-  | INT_CONST #int
-  | STRING_CONST #string
+  | INT #int
+  | STRING #string
   | TRUE #true
   | FALSE #false
   ;
@@ -70,9 +70,13 @@ NOT: ('N'|'n')('O'|'o')('T'|'t');
 TRUE: 't'('R'|'r')('U'|'u')('E'|'e');
 
 // premitives
-STRING_CONST: '"'.*?'"'; // non-greedy matching one line string
-INT_CONST: [0-9]+;
+STRING: '"' (ESC | ~ ["\\])* '"'; // non-greedy matching one line string
+INT: [0-9]+;
 TYPEID: [A-Z][_0-9A-Za-z]*;
 OBJECTID: [a-z][_0-9A-Za-z]*;
 ASSIGNMENT: '<-';
 CASE_ARROW: '=>';
+
+fragment ESC: '\\' (["\\/bfnrt] | UNICODE);
+fragment UNICODE: 'u' HEX HEX HEX HEX;
+fragment HEX: [0-9a-fA-F];
