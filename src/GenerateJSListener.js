@@ -12,9 +12,19 @@ type GeneratedOutput = { code: string, map: any, rawMappings: any };
 type ClassNames = [string, ?string];
 
 export default class GenerateJSListener extends COOLListener {
-  jsAST: any = types.file(types.program([]))
+  jsAST: any;
+  currentPath: any;
 
   @override
+  enterProgram(context: COOLParser.ProgramContext): void {
+    this.jsAST = types.file(types.program([]));
+    traverse(this.jsAST, {
+      enter: (path) => {
+        this.currentPath = path;
+      }
+    });
+  }
+
   @override
   enterClassDefine(context: COOLParser.ClassDefineContext): void {
     // from 'class Main inherits IO' get 'Main' and 'IO', though some class may not have superClassName
@@ -41,13 +51,10 @@ export default class GenerateJSListener extends COOLListener {
     }
 
     // 2. Put this class declearation into program
-    traverse(this.jsAST, {
-      enter(path) {
-        if (types.isProgram(path.node)) {
-          path.node.body.push(classDeclaration);
-        }
-      }
-    });
+    let currentPath = this.currentPath;
+    if (types.isProgram(currentPath.node)) {
+      currentPath.node.body.push(classDeclaration);
+    }
   }
 
   @override

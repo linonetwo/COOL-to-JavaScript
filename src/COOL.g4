@@ -5,8 +5,9 @@ generated js files will be placed in ./antlrGenerated
 */
 grammar COOL;
 
-program
-  : classDefine ';' program #class
+program: programBlocks;
+programBlocks
+  : classDefine ';' programBlocks #class
   | EOF #eof
   ;
 classDefine: CLASS TYPEID (INHERITS TYPEID)? '{' (feature ';')* '}';
