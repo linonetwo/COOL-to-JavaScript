@@ -1,4 +1,5 @@
 // @ts-check @flow
+import { override } from 'core-decorators';
 import * as types from 'babel-types';
 import traverse from 'babel-traverse';
 import template from 'babel-template';
@@ -13,6 +14,8 @@ type ClassNames = [string, ?string];
 export default class GenerateJSListener extends COOLListener {
   jsAST: any = types.file(types.program([]))
 
+  @override
+  @override
   enterClassDefine(context: COOLParser.ClassDefineContext): void {
     // from 'class Main inherits IO' get 'Main' and 'IO', though some class may not have superClassName
     const [ className, superClassName ]: ClassNames = context.TYPEID().filter(i => i).map(item => item.symbol.text);
@@ -47,6 +50,7 @@ export default class GenerateJSListener extends COOLListener {
     });
   }
 
+  @override
   enterMethod(context: COOLParser.MethodContext): void {
     // 1. prepare class method AST
     const className = context.parentCtx.TYPEID(0).symbol.text;
@@ -67,6 +71,7 @@ export default class GenerateJSListener extends COOLListener {
     });
   }
 
+  @override
   enterClassProperty(context: COOLParser.ClassPropertyContext): void {
     // 1. prepare class property AST
     const className = context.parentCtx.TYPEID(0).symbol.text;
