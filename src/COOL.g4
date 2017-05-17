@@ -1,7 +1,30 @@
 /*
-To generate JS file, install gulp first, then run:
-  gulp build-compiler
-generated js files will be placed in ./antlrGenerated
+The MIT License (MIT)
+
+Copyright (c) 2017 Linonetwo
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+COOL grammar derived from:
+
+http://sist.shanghaitech.edu.cn/faculty/songfu/course/spring2017/cs131/COOL/COOLAid.pdf
+
 */
 grammar COOL;
 
@@ -55,28 +78,28 @@ COMMENT: OPEN_COMMENT (COMMENT|.)*? CLOSE_COMMENT -> channel(HIDDEN);
 ONE_LINE_COMMENT: '--' .*? '\n' -> channel(HIDDEN);
 
 // key words
-CLASS: ('C'|'c')('L'|'l')('A'|'a')('S'|'s')('S'|'s');
-ELSE: ('E'|'e')('L'|'l')('S'|'s')('E'|'e');
-FALSE: 'f'('A'|'a')('L'|'l')('S'|'s')('E'|'e');
-FI: ('F'|'f')('I'|'i');
-IF: ('I'|'i')('F'|'f');
-IN: ('I'|'i')('N'|'n');
-INHERITS: ('I'|'i')('N'|'n')('H'|'h')('E'|'e')('R'|'r')('I'|'i')('T'|'t')('S'|'s');
-ISVOID: ('I'|'i')('S'|'s')('V'|'v')('O'|'o')('I'|'i')('D'|'d');
-LET: ('L'|'l')('E'|'e')('T'|'t');
-LOOP: ('L'|'l')('O'|'o')('O'|'o')('P'|'p');
-POOL: ('P'|'p')('O'|'o')('O'|'o')('L'|'l');
-THEN: ('T'|'t')('H'|'h')('E'|'e')('N'|'n');
-WHILE: ('W'|'w')('H'|'h')('I'|'i')('L'|'l')('E'|'e');
-CASE: ('C'|'c')('A'|'a')('S'|'s')('E'|'e');
-ESAC: ('E'|'e')('S'|'s')('A'|'a')('C'|'c');
-NEW: ('N'|'n')('E'|'e')('W'|'w');
-OF: ('O'|'o')('F'|'f');
-NOT: ('N'|'n')('O'|'o')('T'|'t');
-TRUE: 't'('R'|'r')('U'|'u')('E'|'e');
+CLASS: C L A S S;
+ELSE: E L S E ;
+FALSE: 'f' A L S E ;
+FI: F I ;
+IF: I F;
+IN: I N;
+INHERITS: I N H E R I T S;
+ISVOID: I S V O I D;
+LET: L E T;
+LOOP: L O O P;
+POOL: P O O L ;
+THEN: T H E N;
+WHILE: W H I L E ;
+CASE: C A S E ;
+ESAC: E S A C;
+NEW: N E W;
+OF: O F;
+NOT: N O T;
+TRUE: 't' R U E ;
 
 // premitives
-STRING: '"' (ESC | ~ ["\\])* '"'; // non-greedy matching one line string
+STRING: '"' (ESC | ~ ["\\])* '"';
 INT: [0-9]+;
 TYPEID: [A-Z][_0-9A-Za-z]*;
 OBJECTID: [a-z][_0-9A-Za-z]*;
@@ -90,6 +113,24 @@ LESS_THAN: '<';
 LESS_EQUAL: '<=';
 EQUAL: '=';
 INTEGER_COMPLEMENT: '~';
+
+fragment A: [aA];
+fragment C: [cC];
+fragment D: [dD];
+fragment E: [eE];
+fragment F: [fF];
+fragment H: [hH];
+fragment I: [iI];
+fragment L: [lL];
+fragment N: [nN];
+fragment O: [oO];
+fragment P: [pP];
+fragment R: [rR];
+fragment S: [sS];
+fragment T: [tT];
+fragment U: [uU];
+fragment V: [vV];
+fragment W: [wW];
 
 fragment ESC: '\\' (["\\/bfnrt] | UNICODE);
 fragment UNICODE: 'u' HEX HEX HEX HEX;
