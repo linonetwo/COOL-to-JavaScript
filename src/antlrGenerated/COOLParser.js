@@ -113,10 +113,10 @@ var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
     "\u0098\u0003\u0002\u0002\u0002\u009a\u009b\u0003\u0002\u0002\u0002\u009b",
     "\u009c\u0003\u0002\u0002\u0002\u009c\u009d\u0007\u001f\u0002\u0002\u009d",
     "\u00b0\u0003\u0002\u0002\u0002\u009e\u009f\u0007 \u0002\u0002\u009f",
-    "\u00b0\u0007&\u0002\u0002\u00a0\u00a1\u0007\u0018\u0002\u0002\u00a1",
-    "\u00b0\u0005\f\u0007\u0012\u00a2\u00a3\u00071\u0002\u0002\u00a3\u00b0",
-    "\u0005\f\u0007\r\u00a4\u00a5\u0007\"\u0002\u0002\u00a5\u00b0\u0005\f",
-    "\u0007\t\u00a6\u00a7\u0007\u0006\u0002\u0002\u00a7\u00a8\u0005\f\u0007",
+    "\u00b0\u0007&\u0002\u0002\u00a0\u00a1\u00071\u0002\u0002\u00a1\u00b0",
+    "\u0005\f\u0007\u0012\u00a2\u00a3\u0007\u0018\u0002\u0002\u00a3\u00b0",
+    "\u0005\f\u0007\u0011\u00a4\u00a5\u0007\"\u0002\u0002\u00a5\u00b0\u0005",
+    "\f\u0007\t\u00a6\u00a7\u0007\u0006\u0002\u0002\u00a7\u00a8\u0005\f\u0007",
     "\u0002\u00a8\u00a9\u0007\b\u0002\u0002\u00a9\u00b0\u0003\u0002\u0002",
     "\u0002\u00aa\u00b0\u0007\'\u0002\u0002\u00ab\u00b0\u0007%\u0002\u0002",
     "\u00ac\u00b0\u0007$\u0002\u0002\u00ad\u00b0\u0007#\u0002\u0002\u00ae",
@@ -129,36 +129,36 @@ var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
     "\u0002\u0002\u00af\u00aa\u0003\u0002\u0002\u0002\u00af\u00ab\u0003\u0002",
     "\u0002\u0002\u00af\u00ac\u0003\u0002\u0002\u0002\u00af\u00ad\u0003\u0002",
     "\u0002\u0002\u00af\u00ae\u0003\u0002\u0002\u0002\u00b0\u00de\u0003\u0002",
-    "\u0002\u0002\u00b1\u00b2\f\u0011\u0002\u0002\u00b2\u00b3\u0007*\u0002",
-    "\u0002\u00b3\u00dd\u0005\f\u0007\u0012\u00b4\u00b5\f\u0010\u0002\u0002",
-    "\u00b5\u00b6\u0007+\u0002\u0002\u00b6\u00dd\u0005\f\u0007\u0011\u00b7",
-    "\u00b8\f\u000f\u0002\u0002\u00b8\u00b9\u0007,\u0002\u0002\u00b9\u00dd",
-    "\u0005\f\u0007\u0010\u00ba\u00bb\f\u000e\u0002\u0002\u00bb\u00bc\u0007",
-    "-\u0002\u0002\u00bc\u00dd\u0005\f\u0007\u000f\u00bd\u00be\f\f\u0002",
-    "\u0002\u00be\u00bf\u0007.\u0002\u0002\u00bf\u00dd\u0005\f\u0007\r\u00c0",
-    "\u00c1\f\u000b\u0002\u0002\u00c1\u00c2\u0007/\u0002\u0002\u00c2\u00dd",
-    "\u0005\f\u0007\f\u00c3\u00c4\f\n\u0002\u0002\u00c4\u00c5\u00070\u0002",
-    "\u0002\u00c5\u00dd\u0005\f\u0007\u000b\u00c6\u00c9\f\u001a\u0002\u0002",
-    "\u00c7\u00c8\u0007\n\u0002\u0002\u00c8\u00ca\u0007&\u0002\u0002\u00c9",
-    "\u00c7\u0003\u0002\u0002\u0002\u00c9\u00ca\u0003\u0002\u0002\u0002\u00ca",
-    "\u00cb\u0003\u0002\u0002\u0002\u00cb\u00cc\u0007\u000b\u0002\u0002\u00cc",
-    "\u00cd\u0007\'\u0002\u0002\u00cd\u00d8\u0007\u0006\u0002\u0002\u00ce",
-    "\u00d3\u0005\f\u0007\u0002\u00cf\u00d0\u0007\u0007\u0002\u0002\u00d0",
-    "\u00d2\u0005\f\u0007\u0002\u00d1\u00cf\u0003\u0002\u0002\u0002\u00d2",
-    "\u00d5\u0003\u0002\u0002\u0002\u00d3\u00d1\u0003\u0002\u0002\u0002\u00d3",
-    "\u00d4\u0003\u0002\u0002\u0002\u00d4\u00d7\u0003\u0002\u0002\u0002\u00d5",
-    "\u00d3\u0003\u0002\u0002\u0002\u00d6\u00ce\u0003\u0002\u0002\u0002\u00d7",
-    "\u00da\u0003\u0002\u0002\u0002\u00d8\u00d6\u0003\u0002\u0002\u0002\u00d8",
-    "\u00d9\u0003\u0002\u0002\u0002\u00d9\u00db\u0003\u0002\u0002\u0002\u00da",
-    "\u00d8\u0003\u0002\u0002\u0002\u00db\u00dd\u0007\b\u0002\u0002\u00dc",
-    "\u00b1\u0003\u0002\u0002\u0002\u00dc\u00b4\u0003\u0002\u0002\u0002\u00dc",
-    "\u00b7\u0003\u0002\u0002\u0002\u00dc\u00ba\u0003\u0002\u0002\u0002\u00dc",
-    "\u00bd\u0003\u0002\u0002\u0002\u00dc\u00c0\u0003\u0002\u0002\u0002\u00dc",
-    "\u00c3\u0003\u0002\u0002\u0002\u00dc\u00c6\u0003\u0002\u0002\u0002\u00dd",
-    "\u00e0\u0003\u0002\u0002\u0002\u00de\u00dc\u0003\u0002\u0002\u0002\u00de",
-    "\u00df\u0003\u0002\u0002\u0002\u00df\r\u0003\u0002\u0002\u0002\u00e0",
-    "\u00de\u0003\u0002\u0002\u0002\u0016\u0015\u001b#/4CEV[s}\u0085\u0089",
-    "\u009a\u00af\u00c9\u00d3\u00d8\u00dc\u00de"].join("");
+    "\u0002\u0002\u00b1\u00b2\f\u0010\u0002\u0002\u00b2\u00b3\u0007,\u0002",
+    "\u0002\u00b3\u00dd\u0005\f\u0007\u0011\u00b4\u00b5\f\u000f\u0002\u0002",
+    "\u00b5\u00b6\u0007-\u0002\u0002\u00b6\u00dd\u0005\f\u0007\u0010\u00b7",
+    "\u00b8\f\u000e\u0002\u0002\u00b8\u00b9\u0007*\u0002\u0002\u00b9\u00dd",
+    "\u0005\f\u0007\u000f\u00ba\u00bb\f\r\u0002\u0002\u00bb\u00bc\u0007+",
+    "\u0002\u0002\u00bc\u00dd\u0005\f\u0007\u000e\u00bd\u00be\f\f\u0002\u0002",
+    "\u00be\u00bf\u0007.\u0002\u0002\u00bf\u00dd\u0005\f\u0007\r\u00c0\u00c1",
+    "\f\u000b\u0002\u0002\u00c1\u00c2\u0007/\u0002\u0002\u00c2\u00dd\u0005",
+    "\f\u0007\f\u00c3\u00c4\f\n\u0002\u0002\u00c4\u00c5\u00070\u0002\u0002",
+    "\u00c5\u00dd\u0005\f\u0007\u000b\u00c6\u00c9\f\u001a\u0002\u0002\u00c7",
+    "\u00c8\u0007\n\u0002\u0002\u00c8\u00ca\u0007&\u0002\u0002\u00c9\u00c7",
+    "\u0003\u0002\u0002\u0002\u00c9\u00ca\u0003\u0002\u0002\u0002\u00ca\u00cb",
+    "\u0003\u0002\u0002\u0002\u00cb\u00cc\u0007\u000b\u0002\u0002\u00cc\u00cd",
+    "\u0007\'\u0002\u0002\u00cd\u00d8\u0007\u0006\u0002\u0002\u00ce\u00d3",
+    "\u0005\f\u0007\u0002\u00cf\u00d0\u0007\u0007\u0002\u0002\u00d0\u00d2",
+    "\u0005\f\u0007\u0002\u00d1\u00cf\u0003\u0002\u0002\u0002\u00d2\u00d5",
+    "\u0003\u0002\u0002\u0002\u00d3\u00d1\u0003\u0002\u0002\u0002\u00d3\u00d4",
+    "\u0003\u0002\u0002\u0002\u00d4\u00d7\u0003\u0002\u0002\u0002\u00d5\u00d3",
+    "\u0003\u0002\u0002\u0002\u00d6\u00ce\u0003\u0002\u0002\u0002\u00d7\u00da",
+    "\u0003\u0002\u0002\u0002\u00d8\u00d6\u0003\u0002\u0002\u0002\u00d8\u00d9",
+    "\u0003\u0002\u0002\u0002\u00d9\u00db\u0003\u0002\u0002\u0002\u00da\u00d8",
+    "\u0003\u0002\u0002\u0002\u00db\u00dd\u0007\b\u0002\u0002\u00dc\u00b1",
+    "\u0003\u0002\u0002\u0002\u00dc\u00b4\u0003\u0002\u0002\u0002\u00dc\u00b7",
+    "\u0003\u0002\u0002\u0002\u00dc\u00ba\u0003\u0002\u0002\u0002\u00dc\u00bd",
+    "\u0003\u0002\u0002\u0002\u00dc\u00c0\u0003\u0002\u0002\u0002\u00dc\u00c3",
+    "\u0003\u0002\u0002\u0002\u00dc\u00c6\u0003\u0002\u0002\u0002\u00dd\u00e0",
+    "\u0003\u0002\u0002\u0002\u00de\u00dc\u0003\u0002\u0002\u0002\u00de\u00df",
+    "\u0003\u0002\u0002\u0002\u00df\r\u0003\u0002\u0002\u0002\u00e0\u00de",
+    "\u0003\u0002\u0002\u0002\u0016\u0015\u001b#/4CEV[s}\u0085\u0089\u009a",
+    "\u00af\u00c9\u00d3\u00d8\u00dc\u00de"].join("");
 
 
 var atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
@@ -2283,23 +2283,23 @@ COOLParser.prototype.expression = function(_p) {
             break;
 
         case 9:
-            localctx = new IsvoidContext(this, localctx);
+            localctx = new NegativeContext(this, localctx);
             this._ctx = localctx;
             _prevctx = localctx;
             this.state = 158;
-            this.match(COOLParser.ISVOID);
+            this.match(COOLParser.INTEGER_NEGATIVE);
             this.state = 159;
             this.expression(16);
             break;
 
         case 10:
-            localctx = new NegativeContext(this, localctx);
+            localctx = new IsvoidContext(this, localctx);
             this._ctx = localctx;
             _prevctx = localctx;
             this.state = 160;
-            this.match(COOLParser.INTEGER_NEGATIVE);
+            this.match(COOLParser.ISVOID);
             this.state = 161;
-            this.expression(11);
+            this.expression(15);
             break;
 
         case 11:
@@ -2380,55 +2380,55 @@ COOLParser.prototype.expression = function(_p) {
                 var la_ = this._interp.adaptivePredict(this._input,18,this._ctx);
                 switch(la_) {
                 case 1:
-                    localctx = new AddContext(this, new ExpressionContext(this, _parentctx, _parentState));
+                    localctx = new MultiplyContext(this, new ExpressionContext(this, _parentctx, _parentState));
                     this.pushNewRecursionContext(localctx, _startState, COOLParser.RULE_expression);
                     this.state = 175;
-                    if (!( this.precpred(this._ctx, 15))) {
-                        throw new antlr4.error.FailedPredicateException(this, "this.precpred(this._ctx, 15)");
-                    }
-                    this.state = 176;
-                    this.match(COOLParser.ADD);
-                    this.state = 177;
-                    this.expression(16);
-                    break;
-
-                case 2:
-                    localctx = new MinusContext(this, new ExpressionContext(this, _parentctx, _parentState));
-                    this.pushNewRecursionContext(localctx, _startState, COOLParser.RULE_expression);
-                    this.state = 178;
                     if (!( this.precpred(this._ctx, 14))) {
                         throw new antlr4.error.FailedPredicateException(this, "this.precpred(this._ctx, 14)");
                     }
-                    this.state = 179;
-                    this.match(COOLParser.MINUS);
-                    this.state = 180;
+                    this.state = 176;
+                    this.match(COOLParser.MULTIPLY);
+                    this.state = 177;
                     this.expression(15);
                     break;
 
-                case 3:
-                    localctx = new MultiplyContext(this, new ExpressionContext(this, _parentctx, _parentState));
+                case 2:
+                    localctx = new DivisionContext(this, new ExpressionContext(this, _parentctx, _parentState));
                     this.pushNewRecursionContext(localctx, _startState, COOLParser.RULE_expression);
-                    this.state = 181;
+                    this.state = 178;
                     if (!( this.precpred(this._ctx, 13))) {
                         throw new antlr4.error.FailedPredicateException(this, "this.precpred(this._ctx, 13)");
                     }
-                    this.state = 182;
-                    this.match(COOLParser.MULTIPLY);
-                    this.state = 183;
+                    this.state = 179;
+                    this.match(COOLParser.DIVISION);
+                    this.state = 180;
                     this.expression(14);
                     break;
 
-                case 4:
-                    localctx = new DivisionContext(this, new ExpressionContext(this, _parentctx, _parentState));
+                case 3:
+                    localctx = new AddContext(this, new ExpressionContext(this, _parentctx, _parentState));
                     this.pushNewRecursionContext(localctx, _startState, COOLParser.RULE_expression);
-                    this.state = 184;
+                    this.state = 181;
                     if (!( this.precpred(this._ctx, 12))) {
                         throw new antlr4.error.FailedPredicateException(this, "this.precpred(this._ctx, 12)");
                     }
-                    this.state = 185;
-                    this.match(COOLParser.DIVISION);
-                    this.state = 186;
+                    this.state = 182;
+                    this.match(COOLParser.ADD);
+                    this.state = 183;
                     this.expression(13);
+                    break;
+
+                case 4:
+                    localctx = new MinusContext(this, new ExpressionContext(this, _parentctx, _parentState));
+                    this.pushNewRecursionContext(localctx, _startState, COOLParser.RULE_expression);
+                    this.state = 184;
+                    if (!( this.precpred(this._ctx, 11))) {
+                        throw new antlr4.error.FailedPredicateException(this, "this.precpred(this._ctx, 11)");
+                    }
+                    this.state = 185;
+                    this.match(COOLParser.MINUS);
+                    this.state = 186;
+                    this.expression(12);
                     break;
 
                 case 5:
@@ -2553,13 +2553,13 @@ COOLParser.prototype.sempred = function(localctx, ruleIndex, predIndex) {
 COOLParser.prototype.expression_sempred = function(localctx, predIndex) {
 	switch(predIndex) {
 		case 0:
-			return this.precpred(this._ctx, 15);
-		case 1:
 			return this.precpred(this._ctx, 14);
-		case 2:
+		case 1:
 			return this.precpred(this._ctx, 13);
-		case 3:
+		case 2:
 			return this.precpred(this._ctx, 12);
+		case 3:
+			return this.precpred(this._ctx, 11);
 		case 4:
 			return this.precpred(this._ctx, 10);
 		case 5:
