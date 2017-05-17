@@ -1110,22 +1110,22 @@ IsvoidContext.prototype.accept = function(visitor) {
 };
 
 
-function WhildContext(parser, ctx) {
+function WhileContext(parser, ctx) {
 	ExpressionContext.call(this, parser);
     ExpressionContext.prototype.copyFrom.call(this, ctx);
     return this;
 }
 
-WhildContext.prototype = Object.create(ExpressionContext.prototype);
-WhildContext.prototype.constructor = WhildContext;
+WhileContext.prototype = Object.create(ExpressionContext.prototype);
+WhileContext.prototype.constructor = WhileContext;
 
-COOLParser.WhildContext = WhildContext;
+COOLParser.WhileContext = WhileContext;
 
-WhildContext.prototype.WHILE = function() {
+WhileContext.prototype.WHILE = function() {
     return this.getToken(COOLParser.WHILE, 0);
 };
 
-WhildContext.prototype.expression = function(i) {
+WhileContext.prototype.expression = function(i) {
     if(i===undefined) {
         i = null;
     }
@@ -1136,28 +1136,28 @@ WhildContext.prototype.expression = function(i) {
     }
 };
 
-WhildContext.prototype.LOOP = function() {
+WhileContext.prototype.LOOP = function() {
     return this.getToken(COOLParser.LOOP, 0);
 };
 
-WhildContext.prototype.POOL = function() {
+WhileContext.prototype.POOL = function() {
     return this.getToken(COOLParser.POOL, 0);
 };
-WhildContext.prototype.enterRule = function(listener) {
+WhileContext.prototype.enterRule = function(listener) {
     if(listener instanceof COOLListener ) {
-        listener.enterWhild(this);
+        listener.enterWhile(this);
 	}
 };
 
-WhildContext.prototype.exitRule = function(listener) {
+WhileContext.prototype.exitRule = function(listener) {
     if(listener instanceof COOLListener ) {
-        listener.exitWhild(this);
+        listener.exitWhile(this);
 	}
 };
 
-WhildContext.prototype.accept = function(visitor) {
+WhileContext.prototype.accept = function(visitor) {
     if ( visitor instanceof COOLVisitor ) {
-        return visitor.visitWhild(this);
+        return visitor.visitWhile(this);
     } else {
         return visitor.visitChildren(this);
     }
@@ -2147,7 +2147,7 @@ COOLParser.prototype.expression = function(_p) {
             break;
 
         case 4:
-            localctx = new WhildContext(this, localctx);
+            localctx = new WhileContext(this, localctx);
             this._ctx = localctx;
             _prevctx = localctx;
             this.state = 101;

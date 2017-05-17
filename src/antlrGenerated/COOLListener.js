@@ -110,12 +110,12 @@ COOLListener.prototype.exitIsvoid = function(ctx) {
 };
 
 
-// Enter a parse tree produced by COOLParser#whild.
-COOLListener.prototype.enterWhild = function(ctx) {
+// Enter a parse tree produced by COOLParser#while.
+COOLListener.prototype.enterWhile = function(ctx) {
 };
 
-// Exit a parse tree produced by COOLParser#whild.
-COOLListener.prototype.exitWhild = function(ctx) {
+// Exit a parse tree produced by COOLParser#while.
+COOLListener.prototype.exitWhile = function(ctx) {
 };
 
 

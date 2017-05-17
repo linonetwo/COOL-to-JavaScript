@@ -44,7 +44,7 @@ expression
   | expression ('@' TYPEID)? '.' OBJECTID '(' (expression (',' expression)*)* ')' /* call super class method */ #superClassMethod
   | OBJECTID '(' (expression (',' expression)*)* ')' /* call function that refered by variable */ #functionCall
   | IF expression THEN expression ELSE expression FI #if
-  | WHILE expression LOOP expression POOL #whild
+  | WHILE expression LOOP expression POOL #while
   | '{' (expression ';')+ '}' #multipleExpression
   | LET OBJECTID ':' TYPEID (ASSIGNMENT expression)? (',' OBJECTID ':' TYPEID (ASSIGNMENT expression)?)* IN expression /* let num : Int <- num_cells() in */ #letIn
   | CASE expression OF (OBJECTID ':' TYPEID CASE_ARROW expression ';')+ ESAC #case

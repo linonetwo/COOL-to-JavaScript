@@ -78,8 +78,8 @@ COOLVisitor.prototype.visitIsvoid = function(ctx) {
 };
 
 
-// Visit a parse tree produced by COOLParser#whild.
-COOLVisitor.prototype.visitWhild = function(ctx) {
+// Visit a parse tree produced by COOLParser#while.
+COOLVisitor.prototype.visitWhile = function(ctx) {
   return this.visitChildren(ctx);
 };
 
