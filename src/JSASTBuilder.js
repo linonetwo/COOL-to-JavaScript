@@ -146,11 +146,25 @@ export default class JSASTBuilder extends ASTStack {
   }
 
   NewClass(className: string): void {
+    // Not using unaryExpression() since TypeID will not present in the JSAST
     const buildNewClass = template(`
       new CLASS_NAME()
     `);
     const newClassExpressionStatement = buildNewClass({ CLASS_NAME: t.identifier(className) });
     const newClassExpression = newClassExpressionStatement.expression;
     this.push(newClassExpression);
+  }
+
+  Case() {
+  }
+
+  Assignment(variableName: string): void {
+    const expression = this.pop(1);
+    const buildAssignment = template(`
+      let VARIABLE = EXPRESSION
+    `);
+    this.push(buildAssignment({
+      VARIABLE: t.identifier(variableName), EXPRESSION: expression
+    }));
   }
 }

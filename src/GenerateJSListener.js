@@ -108,8 +108,21 @@ export default class GenerateJSListener extends COOLListener {
 
   @override
   exitNew(context: COOLParser.NewContext): void {
-    // This is a non-terminal, we should pop it's sub-AST from stack
+    // Note that TypeID will not present in the JSAST
     this.jsAST.NewClass(context.TYPEID().symbol.text);
+  }
+
+  @override
+  exitCase(context: COOLParser.CaseContext): void {
+    const IDs = context.OBJECTID().filter(i => i).map(item => item.symbol.text);
+    const types = context.TYPEID().filter(i => i).map(item => item.symbol.text);
+    this.jsAST.Case();
+  }
+
+  @override
+  exitAssignment(context: COOLParser.AssignmentContext): void {
+    const variableName = context.OBJECTID().symbol.text;
+    this.jsAST.Assignment(variableName);
   }
 
   // @override
