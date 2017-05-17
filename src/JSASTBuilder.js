@@ -23,7 +23,7 @@ export class ASTStack {
     }
     if (quentity > 1) {
       const nodes = takeRight(this.jsASTStack, quentity);
-      dropRight(this.jsASTStack, quentity);
+      this.jsASTStack = dropRight(this.jsASTStack, quentity);
       return nodes;
     }
     return this.jsASTStack.pop();
@@ -81,7 +81,7 @@ export default class JSASTBuilder extends ASTStack {
     const buildBoolNot = template(`
       LEFT === RIGHT
     `);
-    const newBoolNotStatement = buildBoolNot({ LEFT: left, right: right });
+    const newBoolNotStatement = buildBoolNot({ LEFT: left, RIGHT: right });
     const newBoolNot = newBoolNotStatement.expression;
     this.push(newBoolNot);
   }
