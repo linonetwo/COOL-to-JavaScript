@@ -225,8 +225,9 @@ export default class JSASTBuilder extends ASTBuilder {
     this.push(ownMethodCall);
   }
 
-  MethodCall(functionName: string, argumentLength: number): void {
+  MethodCall(functionName: string, argumentLength: number, superClassName: ?string): void {
     // Invoke someObject.method()
+    // superClassName currently unavailable
     const functionArguments = [...this.pop(argumentLength)];
     const calleeObject = this.pop(1);
     const buildMethodCall = template(`

@@ -153,7 +153,7 @@ export default class GenerateJSListener extends COOLListener {
     // console.log(context.TYPEID())
     const superClassName: ?string = context.TYPEID() ? context.TYPEID().symbol.text : null;
     const argumentLength = context.expression().length - 1; // there are one expression is the callee Object
-    this.jsAST.MethodCall(functionName, argumentLength);
+    this.jsAST.MethodCall(functionName, argumentLength, superClassName);
   }
 
   @override
