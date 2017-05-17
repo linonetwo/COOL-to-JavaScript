@@ -668,47 +668,47 @@ MethodContext.prototype.accept = function(visitor) {
 };
 
 
-function ClassPropertyContext(parser, ctx) {
+function PropertyContext(parser, ctx) {
 	FeatureContext.call(this, parser);
     FeatureContext.prototype.copyFrom.call(this, ctx);
     return this;
 }
 
-ClassPropertyContext.prototype = Object.create(FeatureContext.prototype);
-ClassPropertyContext.prototype.constructor = ClassPropertyContext;
+PropertyContext.prototype = Object.create(FeatureContext.prototype);
+PropertyContext.prototype.constructor = PropertyContext;
 
-COOLParser.ClassPropertyContext = ClassPropertyContext;
+COOLParser.PropertyContext = PropertyContext;
 
-ClassPropertyContext.prototype.OBJECTID = function() {
+PropertyContext.prototype.OBJECTID = function() {
     return this.getToken(COOLParser.OBJECTID, 0);
 };
 
-ClassPropertyContext.prototype.TYPEID = function() {
+PropertyContext.prototype.TYPEID = function() {
     return this.getToken(COOLParser.TYPEID, 0);
 };
 
-ClassPropertyContext.prototype.ASSIGNMENT = function() {
+PropertyContext.prototype.ASSIGNMENT = function() {
     return this.getToken(COOLParser.ASSIGNMENT, 0);
 };
 
-ClassPropertyContext.prototype.expression = function() {
+PropertyContext.prototype.expression = function() {
     return this.getTypedRuleContext(ExpressionContext,0);
 };
-ClassPropertyContext.prototype.enterRule = function(listener) {
+PropertyContext.prototype.enterRule = function(listener) {
     if(listener instanceof COOLListener ) {
-        listener.enterClassProperty(this);
+        listener.enterProperty(this);
 	}
 };
 
-ClassPropertyContext.prototype.exitRule = function(listener) {
+PropertyContext.prototype.exitRule = function(listener) {
     if(listener instanceof COOLListener ) {
-        listener.exitClassProperty(this);
+        listener.exitProperty(this);
 	}
 };
 
-ClassPropertyContext.prototype.accept = function(visitor) {
+PropertyContext.prototype.accept = function(visitor) {
     if ( visitor instanceof COOLVisitor ) {
-        return visitor.visitClassProperty(this);
+        return visitor.visitProperty(this);
     } else {
         return visitor.visitChildren(this);
     }
@@ -772,7 +772,7 @@ COOLParser.prototype.feature = function() {
             break;
 
         case 2:
-            localctx = new ClassPropertyContext(this, localctx);
+            localctx = new PropertyContext(this, localctx);
             this.enterOuterAlt(localctx, 2);
             this.state = 60;
             this.match(COOLParser.OBJECTID);
@@ -1334,56 +1334,6 @@ LessThanContext.prototype.accept = function(visitor) {
 };
 
 
-function SuperClassMethodContext(parser, ctx) {
-	ExpressionContext.call(this, parser);
-    ExpressionContext.prototype.copyFrom.call(this, ctx);
-    return this;
-}
-
-SuperClassMethodContext.prototype = Object.create(ExpressionContext.prototype);
-SuperClassMethodContext.prototype.constructor = SuperClassMethodContext;
-
-COOLParser.SuperClassMethodContext = SuperClassMethodContext;
-
-SuperClassMethodContext.prototype.expression = function(i) {
-    if(i===undefined) {
-        i = null;
-    }
-    if(i===null) {
-        return this.getTypedRuleContexts(ExpressionContext);
-    } else {
-        return this.getTypedRuleContext(ExpressionContext,i);
-    }
-};
-
-SuperClassMethodContext.prototype.OBJECTID = function() {
-    return this.getToken(COOLParser.OBJECTID, 0);
-};
-
-SuperClassMethodContext.prototype.TYPEID = function() {
-    return this.getToken(COOLParser.TYPEID, 0);
-};
-SuperClassMethodContext.prototype.enterRule = function(listener) {
-    if(listener instanceof COOLListener ) {
-        listener.enterSuperClassMethod(this);
-	}
-};
-
-SuperClassMethodContext.prototype.exitRule = function(listener) {
-    if(listener instanceof COOLListener ) {
-        listener.exitSuperClassMethod(this);
-	}
-};
-
-SuperClassMethodContext.prototype.accept = function(visitor) {
-    if ( visitor instanceof COOLVisitor ) {
-        return visitor.visitSuperClassMethod(this);
-    } else {
-        return visitor.visitChildren(this);
-    }
-};
-
-
 function BlockContext(parser, ctx) {
 	ExpressionContext.call(this, parser);
     ExpressionContext.prototype.copyFrom.call(this, ctx);
@@ -1649,6 +1599,52 @@ CaseContext.prototype.exitRule = function(listener) {
 CaseContext.prototype.accept = function(visitor) {
     if ( visitor instanceof COOLVisitor ) {
         return visitor.visitCase(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+function OwnMethodCallContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+OwnMethodCallContext.prototype = Object.create(ExpressionContext.prototype);
+OwnMethodCallContext.prototype.constructor = OwnMethodCallContext;
+
+COOLParser.OwnMethodCallContext = OwnMethodCallContext;
+
+OwnMethodCallContext.prototype.OBJECTID = function() {
+    return this.getToken(COOLParser.OBJECTID, 0);
+};
+
+OwnMethodCallContext.prototype.expression = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(ExpressionContext);
+    } else {
+        return this.getTypedRuleContext(ExpressionContext,i);
+    }
+};
+OwnMethodCallContext.prototype.enterRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.enterOwnMethodCall(this);
+	}
+};
+
+OwnMethodCallContext.prototype.exitRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.exitOwnMethodCall(this);
+	}
+};
+
+OwnMethodCallContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitOwnMethodCall(this);
     } else {
         return visitor.visitChildren(this);
     }
@@ -1934,52 +1930,6 @@ EqualContext.prototype.accept = function(visitor) {
 };
 
 
-function OwnMethodContext(parser, ctx) {
-	ExpressionContext.call(this, parser);
-    ExpressionContext.prototype.copyFrom.call(this, ctx);
-    return this;
-}
-
-OwnMethodContext.prototype = Object.create(ExpressionContext.prototype);
-OwnMethodContext.prototype.constructor = OwnMethodContext;
-
-COOLParser.OwnMethodContext = OwnMethodContext;
-
-OwnMethodContext.prototype.OBJECTID = function() {
-    return this.getToken(COOLParser.OBJECTID, 0);
-};
-
-OwnMethodContext.prototype.expression = function(i) {
-    if(i===undefined) {
-        i = null;
-    }
-    if(i===null) {
-        return this.getTypedRuleContexts(ExpressionContext);
-    } else {
-        return this.getTypedRuleContext(ExpressionContext,i);
-    }
-};
-OwnMethodContext.prototype.enterRule = function(listener) {
-    if(listener instanceof COOLListener ) {
-        listener.enterOwnMethod(this);
-	}
-};
-
-OwnMethodContext.prototype.exitRule = function(listener) {
-    if(listener instanceof COOLListener ) {
-        listener.exitOwnMethod(this);
-	}
-};
-
-OwnMethodContext.prototype.accept = function(visitor) {
-    if ( visitor instanceof COOLVisitor ) {
-        return visitor.visitOwnMethod(this);
-    } else {
-        return visitor.visitChildren(this);
-    }
-};
-
-
 function TrueContext(parser, ctx) {
 	ExpressionContext.call(this, parser);
     ExpressionContext.prototype.copyFrom.call(this, ctx);
@@ -2061,6 +2011,56 @@ LessEqualContext.prototype.accept = function(visitor) {
 };
 
 
+function MethodCallContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+MethodCallContext.prototype = Object.create(ExpressionContext.prototype);
+MethodCallContext.prototype.constructor = MethodCallContext;
+
+COOLParser.MethodCallContext = MethodCallContext;
+
+MethodCallContext.prototype.expression = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(ExpressionContext);
+    } else {
+        return this.getTypedRuleContext(ExpressionContext,i);
+    }
+};
+
+MethodCallContext.prototype.OBJECTID = function() {
+    return this.getToken(COOLParser.OBJECTID, 0);
+};
+
+MethodCallContext.prototype.TYPEID = function() {
+    return this.getToken(COOLParser.TYPEID, 0);
+};
+MethodCallContext.prototype.enterRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.enterMethodCall(this);
+	}
+};
+
+MethodCallContext.prototype.exitRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.exitMethodCall(this);
+	}
+};
+
+MethodCallContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitMethodCall(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
 
 COOLParser.prototype.expression = function(_p) {
 	if(_p===undefined) {
@@ -2093,7 +2093,7 @@ COOLParser.prototype.expression = function(_p) {
             break;
 
         case 2:
-            localctx = new OwnMethodContext(this, localctx);
+            localctx = new OwnMethodCallContext(this, localctx);
             this._ctx = localctx;
             _prevctx = localctx;
             this.state = 77;
@@ -2471,7 +2471,7 @@ COOLParser.prototype.expression = function(_p) {
                     break;
 
                 case 8:
-                    localctx = new SuperClassMethodContext(this, new ExpressionContext(this, _parentctx, _parentState));
+                    localctx = new MethodCallContext(this, new ExpressionContext(this, _parentctx, _parentState));
                     this.pushNewRecursionContext(localctx, _startState, COOLParser.RULE_expression);
                     this.state = 196;
                     if (!( this.precpred(this._ctx, 24))) {

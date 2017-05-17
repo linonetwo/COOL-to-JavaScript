@@ -36,13 +36,13 @@ programBlocks
 classDefine: CLASS TYPEID (INHERITS TYPEID)? '{' (feature ';')* '}';
 feature
   : OBJECTID '(' (formal (',' formal)*)* ')' ':' TYPEID '{' expression '}' #method
-  | OBJECTID ':' TYPEID (ASSIGNMENT expression)? /* class member variable */ #classProperty
+  | OBJECTID ':' TYPEID (ASSIGNMENT expression)? /* class member property */ #property
   ;
 formal: OBJECTID ':' TYPEID; /* method argument */
 expression
   : OBJECTID ASSIGNMENT expression #assignment
-  | expression ('@' TYPEID)? '.' OBJECTID '(' (expression (',' expression)*)* ')' /* call super class method */ #superClassMethod
-  | OBJECTID '(' (expression (',' expression)*)* ')' /* shorthand for self.OBJECTID() */ #ownMethod
+  | expression ('@' TYPEID)? '.' OBJECTID '(' (expression (',' expression)*)* ')' /* call super class method */ #methodCall
+  | OBJECTID '(' (expression (',' expression)*)* ')' /* shorthand for self.OBJECTID() */ #ownMethodCall
   | IF expression THEN expression ELSE expression FI #if
   | WHILE expression LOOP expression POOL #while
   | '{' (expression ';')+ '}' #block

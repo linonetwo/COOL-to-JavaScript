@@ -42,8 +42,8 @@ COOLVisitor.prototype.visitMethod = function(ctx) {
 };
 
 
-// Visit a parse tree produced by COOLParser#classProperty.
-COOLVisitor.prototype.visitClassProperty = function(ctx) {
+// Visit a parse tree produced by COOLParser#property.
+COOLVisitor.prototype.visitProperty = function(ctx) {
   return this.visitChildren(ctx);
 };
 
@@ -108,12 +108,6 @@ COOLVisitor.prototype.visitLessThan = function(ctx) {
 };
 
 
-// Visit a parse tree produced by COOLParser#superClassMethod.
-COOLVisitor.prototype.visitSuperClassMethod = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
 // Visit a parse tree produced by COOLParser#block.
 COOLVisitor.prototype.visitBlock = function(ctx) {
   return this.visitChildren(ctx);
@@ -140,6 +134,12 @@ COOLVisitor.prototype.visitIf = function(ctx) {
 
 // Visit a parse tree produced by COOLParser#case.
 COOLVisitor.prototype.visitCase = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
+// Visit a parse tree produced by COOLParser#ownMethodCall.
+COOLVisitor.prototype.visitOwnMethodCall = function(ctx) {
   return this.visitChildren(ctx);
 };
 
@@ -186,12 +186,6 @@ COOLVisitor.prototype.visitEqual = function(ctx) {
 };
 
 
-// Visit a parse tree produced by COOLParser#ownMethod.
-COOLVisitor.prototype.visitOwnMethod = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
 // Visit a parse tree produced by COOLParser#true.
 COOLVisitor.prototype.visitTrue = function(ctx) {
   return this.visitChildren(ctx);
@@ -200,6 +194,12 @@ COOLVisitor.prototype.visitTrue = function(ctx) {
 
 // Visit a parse tree produced by COOLParser#lessEqual.
 COOLVisitor.prototype.visitLessEqual = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
+// Visit a parse tree produced by COOLParser#methodCall.
+COOLVisitor.prototype.visitMethodCall = function(ctx) {
   return this.visitChildren(ctx);
 };
 

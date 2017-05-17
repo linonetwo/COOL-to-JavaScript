@@ -192,17 +192,17 @@ export default class JSASTBuilder extends ASTStack {
     this.push(t.conditionalExpression(test, this.iief(consequent, 'Ifconsequent'), this.iief(alternate, 'Ifalternate')));
   }
 
-  OwnMethod(functionName: string, argumentLength: number): void {
+  OwnMethodCall(functionName: string, argumentLength: number): void {
     // Invoke build-in functions
     const functionArguments = [...this.pop(argumentLength)];
-    const buildFunctionCall = template(`
+    const buildOwnMethodCall = template(`
       this.FUNCTION()
     `);
-    const ownMethod = buildOwnMethod({
+    const ownMethodCall = buildOwnMethodCall({
       FUNCTION: t.identifier(functionName)
     }).expression;
-    ownMethod.arguments = functionArguments;
-    this.push(ownMethod);
+    ownMethodCall.arguments = functionArguments;
+    this.push(ownMethodCall);
   }
 
   Assignment(variableName: string): void {

@@ -56,12 +56,12 @@ COOLListener.prototype.exitMethod = function(ctx) {
 };
 
 
-// Enter a parse tree produced by COOLParser#classProperty.
-COOLListener.prototype.enterClassProperty = function(ctx) {
+// Enter a parse tree produced by COOLParser#property.
+COOLListener.prototype.enterProperty = function(ctx) {
 };
 
-// Exit a parse tree produced by COOLParser#classProperty.
-COOLListener.prototype.exitClassProperty = function(ctx) {
+// Exit a parse tree produced by COOLParser#property.
+COOLListener.prototype.exitProperty = function(ctx) {
 };
 
 
@@ -155,15 +155,6 @@ COOLListener.prototype.exitLessThan = function(ctx) {
 };
 
 
-// Enter a parse tree produced by COOLParser#superClassMethod.
-COOLListener.prototype.enterSuperClassMethod = function(ctx) {
-};
-
-// Exit a parse tree produced by COOLParser#superClassMethod.
-COOLListener.prototype.exitSuperClassMethod = function(ctx) {
-};
-
-
 // Enter a parse tree produced by COOLParser#block.
 COOLListener.prototype.enterBlock = function(ctx) {
 };
@@ -206,6 +197,15 @@ COOLListener.prototype.enterCase = function(ctx) {
 
 // Exit a parse tree produced by COOLParser#case.
 COOLListener.prototype.exitCase = function(ctx) {
+};
+
+
+// Enter a parse tree produced by COOLParser#ownMethodCall.
+COOLListener.prototype.enterOwnMethodCall = function(ctx) {
+};
+
+// Exit a parse tree produced by COOLParser#ownMethodCall.
+COOLListener.prototype.exitOwnMethodCall = function(ctx) {
 };
 
 
@@ -272,15 +272,6 @@ COOLListener.prototype.exitEqual = function(ctx) {
 };
 
 
-// Enter a parse tree produced by COOLParser#ownMethod.
-COOLListener.prototype.enterOwnMethod = function(ctx) {
-};
-
-// Exit a parse tree produced by COOLParser#ownMethod.
-COOLListener.prototype.exitOwnMethod = function(ctx) {
-};
-
-
 // Enter a parse tree produced by COOLParser#true.
 COOLListener.prototype.enterTrue = function(ctx) {
 };
@@ -296,6 +287,15 @@ COOLListener.prototype.enterLessEqual = function(ctx) {
 
 // Exit a parse tree produced by COOLParser#lessEqual.
 COOLListener.prototype.exitLessEqual = function(ctx) {
+};
+
+
+// Enter a parse tree produced by COOLParser#methodCall.
+COOLListener.prototype.enterMethodCall = function(ctx) {
+};
+
+// Exit a parse tree produced by COOLParser#methodCall.
+COOLListener.prototype.exitMethodCall = function(ctx) {
 };
 
 
