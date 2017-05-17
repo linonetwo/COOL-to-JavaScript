@@ -71,8 +71,44 @@ export default class GenerateJSListener extends COOLListener {
   }
 
   @override
+  exitNegative(context: COOLParser.NegativeContext): void {
+    // This is a non-terminal, we should pop it's sub-AST from stack
+    this.jsAST.Negative();
+  }
+
+  @override
+  exitDivision(context: COOLParser.DivisionContext): void {
+    // This is a T diverse non-terminal, we should pop it's two sub-ASTs from stack
+    this.jsAST.Division();
+  }
+
+  @override
+  exitMultiply(context: COOLParser.MultiplyContext): void {
+    // This is a T diverse non-terminal, we should pop it's two sub-ASTs from stack
+    this.jsAST.Multiply();
+  }
+
+  @override
+  exitMinus(context: COOLParser.MinusContext): void {
+    // This is a T diverse non-terminal, we should pop it's two sub-ASTs from stack
+    this.jsAST.Minus();
+  }
+
+  @override
+  exitAdd(context: COOLParser.AddContext): void {
+    // This is a T diverse non-terminal, we should pop it's two sub-ASTs from stack
+    this.jsAST.Add();
+  }
+
+  @override
+  exitIsvoid(context: COOLParser.IsvoidContext): void {
+    // This is a non-terminal, we should pop it's sub-AST from stack
+    this.jsAST.Isvoid();
+  }
+
+  @override
   exitNew(context: COOLParser.NewContext): void {
-    // COOL have no class constructor, so don't need to pass parameter on class new
+    // This is a non-terminal, we should pop it's sub-AST from stack
     this.jsAST.NewClass(context.TYPEID().symbol.text);
   }
 
@@ -176,7 +212,7 @@ export default class GenerateJSListener extends COOLListener {
   // }
 
   generateJS(): string {
-    console.log(this.jsAST.codes)
+    console.log(this.jsAST.codes);
     return '';
     // const output: GeneratedOutput = generate(this.jsAST.pop(1), { quotes: 'single' });
     // return output.code;

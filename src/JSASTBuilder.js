@@ -29,6 +29,25 @@ export class ASTStack {
     return this.jsASTStack.pop();
   }
 
+
+  // templateString should contains an 'EXPRESSION'
+  unaryExpression(templateString: string): JSASTNode {
+    const expression = this.pop(1);
+    const buildUnitaryExpression = template(templateString);
+    const newUnitaryExpressionStatement = buildUnitaryExpression({ EXPRESSION: expression });
+    const newUnitaryExpression = newUnitaryExpressionStatement.expression;
+    return newUnitaryExpression;
+  }
+
+  // @templateString templateString should contains a 'LEFT', a 'RIGHT'
+  binaryExpression(templateString: string): JSASTNode {
+    const [ left, right ] = this.pop(2);
+    const buildBinaryExpression = template(templateString);
+    const newBinaryExpressionStatement = buildBinaryExpression({ LEFT: left, RIGHT: right });
+    const newBinaryExpression = newBinaryExpressionStatement.expression;
+    return newBinaryExpression;
+  }
+
   // For debug usage, return generated codes for ASTs
   get codes(): Array<string> {
     return this.jsASTStack
@@ -67,23 +86,63 @@ export default class JSASTBuilder extends ASTStack {
   }
 
   BoolNot(): void {
-    const expression = this.pop(1);
-    const buildBoolNot = template(`
+    this.push(this.unaryExpression(`
       !EXPRESSION
-    `);
-    const newBoolNotStatement = buildBoolNot({ EXPRESSION: expression });
-    const newBoolNot = newBoolNotStatement.expression;
-    this.push(newBoolNot);
+    `));
   }
 
   Equal(): void {
-    const [ left, right ] = this.pop(2);
-    const buildBoolNot = template(`
+    this.push(this.binaryExpression(`
       LEFT === RIGHT
-    `);
-    const newBoolNotStatement = buildBoolNot({ LEFT: left, RIGHT: right });
-    const newBoolNot = newBoolNotStatement.expression;
-    this.push(newBoolNot);
+    `));
+  }
+
+  LessEqual(): void {
+    this.push(this.binaryExpression(`
+      LEFT <= RIGHT
+    `));
+  }
+
+  LessThan(): void {
+    this.push(this.binaryExpression(`
+      LEFT < RIGHT
+    `));
+  }
+
+  Negative(): void {
+    this.push(this.unaryExpression(`
+      -EXPRESSION
+    `));
+  }
+
+  Division(): void {
+    this.push(this.binaryExpression(`
+      Math.round( LEFT / RIGHT )
+    `));
+  }
+
+  Multiply(): void {
+    this.push(this.binaryExpression(`
+      LEFT * RIGHT
+    `));
+  }
+
+  Minus(): void {
+    this.push(this.binaryExpression(`
+      LEFT - RIGHT
+    `));
+  }
+
+  Add(): void {
+    this.push(this.binaryExpression(`
+      LEFT + RIGHT
+    `));
+  }
+
+  Isvoid(): void {
+    this.push(this.unaryExpression(`
+      !!EXPRESSION
+    `));
   }
 
   NewClass(className: string): void {
