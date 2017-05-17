@@ -16,7 +16,7 @@ function visitCOOL(ast) {
   const generateJSListener = new GenerateJSListener();
   const walker = new ParseTreeWalker();
   walker.walk(generateJSListener, ast);
-  console.log(generateJSListener.getJS());
+  console.log(generateJSListener.generateJS());
 }
 
 readFile().then(parseCOOL).then(visitCOOL).catch(error => console.error(error));
