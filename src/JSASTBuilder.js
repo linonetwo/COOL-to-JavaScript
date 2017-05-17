@@ -6,7 +6,7 @@ import generate from 'babel-generator';
 
 type JSASTNode = {
   type: string;
-  value: string | number | void;
+  value: string | number | boolean | void;
 };
 
 export class ASTStack {
@@ -39,13 +39,41 @@ export class ASTStack {
     return newUnitaryExpression;
   }
 
-  // @templateString templateString should contains a 'LEFT', a 'RIGHT'
+
+  // templateString should contains a 'LEFT', a 'RIGHT'
   binaryExpression(templateString: string): JSASTNode {
     const [ left, right ] = this.pop(2);
     const buildBinaryExpression = template(templateString);
     const newBinaryExpressionStatement = buildBinaryExpression({ LEFT: left, RIGHT: right });
     const newBinaryExpression = newBinaryExpressionStatement.expression;
     return newBinaryExpression;
+  }
+
+  iief(ast: any, functionName: string): JSASTNode {
+    // 1. if it is a code block, which in JS is a IIEF
+    if (t.isCallExpression(ast)) {
+      const buildIIEF = template(`
+        (function ${functionName}() {return null})()
+      `);
+      const IIEF = buildIIEF({
+      }).expression;
+      // set return value
+      IIEF.callee.body.body[0].argument = ast;
+      return IIEF;
+    } else
+    // 2. if it is a single assignment, how can a humen do this?
+    if (t.isVariableDeclaration(ast)) {
+      const buildIIEF = template(`
+        (function ${functionName}() {STATEMENT})()
+      `);
+      const IIEF = buildIIEF({
+        STATEMENT: ast
+      }).expression;
+      return IIEF;
+    } else {
+    // 3. it is a expression
+      return ast;
+    }
   }
 
   // For debug usage, return generated codes for ASTs
@@ -156,6 +184,12 @@ export default class JSASTBuilder extends ASTStack {
   }
 
   Case() {
+  }
+
+  If(): void {
+    const [ test, consequent, alternate ] = this.pop(3);
+
+    this.push(t.conditionalExpression(test, this.iief(consequent, 'consequent'), this.iief(alternate, 'alternate')));
   }
 
   FunctionCall(functionName: string, argumentLength: number): void {

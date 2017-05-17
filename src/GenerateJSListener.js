@@ -120,6 +120,12 @@ export default class GenerateJSListener extends COOLListener {
   }
 
   @override
+  exitIf(context: COOLParser.IfContext): void {
+    // This is a 3 diverse non-terminal, we should pop it's three sub-ASTs from stack
+    this.jsAST.If();
+  }
+
+  @override
   exitFunctionCall(context: COOLParser.FunctionCallContext): void {
     // shorthand for self.<id>(<expr>, ...)
     const functionName = context.OBJECTID().symbol.text;
