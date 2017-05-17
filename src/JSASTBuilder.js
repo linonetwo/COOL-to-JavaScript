@@ -158,13 +158,28 @@ export default class JSASTBuilder extends ASTStack {
   Case() {
   }
 
+  FunctionCall(functionName: string, argumentLength: number): void {
+    // Invoke build-in functions
+    const functionArguments = [...this.pop(argumentLength)];
+    const buildFunctionCall = template(`
+      this.FUNCTION()
+    `);
+    const functionCall = buildFunctionCall({
+      FUNCTION: t.identifier(functionName)
+    }).expression;
+    functionCall.arguments = functionArguments;
+    this.push(functionCall);
+  }
+
   Assignment(variableName: string): void {
     const expression = this.pop(1);
     const buildAssignment = template(`
       let VARIABLE = EXPRESSION
     `);
-    this.push(buildAssignment({
-      VARIABLE: t.identifier(variableName), EXPRESSION: expression
-    }));
+    this.push(
+      buildAssignment({
+        VARIABLE: t.identifier(variableName), EXPRESSION: expression
+      })
+    );
   }
 }
