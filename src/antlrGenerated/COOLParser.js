@@ -181,7 +181,7 @@ var symbolicNames = [ null, null, null, null, null, null, null, null, null,
                       "POOL", "THEN", "WHILE", "CASE", "ESAC", "NEW", "OF", 
                       "NOT", "TRUE", "STRING", "INT", "TYPEID", "OBJECTID", 
                       "ASSIGNMENT", "CASE_ARROW", "ADD", "MINUS", "MULTIPLY", 
-                      "DIVISION", "LESS_THAN", "LESS_EQUAL", "EQUAL", "INTEGER_COMPLEMENT" ];
+                      "DIVISION", "LESS_THAN", "LESS_EQUAL", "EQUAL", "INTEGER_NEGATIVE" ];
 
 var ruleNames =  [ "program", "programBlocks", "classDefine", "feature", 
                    "formal", "expression" ];
@@ -251,7 +251,7 @@ COOLParser.DIVISION = 43;
 COOLParser.LESS_THAN = 44;
 COOLParser.LESS_EQUAL = 45;
 COOLParser.EQUAL = 46;
-COOLParser.INTEGER_COMPLEMENT = 47;
+COOLParser.INTEGER_NEGATIVE = 47;
 
 COOLParser.RULE_program = 0;
 COOLParser.RULE_programBlocks = 1;
@@ -990,45 +990,6 @@ LetInContext.prototype.accept = function(visitor) {
 };
 
 
-function NewTypeContext(parser, ctx) {
-	ExpressionContext.call(this, parser);
-    ExpressionContext.prototype.copyFrom.call(this, ctx);
-    return this;
-}
-
-NewTypeContext.prototype = Object.create(ExpressionContext.prototype);
-NewTypeContext.prototype.constructor = NewTypeContext;
-
-COOLParser.NewTypeContext = NewTypeContext;
-
-NewTypeContext.prototype.NEW = function() {
-    return this.getToken(COOLParser.NEW, 0);
-};
-
-NewTypeContext.prototype.TYPEID = function() {
-    return this.getToken(COOLParser.TYPEID, 0);
-};
-NewTypeContext.prototype.enterRule = function(listener) {
-    if(listener instanceof COOLListener ) {
-        listener.enterNewType(this);
-	}
-};
-
-NewTypeContext.prototype.exitRule = function(listener) {
-    if(listener instanceof COOLListener ) {
-        listener.exitNewType(this);
-	}
-};
-
-NewTypeContext.prototype.accept = function(visitor) {
-    if ( visitor instanceof COOLVisitor ) {
-        return visitor.visitNewType(this);
-    } else {
-        return visitor.visitChildren(this);
-    }
-};
-
-
 function MinusContext(parser, ctx) {
 	ExpressionContext.call(this, parser);
     ExpressionContext.prototype.copyFrom.call(this, ctx);
@@ -1243,6 +1204,45 @@ DivisionContext.prototype.exitRule = function(listener) {
 DivisionContext.prototype.accept = function(visitor) {
     if ( visitor instanceof COOLVisitor ) {
         return visitor.visitDivision(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+function NegativeContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+NegativeContext.prototype = Object.create(ExpressionContext.prototype);
+NegativeContext.prototype.constructor = NegativeContext;
+
+COOLParser.NegativeContext = NegativeContext;
+
+NegativeContext.prototype.INTEGER_NEGATIVE = function() {
+    return this.getToken(COOLParser.INTEGER_NEGATIVE, 0);
+};
+
+NegativeContext.prototype.expression = function() {
+    return this.getTypedRuleContext(ExpressionContext,0);
+};
+NegativeContext.prototype.enterRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.enterNegative(this);
+	}
+};
+
+NegativeContext.prototype.exitRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.exitNegative(this);
+	}
+};
+
+NegativeContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitNegative(this);
     } else {
         return visitor.visitChildren(this);
     }
@@ -1659,6 +1659,45 @@ AddContext.prototype.accept = function(visitor) {
 };
 
 
+function NewContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+NewContext.prototype = Object.create(ExpressionContext.prototype);
+NewContext.prototype.constructor = NewContext;
+
+COOLParser.NewContext = NewContext;
+
+NewContext.prototype.NEW = function() {
+    return this.getToken(COOLParser.NEW, 0);
+};
+
+NewContext.prototype.TYPEID = function() {
+    return this.getToken(COOLParser.TYPEID, 0);
+};
+NewContext.prototype.enterRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.enterNew(this);
+	}
+};
+
+NewContext.prototype.exitRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.exitNew(this);
+	}
+};
+
+NewContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitNew(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
 function ParenthesesContext(parser, ctx) {
 	ExpressionContext.call(this, parser);
     ExpressionContext.prototype.copyFrom.call(this, ctx);
@@ -2022,45 +2061,6 @@ LessEqualContext.prototype.accept = function(visitor) {
 };
 
 
-function IntegerComplementContext(parser, ctx) {
-	ExpressionContext.call(this, parser);
-    ExpressionContext.prototype.copyFrom.call(this, ctx);
-    return this;
-}
-
-IntegerComplementContext.prototype = Object.create(ExpressionContext.prototype);
-IntegerComplementContext.prototype.constructor = IntegerComplementContext;
-
-COOLParser.IntegerComplementContext = IntegerComplementContext;
-
-IntegerComplementContext.prototype.INTEGER_COMPLEMENT = function() {
-    return this.getToken(COOLParser.INTEGER_COMPLEMENT, 0);
-};
-
-IntegerComplementContext.prototype.expression = function() {
-    return this.getTypedRuleContext(ExpressionContext,0);
-};
-IntegerComplementContext.prototype.enterRule = function(listener) {
-    if(listener instanceof COOLListener ) {
-        listener.enterIntegerComplement(this);
-	}
-};
-
-IntegerComplementContext.prototype.exitRule = function(listener) {
-    if(listener instanceof COOLListener ) {
-        listener.exitIntegerComplement(this);
-	}
-};
-
-IntegerComplementContext.prototype.accept = function(visitor) {
-    if ( visitor instanceof COOLVisitor ) {
-        return visitor.visitIntegerComplement(this);
-    } else {
-        return visitor.visitChildren(this);
-    }
-};
-
-
 
 COOLParser.prototype.expression = function(_p) {
 	if(_p===undefined) {
@@ -2103,7 +2103,7 @@ COOLParser.prototype.expression = function(_p) {
             this.state = 89;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
-            while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << COOLParser.T__1) | (1 << COOLParser.T__3) | (1 << COOLParser.FALSE) | (1 << COOLParser.IF) | (1 << COOLParser.ISVOID) | (1 << COOLParser.LET) | (1 << COOLParser.WHILE) | (1 << COOLParser.CASE) | (1 << COOLParser.NEW))) !== 0) || ((((_la - 32)) & ~0x1f) == 0 && ((1 << (_la - 32)) & ((1 << (COOLParser.NOT - 32)) | (1 << (COOLParser.TRUE - 32)) | (1 << (COOLParser.STRING - 32)) | (1 << (COOLParser.INT - 32)) | (1 << (COOLParser.OBJECTID - 32)) | (1 << (COOLParser.INTEGER_COMPLEMENT - 32)))) !== 0)) {
+            while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << COOLParser.T__1) | (1 << COOLParser.T__3) | (1 << COOLParser.FALSE) | (1 << COOLParser.IF) | (1 << COOLParser.ISVOID) | (1 << COOLParser.LET) | (1 << COOLParser.WHILE) | (1 << COOLParser.CASE) | (1 << COOLParser.NEW))) !== 0) || ((((_la - 32)) & ~0x1f) == 0 && ((1 << (_la - 32)) & ((1 << (COOLParser.NOT - 32)) | (1 << (COOLParser.TRUE - 32)) | (1 << (COOLParser.STRING - 32)) | (1 << (COOLParser.INT - 32)) | (1 << (COOLParser.OBJECTID - 32)) | (1 << (COOLParser.INTEGER_NEGATIVE - 32)))) !== 0)) {
                 this.state = 79;
                 this.expression(0);
                 this.state = 84;
@@ -2179,7 +2179,7 @@ COOLParser.prototype.expression = function(_p) {
                 this.state = 113; 
                 this._errHandler.sync(this);
                 _la = this._input.LA(1);
-            } while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << COOLParser.T__1) | (1 << COOLParser.T__3) | (1 << COOLParser.FALSE) | (1 << COOLParser.IF) | (1 << COOLParser.ISVOID) | (1 << COOLParser.LET) | (1 << COOLParser.WHILE) | (1 << COOLParser.CASE) | (1 << COOLParser.NEW))) !== 0) || ((((_la - 32)) & ~0x1f) == 0 && ((1 << (_la - 32)) & ((1 << (COOLParser.NOT - 32)) | (1 << (COOLParser.TRUE - 32)) | (1 << (COOLParser.STRING - 32)) | (1 << (COOLParser.INT - 32)) | (1 << (COOLParser.OBJECTID - 32)) | (1 << (COOLParser.INTEGER_COMPLEMENT - 32)))) !== 0));
+            } while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << COOLParser.T__1) | (1 << COOLParser.T__3) | (1 << COOLParser.FALSE) | (1 << COOLParser.IF) | (1 << COOLParser.ISVOID) | (1 << COOLParser.LET) | (1 << COOLParser.WHILE) | (1 << COOLParser.CASE) | (1 << COOLParser.NEW))) !== 0) || ((((_la - 32)) & ~0x1f) == 0 && ((1 << (_la - 32)) & ((1 << (COOLParser.NOT - 32)) | (1 << (COOLParser.TRUE - 32)) | (1 << (COOLParser.STRING - 32)) | (1 << (COOLParser.INT - 32)) | (1 << (COOLParser.OBJECTID - 32)) | (1 << (COOLParser.INTEGER_NEGATIVE - 32)))) !== 0));
             this.state = 115;
             this.match(COOLParser.T__2);
             break;
@@ -2273,7 +2273,7 @@ COOLParser.prototype.expression = function(_p) {
             break;
 
         case 8:
-            localctx = new NewTypeContext(this, localctx);
+            localctx = new NewContext(this, localctx);
             this._ctx = localctx;
             _prevctx = localctx;
             this.state = 156;
@@ -2293,11 +2293,11 @@ COOLParser.prototype.expression = function(_p) {
             break;
 
         case 10:
-            localctx = new IntegerComplementContext(this, localctx);
+            localctx = new NegativeContext(this, localctx);
             this._ctx = localctx;
             _prevctx = localctx;
             this.state = 160;
-            this.match(COOLParser.INTEGER_COMPLEMENT);
+            this.match(COOLParser.INTEGER_NEGATIVE);
             this.state = 161;
             this.expression(11);
             break;
@@ -2496,7 +2496,7 @@ COOLParser.prototype.expression = function(_p) {
                     this.state = 214;
                     this._errHandler.sync(this);
                     _la = this._input.LA(1);
-                    while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << COOLParser.T__1) | (1 << COOLParser.T__3) | (1 << COOLParser.FALSE) | (1 << COOLParser.IF) | (1 << COOLParser.ISVOID) | (1 << COOLParser.LET) | (1 << COOLParser.WHILE) | (1 << COOLParser.CASE) | (1 << COOLParser.NEW))) !== 0) || ((((_la - 32)) & ~0x1f) == 0 && ((1 << (_la - 32)) & ((1 << (COOLParser.NOT - 32)) | (1 << (COOLParser.TRUE - 32)) | (1 << (COOLParser.STRING - 32)) | (1 << (COOLParser.INT - 32)) | (1 << (COOLParser.OBJECTID - 32)) | (1 << (COOLParser.INTEGER_COMPLEMENT - 32)))) !== 0)) {
+                    while((((_la) & ~0x1f) == 0 && ((1 << _la) & ((1 << COOLParser.T__1) | (1 << COOLParser.T__3) | (1 << COOLParser.FALSE) | (1 << COOLParser.IF) | (1 << COOLParser.ISVOID) | (1 << COOLParser.LET) | (1 << COOLParser.WHILE) | (1 << COOLParser.CASE) | (1 << COOLParser.NEW))) !== 0) || ((((_la - 32)) & ~0x1f) == 0 && ((1 << (_la - 32)) & ((1 << (COOLParser.NOT - 32)) | (1 << (COOLParser.TRUE - 32)) | (1 << (COOLParser.STRING - 32)) | (1 << (COOLParser.INT - 32)) | (1 << (COOLParser.OBJECTID - 32)) | (1 << (COOLParser.INTEGER_NEGATIVE - 32)))) !== 0)) {
                         this.state = 204;
                         this.expression(0);
                         this.state = 209;

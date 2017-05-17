@@ -60,12 +60,6 @@ COOLVisitor.prototype.visitLetIn = function(ctx) {
 };
 
 
-// Visit a parse tree produced by COOLParser#newType.
-COOLVisitor.prototype.visitNewType = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
 // Visit a parse tree produced by COOLParser#minus.
 COOLVisitor.prototype.visitMinus = function(ctx) {
   return this.visitChildren(ctx);
@@ -92,6 +86,12 @@ COOLVisitor.prototype.visitWhild = function(ctx) {
 
 // Visit a parse tree produced by COOLParser#division.
 COOLVisitor.prototype.visitDivision = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
+// Visit a parse tree produced by COOLParser#negative.
+COOLVisitor.prototype.visitNegative = function(ctx) {
   return this.visitChildren(ctx);
 };
 
@@ -140,6 +140,12 @@ COOLVisitor.prototype.visitCase = function(ctx) {
 
 // Visit a parse tree produced by COOLParser#add.
 COOLVisitor.prototype.visitAdd = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
+// Visit a parse tree produced by COOLParser#new.
+COOLVisitor.prototype.visitNew = function(ctx) {
   return this.visitChildren(ctx);
 };
 
@@ -194,12 +200,6 @@ COOLVisitor.prototype.visitTrue = function(ctx) {
 
 // Visit a parse tree produced by COOLParser#lessEqual.
 COOLVisitor.prototype.visitLessEqual = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by COOLParser#integerComplement.
-COOLVisitor.prototype.visitIntegerComplement = function(ctx) {
   return this.visitChildren(ctx);
 };
 

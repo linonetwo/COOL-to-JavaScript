@@ -59,7 +59,19 @@ export default class GenerateJSListener extends COOLListener {
   }
 
   @override
-  exitNewType(context: COOLParser.NewTypeContext): void {
+  exitLessEqual(context: COOLParser.LessEqualContext): void {
+    // This is a T diverse non-terminal, we should pop it's two sub-ASTs from stack
+    this.jsAST.LessEqual();
+  }
+
+  @override
+  exitLessThan(context: COOLParser.LessThanContext): void {
+    // This is a T diverse non-terminal, we should pop it's two sub-ASTs from stack
+    this.jsAST.LessThan();
+  }
+
+  @override
+  exitNew(context: COOLParser.NewContext): void {
     // COOL have no class constructor, so don't need to pass parameter on class new
     this.jsAST.NewClass(context.TYPEID().symbol.text);
   }

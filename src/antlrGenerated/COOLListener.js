@@ -83,15 +83,6 @@ COOLListener.prototype.exitLetIn = function(ctx) {
 };
 
 
-// Enter a parse tree produced by COOLParser#newType.
-COOLListener.prototype.enterNewType = function(ctx) {
-};
-
-// Exit a parse tree produced by COOLParser#newType.
-COOLListener.prototype.exitNewType = function(ctx) {
-};
-
-
 // Enter a parse tree produced by COOLParser#minus.
 COOLListener.prototype.enterMinus = function(ctx) {
 };
@@ -134,6 +125,15 @@ COOLListener.prototype.enterDivision = function(ctx) {
 
 // Exit a parse tree produced by COOLParser#division.
 COOLListener.prototype.exitDivision = function(ctx) {
+};
+
+
+// Enter a parse tree produced by COOLParser#negative.
+COOLListener.prototype.enterNegative = function(ctx) {
+};
+
+// Exit a parse tree produced by COOLParser#negative.
+COOLListener.prototype.exitNegative = function(ctx) {
 };
 
 
@@ -206,6 +206,15 @@ COOLListener.prototype.enterAdd = function(ctx) {
 
 // Exit a parse tree produced by COOLParser#add.
 COOLListener.prototype.exitAdd = function(ctx) {
+};
+
+
+// Enter a parse tree produced by COOLParser#new.
+COOLListener.prototype.enterNew = function(ctx) {
+};
+
+// Exit a parse tree produced by COOLParser#new.
+COOLListener.prototype.exitNew = function(ctx) {
 };
 
 
@@ -287,15 +296,6 @@ COOLListener.prototype.enterLessEqual = function(ctx) {
 
 // Exit a parse tree produced by COOLParser#lessEqual.
 COOLListener.prototype.exitLessEqual = function(ctx) {
-};
-
-
-// Enter a parse tree produced by COOLParser#integerComplement.
-COOLListener.prototype.enterIntegerComplement = function(ctx) {
-};
-
-// Exit a parse tree produced by COOLParser#integerComplement.
-COOLListener.prototype.exitIntegerComplement = function(ctx) {
 };
 
 

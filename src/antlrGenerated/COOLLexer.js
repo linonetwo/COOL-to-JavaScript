@@ -298,7 +298,7 @@ COOLLexer.DIVISION = 43;
 COOLLexer.LESS_THAN = 44;
 COOLLexer.LESS_EQUAL = 45;
 COOLLexer.EQUAL = 46;
-COOLLexer.INTEGER_COMPLEMENT = 47;
+COOLLexer.INTEGER_NEGATIVE = 47;
 
 COOLLexer.prototype.channelNames = [ "DEFAULT_TOKEN_CHANNEL", "HIDDEN" ];
 
@@ -325,7 +325,7 @@ COOLLexer.prototype.symbolicNames = [ null, null, null, null, null, null,
                                       "OBJECTID", "ASSIGNMENT", "CASE_ARROW", 
                                       "ADD", "MINUS", "MULTIPLY", "DIVISION", 
                                       "LESS_THAN", "LESS_EQUAL", "EQUAL", 
-                                      "INTEGER_COMPLEMENT" ];
+                                      "INTEGER_NEGATIVE" ];
 
 COOLLexer.prototype.ruleNames = [ "T__0", "T__1", "T__2", "T__3", "T__4", 
                                   "T__5", "T__6", "T__7", "T__8", "WHITESPACE", 
@@ -337,7 +337,7 @@ COOLLexer.prototype.ruleNames = [ "T__0", "T__1", "T__2", "T__3", "T__4",
                                   "STRING", "INT", "TYPEID", "OBJECTID", 
                                   "ASSIGNMENT", "CASE_ARROW", "ADD", "MINUS", 
                                   "MULTIPLY", "DIVISION", "LESS_THAN", "LESS_EQUAL", 
-                                  "EQUAL", "INTEGER_COMPLEMENT", "A", "C", 
+                                  "EQUAL", "INTEGER_NEGATIVE", "A", "C", 
                                   "D", "E", "F", "H", "I", "L", "N", "O", 
                                   "P", "R", "S", "T", "U", "V", "W", "ESC", 
                                   "UNICODE", "HEX" ];
