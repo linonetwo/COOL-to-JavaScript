@@ -1384,6 +1384,48 @@ SuperClassMethodContext.prototype.accept = function(visitor) {
 };
 
 
+function BlockContext(parser, ctx) {
+	ExpressionContext.call(this, parser);
+    ExpressionContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+BlockContext.prototype = Object.create(ExpressionContext.prototype);
+BlockContext.prototype.constructor = BlockContext;
+
+COOLParser.BlockContext = BlockContext;
+
+BlockContext.prototype.expression = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(ExpressionContext);
+    } else {
+        return this.getTypedRuleContext(ExpressionContext,i);
+    }
+};
+BlockContext.prototype.enterRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.enterBlock(this);
+	}
+};
+
+BlockContext.prototype.exitRule = function(listener) {
+    if(listener instanceof COOLListener ) {
+        listener.exitBlock(this);
+	}
+};
+
+BlockContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof COOLVisitor ) {
+        return visitor.visitBlock(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
 function IdContext(parser, ctx) {
 	ExpressionContext.call(this, parser);
     ExpressionContext.prototype.copyFrom.call(this, ctx);
@@ -1892,48 +1934,6 @@ EqualContext.prototype.accept = function(visitor) {
 };
 
 
-function MultipleExpressionContext(parser, ctx) {
-	ExpressionContext.call(this, parser);
-    ExpressionContext.prototype.copyFrom.call(this, ctx);
-    return this;
-}
-
-MultipleExpressionContext.prototype = Object.create(ExpressionContext.prototype);
-MultipleExpressionContext.prototype.constructor = MultipleExpressionContext;
-
-COOLParser.MultipleExpressionContext = MultipleExpressionContext;
-
-MultipleExpressionContext.prototype.expression = function(i) {
-    if(i===undefined) {
-        i = null;
-    }
-    if(i===null) {
-        return this.getTypedRuleContexts(ExpressionContext);
-    } else {
-        return this.getTypedRuleContext(ExpressionContext,i);
-    }
-};
-MultipleExpressionContext.prototype.enterRule = function(listener) {
-    if(listener instanceof COOLListener ) {
-        listener.enterMultipleExpression(this);
-	}
-};
-
-MultipleExpressionContext.prototype.exitRule = function(listener) {
-    if(listener instanceof COOLListener ) {
-        listener.exitMultipleExpression(this);
-	}
-};
-
-MultipleExpressionContext.prototype.accept = function(visitor) {
-    if ( visitor instanceof COOLVisitor ) {
-        return visitor.visitMultipleExpression(this);
-    } else {
-        return visitor.visitChildren(this);
-    }
-};
-
-
 function FunctionCallContext(parser, ctx) {
 	ExpressionContext.call(this, parser);
     ExpressionContext.prototype.copyFrom.call(this, ctx);
@@ -2163,7 +2163,7 @@ COOLParser.prototype.expression = function(_p) {
             break;
 
         case 5:
-            localctx = new MultipleExpressionContext(this, localctx);
+            localctx = new BlockContext(this, localctx);
             this._ctx = localctx;
             _prevctx = localctx;
             this.state = 107;

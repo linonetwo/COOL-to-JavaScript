@@ -164,6 +164,15 @@ COOLListener.prototype.exitSuperClassMethod = function(ctx) {
 };
 
 
+// Enter a parse tree produced by COOLParser#block.
+COOLListener.prototype.enterBlock = function(ctx) {
+};
+
+// Exit a parse tree produced by COOLParser#block.
+COOLListener.prototype.exitBlock = function(ctx) {
+};
+
+
 // Enter a parse tree produced by COOLParser#id.
 COOLListener.prototype.enterId = function(ctx) {
 };
@@ -260,15 +269,6 @@ COOLListener.prototype.enterEqual = function(ctx) {
 
 // Exit a parse tree produced by COOLParser#equal.
 COOLListener.prototype.exitEqual = function(ctx) {
-};
-
-
-// Enter a parse tree produced by COOLParser#multipleExpression.
-COOLListener.prototype.enterMultipleExpression = function(ctx) {
-};
-
-// Exit a parse tree produced by COOLParser#multipleExpression.
-COOLListener.prototype.exitMultipleExpression = function(ctx) {
 };
 
 

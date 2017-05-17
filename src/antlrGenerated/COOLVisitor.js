@@ -114,6 +114,12 @@ COOLVisitor.prototype.visitSuperClassMethod = function(ctx) {
 };
 
 
+// Visit a parse tree produced by COOLParser#block.
+COOLVisitor.prototype.visitBlock = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
 // Visit a parse tree produced by COOLParser#id.
 COOLVisitor.prototype.visitId = function(ctx) {
   return this.visitChildren(ctx);
@@ -176,12 +182,6 @@ COOLVisitor.prototype.visitInt = function(ctx) {
 
 // Visit a parse tree produced by COOLParser#equal.
 COOLVisitor.prototype.visitEqual = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by COOLParser#multipleExpression.
-COOLVisitor.prototype.visitMultipleExpression = function(ctx) {
   return this.visitChildren(ctx);
 };
 
