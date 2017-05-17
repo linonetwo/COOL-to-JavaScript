@@ -21,7 +21,7 @@ export class ASTStack {
     if (this.jsASTStack.length < quentity) {
       throw new Error(`Poping too many sub-AST from JSASTStack, poping ${quentity} but stack with length ${this.jsASTStack.length} is:`, this.jsASTStack);
     }
-    if (quentity > 1) {
+    if (quentity !== 1) {
       const nodes = takeRight(this.jsASTStack, quentity);
       this.jsASTStack = dropRight(this.jsASTStack, quentity);
       return nodes;
