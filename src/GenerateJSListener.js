@@ -120,6 +120,19 @@ export default class GenerateJSListener extends COOLListener {
   }
 
   @override
+  exitBlock(context: COOLParser.BlockContext): void {
+    // This is a multi-diverse non-terminal, we should pop it's several sub-ASTs from stack
+    const bodyLength = context.expression().length;
+    this.jsAST.Block(bodyLength);
+  }
+
+  @override
+  exitWhile(context: COOLParser.WhileContext): void {
+    // This is a T diverse non-terminal, we should pop it's two sub-ASTs from stack
+    this.jsAST.While();
+  }
+
+  @override
   exitIf(context: COOLParser.IfContext): void {
     // This is a 3 diverse non-terminal, we should pop it's three sub-ASTs from stack
     this.jsAST.If();

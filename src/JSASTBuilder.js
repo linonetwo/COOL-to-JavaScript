@@ -50,8 +50,8 @@ export class ASTStack {
   }
 
   iief(ast: any, functionName: string): JSASTNode {
-    // 1. if it is a code block, which in JS is a IIEF
-    if (t.isCallExpression(ast)) {
+    // 1. if it is a code block, which in JS is a IIEF, or it's a function call
+    if (t.isExpression(ast)) {
       const buildIIEF = template(`
         (function ${functionName}() {return null})()
       `);
@@ -71,8 +71,8 @@ export class ASTStack {
       }).expression;
       return IIEF;
     } else {
-    // 3. it is a expression
-      return ast;
+      // 3. it something I haven't consider
+      throw new Error(`${functionName} IIFE building error, ast is `, ast);
     }
   }
 
@@ -184,6 +184,25 @@ export default class JSASTBuilder extends ASTStack {
   }
 
   Case() {
+  }
+
+  Block(bodyLength: number): void {
+    // 1. If there were only one or less expression, with or without this is the same
+    if (bodyLength <= 1) return;
+    // 2. If there were more than one expression, execute some first, then return last one
+    const expressions = this.pop(bodyLength);
+    // 2.1 get lastExpression out
+    const lastExpression = expressions.pop();
+    // 2.2 get IIEF with 'return lastExpression'
+    const IIEF = this.iief(lastExpression, 'codeBlock');
+    IIEF.callee.body.body = [...expressions, ...IIEF.callee.body.body];
+    this.push(IIEF);
+  }
+
+  While(): void {
+    const [ test, body ] = this.pop(2);
+
+    this.push(t.whileStatement(test, this.iief(body, 'whileBody')));
   }
 
   If(): void {
