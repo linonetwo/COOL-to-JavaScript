@@ -186,8 +186,8 @@ COOLVisitor.prototype.visitEqual = function(ctx) {
 };
 
 
-// Visit a parse tree produced by COOLParser#functionCall.
-COOLVisitor.prototype.visitFunctionCall = function(ctx) {
+// Visit a parse tree produced by COOLParser#ownMethod.
+COOLVisitor.prototype.visitOwnMethod = function(ctx) {
   return this.visitChildren(ctx);
 };
 

@@ -1934,22 +1934,22 @@ EqualContext.prototype.accept = function(visitor) {
 };
 
 
-function FunctionCallContext(parser, ctx) {
+function OwnMethodContext(parser, ctx) {
 	ExpressionContext.call(this, parser);
     ExpressionContext.prototype.copyFrom.call(this, ctx);
     return this;
 }
 
-FunctionCallContext.prototype = Object.create(ExpressionContext.prototype);
-FunctionCallContext.prototype.constructor = FunctionCallContext;
+OwnMethodContext.prototype = Object.create(ExpressionContext.prototype);
+OwnMethodContext.prototype.constructor = OwnMethodContext;
 
-COOLParser.FunctionCallContext = FunctionCallContext;
+COOLParser.OwnMethodContext = OwnMethodContext;
 
-FunctionCallContext.prototype.OBJECTID = function() {
+OwnMethodContext.prototype.OBJECTID = function() {
     return this.getToken(COOLParser.OBJECTID, 0);
 };
 
-FunctionCallContext.prototype.expression = function(i) {
+OwnMethodContext.prototype.expression = function(i) {
     if(i===undefined) {
         i = null;
     }
@@ -1959,21 +1959,21 @@ FunctionCallContext.prototype.expression = function(i) {
         return this.getTypedRuleContext(ExpressionContext,i);
     }
 };
-FunctionCallContext.prototype.enterRule = function(listener) {
+OwnMethodContext.prototype.enterRule = function(listener) {
     if(listener instanceof COOLListener ) {
-        listener.enterFunctionCall(this);
+        listener.enterOwnMethod(this);
 	}
 };
 
-FunctionCallContext.prototype.exitRule = function(listener) {
+OwnMethodContext.prototype.exitRule = function(listener) {
     if(listener instanceof COOLListener ) {
-        listener.exitFunctionCall(this);
+        listener.exitOwnMethod(this);
 	}
 };
 
-FunctionCallContext.prototype.accept = function(visitor) {
+OwnMethodContext.prototype.accept = function(visitor) {
     if ( visitor instanceof COOLVisitor ) {
-        return visitor.visitFunctionCall(this);
+        return visitor.visitOwnMethod(this);
     } else {
         return visitor.visitChildren(this);
     }
@@ -2093,7 +2093,7 @@ COOLParser.prototype.expression = function(_p) {
             break;
 
         case 2:
-            localctx = new FunctionCallContext(this, localctx);
+            localctx = new OwnMethodContext(this, localctx);
             this._ctx = localctx;
             _prevctx = localctx;
             this.state = 77;

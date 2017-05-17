@@ -42,7 +42,7 @@ formal: OBJECTID ':' TYPEID; /* method argument */
 expression
   : OBJECTID ASSIGNMENT expression #assignment
   | expression ('@' TYPEID)? '.' OBJECTID '(' (expression (',' expression)*)* ')' /* call super class method */ #superClassMethod
-  | OBJECTID '(' (expression (',' expression)*)* ')' /* call function that refered by variable */ #functionCall
+  | OBJECTID '(' (expression (',' expression)*)* ')' /* shorthand for self.OBJECTID() */ #ownMethod
   | IF expression THEN expression ELSE expression FI #if
   | WHILE expression LOOP expression POOL #while
   | '{' (expression ';')+ '}' #block

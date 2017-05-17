@@ -272,12 +272,12 @@ COOLListener.prototype.exitEqual = function(ctx) {
 };
 
 
-// Enter a parse tree produced by COOLParser#functionCall.
-COOLListener.prototype.enterFunctionCall = function(ctx) {
+// Enter a parse tree produced by COOLParser#ownMethod.
+COOLListener.prototype.enterOwnMethod = function(ctx) {
 };
 
-// Exit a parse tree produced by COOLParser#functionCall.
-COOLListener.prototype.exitFunctionCall = function(ctx) {
+// Exit a parse tree produced by COOLParser#ownMethod.
+COOLListener.prototype.exitOwnMethod = function(ctx) {
 };
 
 
