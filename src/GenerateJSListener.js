@@ -147,6 +147,16 @@ export default class GenerateJSListener extends COOLListener {
   }
 
   @override
+  exitMethodCall(context: COOLParser.MethodCallContext): void {
+    // shorthand for self.<id>(<expr>, ...)
+    const functionName = context.OBJECTID().symbol.text;
+    // console.log(context.TYPEID())
+    const superClassName: ?string = context.TYPEID() ? context.TYPEID().symbol.text : null;
+    const argumentLength = context.expression().length - 1; // there are one expression is the callee Object
+    this.jsAST.MethodCall(functionName, argumentLength);
+  }
+
+  @override
   exitAssignment(context: COOLParser.AssignmentContext): void {
     const variableName = context.OBJECTID().symbol.text;
     this.jsAST.Assignment(variableName);

@@ -29,7 +29,15 @@ export class ASTStack {
     return this.jsASTStack.pop();
   }
 
+  // For debug usage, return generated codes for ASTs
+  get codes(): Array<string> {
+    return this.jsASTStack
+      .map(ast => generate(ast, { quotes: 'single' }))
+      .map(output => output.code);
+  }
+}
 
+export class ASTBuilder extends ASTStack {
   // templateString should contains an 'EXPRESSION'
   unaryExpression(templateString: string): JSASTNode {
     const expression = this.pop(1);
@@ -49,7 +57,7 @@ export class ASTStack {
     return newBinaryExpression;
   }
 
-  iief(ast: any, functionName: string): JSASTNode {
+  static iief(ast: any, functionName: string): JSASTNode {
     // 1. if it is a code block, which in JS is a IIEF, or it's a function call
     if (t.isExpression(ast)) {
       const buildIIEF = template(`
@@ -75,16 +83,9 @@ export class ASTStack {
       throw new Error(`${functionName} IIFE building error, ast is `, ast);
     }
   }
-
-  // For debug usage, return generated codes for ASTs
-  get codes(): Array<string> {
-    return this.jsASTStack
-      .map(ast => generate(ast, { quotes: 'single' }))
-      .map(output => output.code);
-  }
 }
 
-export default class JSASTBuilder extends ASTStack {
+export default class JSASTBuilder extends ASTBuilder {
   False(): void {
     // booleanLiteral, stringLiteral, and identifier are all extends Expression
     this.push(t.booleanLiteral(false));
@@ -194,7 +195,7 @@ export default class JSASTBuilder extends ASTStack {
     // 2.1 get lastExpression out
     const lastExpression = expressions.pop();
     // 2.2 get IIEF with 'return lastExpression'
-    const IIEF = this.iief(lastExpression, 'codeBlock');
+    const IIEF = ASTBuilder.iief(lastExpression, 'codeBlock');
     IIEF.callee.body.body = [...expressions, ...IIEF.callee.body.body];
     this.push(IIEF);
   }
@@ -202,17 +203,17 @@ export default class JSASTBuilder extends ASTStack {
   While(): void {
     const [ test, body ] = this.pop(2);
 
-    this.push(t.whileStatement(test, this.iief(body, 'whileBody')));
+    this.push(t.whileStatement(test, ASTBuilder.iief(body, 'whileBody')));
   }
 
   If(): void {
     const [ test, consequent, alternate ] = this.pop(3);
 
-    this.push(t.conditionalExpression(test, this.iief(consequent, 'Ifconsequent'), this.iief(alternate, 'Ifalternate')));
+    this.push(t.conditionalExpression(test, ASTBuilder.iief(consequent, 'Ifconsequent'), ASTBuilder.iief(alternate, 'Ifalternate')));
   }
 
   OwnMethodCall(functionName: string, argumentLength: number): void {
-    // Invoke build-in functions
+    // Invoke build-in functions inherits from Object type, or own methods
     const functionArguments = [...this.pop(argumentLength)];
     const buildOwnMethodCall = template(`
       this.FUNCTION()
@@ -222,6 +223,21 @@ export default class JSASTBuilder extends ASTStack {
     }).expression;
     ownMethodCall.arguments = functionArguments;
     this.push(ownMethodCall);
+  }
+
+  MethodCall(functionName: string, argumentLength: number): void {
+    // Invoke someObject.method()
+    const functionArguments = [...this.pop(argumentLength)];
+    const calleeObject = this.pop(1);
+    const buildMethodCall = template(`
+      CALLEE.FUNCTION()
+    `);
+    const methodCall = buildMethodCall({
+      CALLEE: calleeObject,
+      FUNCTION: t.identifier(functionName)
+    }).expression;
+    methodCall.arguments = functionArguments;
+    this.push(methodCall);
   }
 
   Assignment(variableName: string): void {
