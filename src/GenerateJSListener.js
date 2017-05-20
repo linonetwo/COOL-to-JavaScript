@@ -162,6 +162,13 @@ export default class GenerateJSListener extends COOLListener {
     this.jsAST.Assignment(variableName);
   }
 
+  @override
+  exitFormal(context: COOLParser.FormalContext): void {
+    const variableName = context.OBJECTID().symbol.text;
+    const typeName = context.TYPEID().symbol.text;
+    this.jsAST.Formal(variableName, typeName);
+  }
+
   // @override
   // enterProgram(context: COOLParser.ProgramContext): void {
   //   // 1. init root JSAST

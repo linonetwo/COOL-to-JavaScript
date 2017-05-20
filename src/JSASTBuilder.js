@@ -252,4 +252,25 @@ export default class JSASTBuilder extends ASTBuilder {
       })
     );
   }
+
+  Formal(variableName: string, typeName: string): void {
+    let typeId = null;
+    switch (typeName) {
+      case 'Int':
+        typeId = t.numberTypeAnnotation();
+        break;
+      case 'Bool':
+        typeId = t.booleanTypeAnnotation();
+        break;
+      case 'String':
+        typeId = t.stringTypeAnnotation();
+        break;
+      default:
+        typeId = t.identifier(typeName);
+        break;
+    }
+    const identifier = t.identifier(variableName);
+    identifier.typeAnnotation = t.genericTypeAnnotation(typeId, null);
+    this.push(identifier);
+  }
 }
