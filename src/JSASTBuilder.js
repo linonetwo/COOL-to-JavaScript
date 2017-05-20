@@ -18,7 +18,7 @@ export class ASTStack {
     this.jsASTStack.push(subAST);
   }
 
-  pop(quentity: number): JSASTNode | Array<JSASTNode> {
+  pop(quentity: number, returnArray: boolean = false): JSASTNode | Array<JSASTNode> {
     if (this.jsASTStack.length < quentity) {
       throw new Error(`Poping too many sub-AST from JSASTStack, poping ${quentity} but stack with length ${this.jsASTStack.length} is:`, this.jsASTStack);
     }
@@ -27,7 +27,7 @@ export class ASTStack {
       this.jsASTStack = dropRight(this.jsASTStack, quentity);
       return nodes;
     }
-    return this.jsASTStack.pop();
+    return returnArray ? [this.jsASTStack.pop()] : this.jsASTStack.pop();
   }
 
   // For debug usage, return generated codes for ASTs
@@ -205,7 +205,7 @@ export default class JSASTBuilder extends ASTBuilder {
     // 1. If there were only one or less expression, with or without this is the same
     if (bodyLength <= 1) return;
     // 2. If there were more than one expression, execute some first, then return last one
-    const expressions = this.pop(bodyLength);
+    const expressions = this.pop(bodyLength, true);
     // 2.1 get lastExpression out
     const lastExpression = expressions.pop();
     // 2.2 get IIEF with 'return lastExpression'
@@ -228,7 +228,7 @@ export default class JSASTBuilder extends ASTBuilder {
 
   OwnMethodCall(functionName: string, argumentLength: number): void {
     // Invoke build-in functions inherits from Object type, or own methods
-    const functionArguments = [...this.pop(argumentLength)];
+    const functionArguments = [...this.pop(argumentLength, true)];
     const buildOwnMethodCall = template(`
       this.FUNCTION()
     `);
@@ -242,7 +242,7 @@ export default class JSASTBuilder extends ASTBuilder {
   MethodCall(functionName: string, argumentLength: number, superClassName: ?string): void {
     // Invoke someObject.method()
     // superClassName currently unavailable
-    const functionArguments = [...this.pop(argumentLength)];
+    const functionArguments = [...this.pop(argumentLength, true)];
     const calleeObject = this.pop(1);
     const buildMethodCall = template(`
       CALLEE.FUNCTION()
@@ -278,5 +278,21 @@ export default class JSASTBuilder extends ASTBuilder {
     const value = this.pop(1);
     const classProperty = t.classProperty(t.identifier(variableName), value, ASTBuilder.typeAnnotation(typeName), []);
     this.push(classProperty);
+  }
+
+  Method(variableName: string, typeName: string, argumentLength: number): void {
+    // 1. pop method body expression, and at least one formals(arguments)
+    const expression = this.pop(1);
+    const formals = [...this.pop(argumentLength, true)];
+    // 2. return this expression in body block
+    const returnBlock = t.blockStatement([t.returnStatement(expression)], []);
+    const classMethod = t.classMethod('method', t.identifier(variableName), formals, returnBlock);
+    this.push(classMethod);
+  }
+
+  ClassDefine(className: string, superClassName: ?string, featureLength: number): void {
+    let methodAndProperty = [...this.pop(featureLength, true)];
+    const classDeclaration = t.classDeclaration(t.identifier(className), superClassName && t.identifier(superClassName), t.classBody(methodAndProperty), []);
+    this.push(classDeclaration);
   }
 }

@@ -177,6 +177,26 @@ export default class GenerateJSListener extends COOLListener {
     this.jsAST.Property(variableName, typeName);
   }
 
+  @override
+  exitMethod(context: COOLParser.MethodContext): void {
+    // This is a multi-diverse non-terminal, we should pop it's several "formal" and one "expression" sub-ASTs from stack
+    const variableName: string = context.OBJECTID().symbol.text;
+    const typeName: string = context.TYPEID().symbol.text;
+    const argumentLength: number = context.formal().length;
+    this.jsAST.Method(variableName, typeName, argumentLength);
+  }
+
+  @override
+  exitClassDefine(context: COOLParser.ClassDefineContext): void {
+    // This is a multi-diverse non-terminal, we should pop it's several "feature" sub-ASTs from stack
+    const typeIDs = context.TYPEID();
+    const className: string = typeIDs[0].symbol.text;
+    const featureLength: number = context.feature().length;
+    const hasSuperClass: boolean = !!context.INHERITS();
+    const superClassName: ?string = hasSuperClass ? typeIDs[1].text : null;
+    this.jsAST.ClassDefine(className, superClassName, featureLength);
+  }
+
   // @override
   // enterProgram(context: COOLParser.ProgramContext): void {
   //   // 1. init root JSAST
