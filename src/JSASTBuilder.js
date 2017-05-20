@@ -6,7 +6,8 @@ import generate from 'babel-generator';
 
 type JSASTNode = {
   type: string;
-  value: string | number | boolean | void;
+  key: ?JSASTNode;
+  value: any;
 };
 
 export class ASTStack {
@@ -81,6 +82,19 @@ export class ASTBuilder extends ASTStack {
     } else {
       // 3. it something I haven't consider
       throw new Error(`${functionName} IIFE building error, ast is `, ast);
+    }
+  }
+
+  static typeAnnotation(typeName: string): JSASTNode {
+    switch (typeName) {
+      case 'Int':
+        return t.numberTypeAnnotation();
+      case 'Bool':
+        return t.booleanTypeAnnotation();
+      case 'String':
+        return t.stringTypeAnnotation();
+      default:
+        return t.identifier(typeName);
     }
   }
 }
@@ -254,23 +268,15 @@ export default class JSASTBuilder extends ASTBuilder {
   }
 
   Formal(variableName: string, typeName: string): void {
-    let typeId = null;
-    switch (typeName) {
-      case 'Int':
-        typeId = t.numberTypeAnnotation();
-        break;
-      case 'Bool':
-        typeId = t.booleanTypeAnnotation();
-        break;
-      case 'String':
-        typeId = t.stringTypeAnnotation();
-        break;
-      default:
-        typeId = t.identifier(typeName);
-        break;
-    }
     const identifier = t.identifier(variableName);
+    let typeId = ASTBuilder.typeAnnotation(typeName);
     identifier.typeAnnotation = t.genericTypeAnnotation(typeId, null);
     this.push(identifier);
+  }
+
+  Property(variableName: string, typeName: string): void {
+    const value = this.pop(1);
+    const classProperty = t.classProperty(t.identifier(variableName), value, ASTBuilder.typeAnnotation(typeName), []);
+    this.push(classProperty);
   }
 }
