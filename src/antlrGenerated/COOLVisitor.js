@@ -18,8 +18,8 @@ COOLVisitor.prototype.visitProgram = function(ctx) {
 };
 
 
-// Visit a parse tree produced by COOLParser#class.
-COOLVisitor.prototype.visitClass = function(ctx) {
+// Visit a parse tree produced by COOLParser#classes.
+COOLVisitor.prototype.visitClasses = function(ctx) {
   return this.visitChildren(ctx);
 };
 

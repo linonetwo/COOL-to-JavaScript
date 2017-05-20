@@ -20,12 +20,12 @@ COOLListener.prototype.exitProgram = function(ctx) {
 };
 
 
-// Enter a parse tree produced by COOLParser#class.
-COOLListener.prototype.enterClass = function(ctx) {
+// Enter a parse tree produced by COOLParser#classes.
+COOLListener.prototype.enterClasses = function(ctx) {
 };
 
-// Exit a parse tree produced by COOLParser#class.
-COOLListener.prototype.exitClass = function(ctx) {
+// Exit a parse tree produced by COOLParser#classes.
+COOLListener.prototype.exitClasses = function(ctx) {
 };
 
 

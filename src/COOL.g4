@@ -30,7 +30,7 @@ grammar COOL;
 
 program: programBlocks;
 programBlocks
-  : classDefine ';' programBlocks #class
+  : classDefine ';' programBlocks #classes
   | EOF #eof
   ;
 classDefine: CLASS TYPEID (INHERITS TYPEID)? '{' (feature ';')* '}';

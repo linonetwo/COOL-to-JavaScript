@@ -350,39 +350,39 @@ ProgramBlocksContext.prototype.copyFrom = function(ctx) {
 };
 
 
-function ClassContext(parser, ctx) {
+function ClassesContext(parser, ctx) {
 	ProgramBlocksContext.call(this, parser);
     ProgramBlocksContext.prototype.copyFrom.call(this, ctx);
     return this;
 }
 
-ClassContext.prototype = Object.create(ProgramBlocksContext.prototype);
-ClassContext.prototype.constructor = ClassContext;
+ClassesContext.prototype = Object.create(ProgramBlocksContext.prototype);
+ClassesContext.prototype.constructor = ClassesContext;
 
-COOLParser.ClassContext = ClassContext;
+COOLParser.ClassesContext = ClassesContext;
 
-ClassContext.prototype.classDefine = function() {
+ClassesContext.prototype.classDefine = function() {
     return this.getTypedRuleContext(ClassDefineContext,0);
 };
 
-ClassContext.prototype.programBlocks = function() {
+ClassesContext.prototype.programBlocks = function() {
     return this.getTypedRuleContext(ProgramBlocksContext,0);
 };
-ClassContext.prototype.enterRule = function(listener) {
+ClassesContext.prototype.enterRule = function(listener) {
     if(listener instanceof COOLListener ) {
-        listener.enterClass(this);
+        listener.enterClasses(this);
 	}
 };
 
-ClassContext.prototype.exitRule = function(listener) {
+ClassesContext.prototype.exitRule = function(listener) {
     if(listener instanceof COOLListener ) {
-        listener.exitClass(this);
+        listener.exitClasses(this);
 	}
 };
 
-ClassContext.prototype.accept = function(visitor) {
+ClassesContext.prototype.accept = function(visitor) {
     if ( visitor instanceof COOLVisitor ) {
-        return visitor.visitClass(this);
+        return visitor.visitClasses(this);
     } else {
         return visitor.visitChildren(this);
     }
@@ -436,7 +436,7 @@ COOLParser.prototype.programBlocks = function() {
         this._errHandler.sync(this);
         switch(this._input.LA(1)) {
         case COOLParser.CLASS:
-            localctx = new ClassContext(this, localctx);
+            localctx = new ClassesContext(this, localctx);
             this.enterOuterAlt(localctx, 1);
             this.state = 14;
             this.classDefine();
