@@ -80,10 +80,10 @@ export class ASTBuilder extends ASTStack {
     }
     // 3. set formal and actual argument
     if (formalNames) {
-      IIEF.arguments = formalNames.map(name => t.identifier(name));
+      IIEF.callee.callee.object.params = formalNames.map(name => t.identifier(name));
     }
     if (paramExpressions) {
-      IIEF.callee.callee.object.params = paramExpressions;
+      IIEF.arguments = paramExpressions;
     }
     return IIEF;
   }
@@ -204,12 +204,13 @@ export default class JSASTBuilder extends ASTBuilder {
   Case(IDs: Array<string>, types: Array<string>): void {
     const consequentLength = IDs.length;
     const consequents = this.pop(consequentLength, true);
-    const test = this.pop(1);
+    const testExpression = this.pop(1);
     const ifElseStatementWithReturn = consequents.reduce((prev, current, index) => {
-      // use instanceof to perform runtime typecheck
-      const test = t.binaryExpression('instanceof', t.identifier(IDs[index]), t.identifier(types[index]));
+      // use instanceof to perform runtime typecheck, bind testExpression to left hind side
+      const test = t.binaryExpression('instanceof', testExpression, t.identifier(types[index]));
       // put if statement in previous' else statement, and accept next else statement
-      return (alternate) => prev(t.ifStatement(test, t.returnStatement(current), alternate));
+      // bind t.identifier(IDs[index]) to expression to return
+      return (alternate) => prev(t.ifStatement(test, t.returnStatement(JSASTBuilder.iief(current, 'idBindingOfCaseStatement', null, [IDs[index]], [testExpression])), alternate));
     }, i => i)(null);
     this.push(JSASTBuilder.iief(ifElseStatementWithReturn, 'caseStatement'));
   }
