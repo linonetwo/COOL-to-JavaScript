@@ -60,8 +60,8 @@ export class ASTBuilder extends ASTStack {
     return newBinaryExpression;
   }
 
-  static iief(ast: any, functionName: string, statementInsertBefore: Array<JSASTNode>): JSASTNode {
-    // 1. if it is a code block, which in JS is a IIEF, or it's a function call
+  static iief(ast: any, functionName: string, statementInsertBefore: ?Array<JSASTNode>): JSASTNode {
+    // 1. if it is a expression, which in JS is a IIEF, or it's a function call
     if (t.isExpression(ast)) {
       const buildIIEF = template(`
         (function ${functionName}() {return null}.bind(this)())
@@ -75,19 +75,15 @@ export class ASTBuilder extends ASTStack {
         IIEF.callee.callee.object.body.body = [...statementInsertBefore, ...IIEF.callee.callee.object.body.body];
       }
       return IIEF;
-    } else
-    // 2. if it is a single assignment, how can a humen do this?
-    if (t.isVariableDeclaration(ast)) {
+    } else {
+      // 2. if it is a statement
       const buildIIEF = template(`
-        (function ${functionName}() {STATEMENT}())
+        (function ${functionName}() {return null}.bind(this)())
       `);
       const IIEF = buildIIEF({
-        STATEMENT: ast
       }).expression;
+      IIEF.callee.callee.object.body.body = [ast];
       return IIEF;
-    } else {
-      // 3. it something I haven't consider
-      throw new Error(`${functionName} IIFE building error, ast is `, ast);
     }
   }
 
@@ -126,7 +122,7 @@ export default class JSASTBuilder extends ASTBuilder {
   }
 
   Id(content: string): void {
-    this.push(t.identifier(content));
+    this.push(content === 'self' ? t.identifier('this') : t.identifier(content));
   }
 
   Parentheses(): void {
@@ -204,7 +200,17 @@ export default class JSASTBuilder extends ASTBuilder {
     this.push(newClassExpression);
   }
 
-  Case() {
+  Case(IDs: Array<string>, types: Array<string>): void {
+    const consequentLength = IDs.length;
+    const consequents = this.pop(consequentLength, true);
+    const test = this.pop(1);
+    const ifElseStatementWithReturn = consequents.reduce((prev, current, index) => {
+      // use instanceof to perform runtime typecheck
+      const test = t.binaryExpression('instanceof', t.identifier(IDs[index]), t.identifier(types[index]));
+      // put if statement in previous' else statement, and accept next else statement
+      return (alternate) => prev(t.ifStatement(test, t.returnStatement(current), alternate));
+    }, i => i)(null);
+    this.push(JSASTBuilder.iief(ifElseStatementWithReturn, 'caseStatement'));
   }
 
   Block(bodyLength: number): void {

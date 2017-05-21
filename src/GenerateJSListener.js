@@ -116,7 +116,7 @@ export default class GenerateJSListener extends COOLListener {
   exitCase(context: COOLParser.CaseContext): void {
     const IDs = context.OBJECTID().filter(i => i).map(item => item.symbol.text);
     const types = context.TYPEID().filter(i => i).map(item => item.symbol.text);
-    this.jsAST.Case();
+    this.jsAST.Case(IDs, types);
   }
 
   @override
