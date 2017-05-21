@@ -13,6 +13,8 @@ type JSASTNode = {
 export class ASTStack {
   // We use stack to temporarly store subtree of AST, then you can use popFor() to load subtree in the stack into a container tree node
   jsASTStack: Array<JSASTNode> = [];
+  // root of AST, last to finish
+  jsProgramAST: JSASTNode = t.file(t.program([]));
 
   push(subAST: JSASTNode): void {
     this.jsASTStack.push(subAST);
@@ -294,5 +296,10 @@ export default class JSASTBuilder extends ASTBuilder {
     let methodAndProperty = [...this.pop(featureLength, true)];
     const classDeclaration = t.classDeclaration(t.identifier(className), superClassName && t.identifier(superClassName), t.classBody(methodAndProperty), []);
     this.push(classDeclaration);
+  }
+
+  Classes(): void {
+    const classDefination = this.pop(1);
+    this.jsProgramAST.program.body.push(classDefination);
   }
 }

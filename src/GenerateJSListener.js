@@ -197,87 +197,16 @@ export default class GenerateJSListener extends COOLListener {
     this.jsAST.ClassDefine(className, superClassName, featureLength);
   }
 
-  // @override
-  // enterProgram(context: COOLParser.ProgramContext): void {
-  //   // 1. init root JSAST
-  //   this.jsAST = types.file(types.program([]));
-  //   // 2. set currentPath to AST root
-  //   traverse(this.jsAST, {
-  //     Program: (path) => {
-  //       this.currentPath = path;
-  //     }
-  //   });
-  // }
-
-  // @override
-  // enterClassDefine(context: COOLParser.ClassDefineContext): void {
-  //   // from 'class Main inherits IO' get 'Main' and 'IO', though some class may not have superClassName
-  //   const [ className, superClassName ]: ClassNames = context.TYPEID().filter(i => i).map(item => item.symbol.text);
-  //   // 1. get JS AST
-  //   let classDeclaration;
-  //   if (className === 'Main') {
-  //     // 1.a If Class is Main, turn it into an IIFE
-  //     const IIFEBuilder = template(`
-  //       (function FUNCTION_NAME(props) {
-  //       })()
-  //     `);
-  //     classDeclaration = IIFEBuilder({
-  //       FUNCTION_NAME: types.identifier(className),
-  //     });
-  //   } else {
-  //     // 1.b For normal classes, Declare the class
-  //     classDeclaration = types.classDeclaration(
-  //       types.Identifier(className),
-  //       superClassName ? types.Identifier(superClassName) : null,
-  //       types.classBody([]),
-  //       []
-  //     );
-  //   }
-
-  //   // 2. Put this class declearation into program
-  //   if (types.isProgram(this.currentPath.node)) {
-  //     traverse(this.currentPath, {
-  //       enter: (path) => {
-  //         console.log(path);
-  //       }
-  //     });
-  //     this.currentPath.node.body.push(classDeclaration);
-  //     this.currentPath = this.currentPath.node.body;
-  //   }
-  // }
-
-  // @override
-  // exitClassDefine(context: COOLParser.ClassDefineContext): void {
-  //   // set currentPath to AST root
-  //   this.currentPath = this.currentPath;
-  // }
-
-  // @override
-  // enterMethod(context: COOLParser.MethodContext): void {
-  //   // 1. prepare class method AST
-  //   const className = context.parentCtx.TYPEID(0).symbol.text;
-  //   const methodName: string = context.OBJECTID().symbol.text;
-  //   const method = types.classMethod(
-  //     'method',
-  //     types.Identifier(methodName),
-  //     [],
-  //     types.blockStatement([], [])
-  //   );
-  //   // 2. for each method we found, found the class it belongs to, then put it in
-  //   traverse(this.jsAST, {
-  //     enter(path) {
-  //       if (types.isClassDeclaration(path.node) && path.node.id.name === className) {
-  //         path.node.body.body.push(method);
-  //       }
-  //     }
-  //   });
-  // }
-
+  @override
+  exitClasses(context: COOLParser.ClassesContext): void {
+    // Everytime we build a class defination, just add it to probram body
+    this.jsAST.Classes();
+  }
 
   generateJS(): string {
-    console.log(this.jsAST.codes);
-    return '';
-    // const output: GeneratedOutput = generate(this.jsAST.pop(1), { quotes: 'single' });
-    // return output.code;
+    // console.log(this.jsAST.codes);
+    // return '';
+    const output: GeneratedOutput = generate(this.jsAST.jsProgramAST, { quotes: 'single' });
+    return output.code;
   }
 }
