@@ -39,7 +39,15 @@
 
     <div class="card-panel grey lighten-5 z-depth-2">
       <label>Source:</label>
-      <div class="card-content code editor" id="editor">
+      <div class="card-content code editor" id="editor-source">
+      </div>
+      <a class="waves-effect waves-light btn" onclick="transformIt()">
+        Transform
+      </a>
+    </div>
+    <div class="card-panel grey lighten-5 z-depth-2">
+      <label>JS:</label>
+      <div class="card-content code editor" id="editor-js">
       </div>
     </div>
     <div class="card-panel grey lighten-5 z-depth-1">
@@ -49,7 +57,7 @@
     <div class="card-panel grey lighten-5 z-depth-1">
       <span class="card-title">Output:</span>
       <textarea class="card-content code output" id="output"></textarea>
-      <a class="waves-effect waves-light btn" onclick="runit()">
+      <a class="waves-effect waves-light btn" onclick="transformIt()">
         Run
       </a>
     </div>
@@ -58,61 +66,113 @@
 
 <script>
   // Initialize editor
-  const editor = ace.edit("editor");
-  editor.setTheme("ace/theme/iplastic");
-  editor.setShowPrintMargin(false);
-  
-  editor.getSession().setMode("ace/mode/rust");
+  function initEditor(divname, mode) {
+    const editor = ace.edit(divname);
+    editor.setTheme("ace/theme/iplastic");
+    editor.setShowPrintMargin(false);
+    editor.getSession().setMode(`ace/mode/${mode}`);
+    return editor;
+  }
+  const sourceEditor = initEditor("editor-source", "rust");
+  const jsEditor = initEditor("editor-js", "javascript");
 
   // Load code from localsorage or use example code
   const storage = window.localStorage;
   const userSavedCode = storage.getItem("code");
 
   if (userSavedCode) {
-    editor.setValue(userSavedCode);
+    sourceEditor.setValue(userSavedCode);
   } else {
     const exampleCode =
-      `class Main inherits IO {
-    main() : SELF_TYPE {{
-        let input: Int <- in_int() in
-        {
-            out_string("The factorial of ");
-            out_int(input);
-            out_string(" is ");
-            out_int(func(input));
-            out_string(" ");
-        };
-    }};
+      `(*
+ *  IO class runtime is partially suppoted, more runtime support are to be added if onetwo won't fail his classes.
+ *  Note that currently what transform to is flowtype, which should be run with babel-node, not your browser.
+ *)
 
-    func(n: Int) : Int {{
-        let sum: Int <- 1 in
-        {
-            while 0 < n loop
-            {
-                sum <- sum * n;
-                n <- n - 1;
-            }
-            pool;
-            sum;
-        };
-    }};
-};`;
-    editor.setValue(exampleCode);
+
+class A {
+
+   -- Let's assume that we don't want A to not inherit from IO.
+
+   io : IO <- new IO;
+
+   out_a() : Object { io.out_string("A: Hello world\n") };
+
+};
+
+
+class B inherits A {
+
+   -- B does not have to an extra attribute, since it inherits io from A.
+
+   out_b() : Object { io.out_string("B: Hello world\n") };
+
+};
+
+
+class C inherits IO {
+
+   -- Now the IO methods are part of C.
+
+   out_c() : Object { out_string("C: Hello world\n") };
+
+   -- Note that out_string(...) is just a shorthand for self.out_string(...)
+
+};
+
+
+class D inherits C {
+
+   -- Inherits IO methods from C.
+
+   out_d() : Object { out_string("D: Hello world\n") };
+
+};
+
+
+class Main inherits IO {
+
+   -- Same case as class C.
+
+   main() : Object {
+      {
+	 (new A).out_a();
+	 (new B).out_b();
+	 (new C).out_c();
+	 (new D).out_d();
+	 out_string("Done.\n");
+      }
+   };
+
+};
+`;
+    sourceEditor.setValue(exampleCode);
   }
-  function runit() {
-    const sourceCode = editor.getValue();
-    const input = document.getElementById("input").value.split(" ");
-    const outputDiv = document.getElementById("output");
-    outputDiv.value = "";
-    const parser = new cool.Parser();
 
-    parser.parse(sourceCode);
+
+
+
+  function transformIt() {
+    const sourceCode = sourceEditor.getValue();
 
     // Save code to localstorage
     const storage = window.localStorage;
     storage.setItem("code", sourceCode);
+
+    jsEditor.setValue(transformCOOL(sourceCode));
+  }
+
+
+
+
+  function runIt() {
+    // const input = document.getElementById("input").value.split(" ");
+    // const outputDiv = document.getElementById("output");
+    // outputDiv.value = "";
   }
 
 </script>
+
+<script src="../build/bundle.js" inline></script>
 
 </html>
