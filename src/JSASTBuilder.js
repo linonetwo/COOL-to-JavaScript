@@ -62,29 +62,23 @@ export class ASTBuilder extends ASTStack {
 
   static iief(ast: any, functionName: string, statementInsertBefore: ?Array<JSASTNode>): JSASTNode {
     // 1. if it is a expression, which in JS is a IIEF, or it's a function call
+    const buildIIEF = template(`
+      (function ${functionName}() {return null}.bind(this)())
+    `);
+    const IIEF = buildIIEF({
+    }).expression;
     if (t.isExpression(ast)) {
-      const buildIIEF = template(`
-        (function ${functionName}() {return null}.bind(this)())
-      `);
-      const IIEF = buildIIEF({
-      }).expression;
       // 1.1 set return value
       IIEF.callee.callee.object.body.body[0].argument = ast;
-      // 1.2 set statements before return
-      if (statementInsertBefore) {
-        IIEF.callee.callee.object.body.body = [...statementInsertBefore, ...IIEF.callee.callee.object.body.body];
-      }
-      return IIEF;
     } else {
-      // 2. if it is a statement
-      const buildIIEF = template(`
-        (function ${functionName}() {return null}.bind(this)())
-      `);
-      const IIEF = buildIIEF({
-      }).expression;
+      // 1.2 if it is a statement
       IIEF.callee.callee.object.body.body = [ast];
-      return IIEF;
     }
+    // 2. set statements before return
+    if (statementInsertBefore) {
+      IIEF.callee.callee.object.body.body = [...statementInsertBefore, ...IIEF.callee.callee.object.body.body];
+    }
+    return IIEF;
   }
 
   static typeAnnotation(typeName: string): JSASTNode {
