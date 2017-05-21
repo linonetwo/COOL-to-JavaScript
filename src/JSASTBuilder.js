@@ -90,13 +90,13 @@ export class ASTBuilder extends ASTStack {
   static typeAnnotation(typeName: string): JSASTNode {
     switch (typeName) {
       case 'Int':
-        return t.numberTypeAnnotation();
+        return t.typeAnnotation(t.numberTypeAnnotation());
       case 'Bool':
-        return t.booleanTypeAnnotation();
+        return t.typeAnnotation(t.booleanTypeAnnotation());
       case 'String':
-        return t.stringTypeAnnotation();
+        return t.typeAnnotation(t.stringTypeAnnotation());
       default:
-        return t.identifier(typeName);
+        return t.typeAnnotation(t.identifier(typeName));
     }
   }
 }
@@ -271,8 +271,7 @@ export default class JSASTBuilder extends ASTBuilder {
 
   Formal(variableName: string, typeName: string): void {
     const identifier = t.identifier(variableName);
-    let typeId = ASTBuilder.typeAnnotation(typeName);
-    identifier.typeAnnotation = t.genericTypeAnnotation(typeId, null);
+    identifier.typeAnnotation = ASTBuilder.typeAnnotation(typeName);
     this.push(identifier);
   }
 
@@ -300,6 +299,21 @@ export default class JSASTBuilder extends ASTBuilder {
 
   Classes(): void {
     const classDefination = this.pop(1);
-    this.jsProgramAST.program.body.push(classDefination);
+    this.jsProgramAST.program.body.unshift(classDefination);
+  }
+
+  Program(): void {
+    const runtimeBuilder = template(`
+      class IO {
+        out_string(content: ?string) {
+          string ? console.log(content) : console.log();
+        }
+      }
+    `, {
+      plugins: [
+        'flow'
+      ]
+    });
+    this.jsProgramAST.program.body.unshift(runtimeBuilder({}));
   }
 }

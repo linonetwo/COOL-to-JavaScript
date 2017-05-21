@@ -193,7 +193,7 @@ export default class GenerateJSListener extends COOLListener {
     const className: string = typeIDs[0].symbol.text;
     const featureLength: number = context.feature().length;
     const hasSuperClass: boolean = !!context.INHERITS();
-    const superClassName: ?string = hasSuperClass ? typeIDs[1].text : null;
+    const superClassName: ?string = hasSuperClass ? typeIDs[1].symbol.text : null;
     this.jsAST.ClassDefine(className, superClassName, featureLength);
   }
 
@@ -203,10 +203,14 @@ export default class GenerateJSListener extends COOLListener {
     this.jsAST.Classes();
   }
 
+  @override
+  exitProgram(context: COOLParser.ProgramContext): void {
+    // Inject runtimes
+    this.jsAST.Program();
+  }
+
   generateJS(): string {
-    // console.log(this.jsAST.codes);
-    // return '';
-    const output: GeneratedOutput = generate(this.jsAST.jsProgramAST, { quotes: 'single' });
+    const output: GeneratedOutput = generate(this.jsAST.jsProgramAST, { quotes: 'single', auxiliaryCommentBefore: ' @flow ' });
     return output.code;
   }
 }
