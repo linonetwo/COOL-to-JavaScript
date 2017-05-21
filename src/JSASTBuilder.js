@@ -1,6 +1,7 @@
 // @ts-check @flow
 import { takeRight, dropRight } from 'lodash';
 import * as t from 'babel-types';
+import traverse from 'babel-traverse';
 import template from 'babel-template';
 import generate from 'babel-generator';
 
@@ -67,23 +68,34 @@ export class ASTBuilder extends ASTStack {
     `);
     const IIEF = buildIIEF({
     }).expression;
-    if (t.isExpression(ast)) {
-      // 1.1 set return value
-      IIEF.callee.callee.object.body.body[0].argument = ast;
-    } else {
-      // 1.2 if it is a statement
-      IIEF.callee.callee.object.body.body = [ast];
-    }
-    // 2. set statements before return
-    if (statementInsertBefore) {
-      IIEF.callee.callee.object.body.body = [...statementInsertBefore, ...IIEF.callee.callee.object.body.body];
-    }
-    // 3. set formal and actual argument
+    // 1. set formal and actual argument
     if (formalNames) {
+    // 2. remove this. from identifier, since we defaultly give all identifier a this.
+      traverse(ast, {
+        noScope: true,
+        Identifier(path) {
+          if (formalNames.includes(path.node.name) && path.parentPath && t.isThisExpression(path.container.object)) {
+            path.parentPath.parentPath.node.argument = path.node;
+          } else if (formalNames.includes(path.node.name) && t.isThisExpression(path.container.object)) {
+            ast = path.node; // eslint-disable-line
+          }
+        }
+      });
       IIEF.callee.callee.object.params = formalNames.map(name => t.identifier(name));
     }
     if (paramExpressions) {
       IIEF.arguments = paramExpressions;
+    }
+    if (t.isExpression(ast)) {
+      // 3.1 set return value
+      IIEF.callee.callee.object.body.body[0].argument = ast;
+    } else {
+      // 3.2 if it is a statement
+      IIEF.callee.callee.object.body.body = [ast];
+    }
+    // 4. set statements before return
+    if (statementInsertBefore) {
+      IIEF.callee.callee.object.body.body = [...statementInsertBefore, ...IIEF.callee.callee.object.body.body];
     }
     return IIEF;
   }
@@ -123,7 +135,8 @@ export default class JSASTBuilder extends ASTBuilder {
   }
 
   Id(content: string): void {
-    this.push(content === 'self' ? t.identifier('this') : t.identifier(content));
+    // at most case id are bound to this, other case handle by thenselves
+    this.push(content === 'self' ? t.identifier('this') : t.memberExpression(t.thisExpression(), t.identifier(content)));
   }
 
   Parentheses(): void {
@@ -279,9 +292,10 @@ export default class JSASTBuilder extends ASTBuilder {
   }
 
   Assignment(variableName: string): void {
+    // assignment are all about assign to this.xxx
     const expression = this.pop(1);
     const buildAssignment = template(`
-      let VARIABLE = EXPRESSION
+      this.VARIABLE = EXPRESSION
     `);
     this.push(
       buildAssignment({
