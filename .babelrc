@@ -11,6 +11,7 @@
       "assert": true,
       "annotate": true
     }],
-    "transform-runtime"
+    "transform-runtime",
+    "static-fs"
   ]
 }
