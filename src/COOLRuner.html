@@ -1,0 +1,118 @@
+<html>
+
+<head>
+  <title>COOL在线运行</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/font-hack/2.020/css/hack-extended.min.css">
+</head>
+
+<body>
+  <style type="text/css" media="screen">
+    .editor {
+      height: 60vh;
+
+      font-size: 20px;
+    }
+    .input {
+      height: 3vh;
+    }
+    .output {
+      height: 12vh;
+    }
+
+    .code {
+      font-family: Hack, monospace;
+    }
+  </style>
+  <div class="container">
+
+    <nav>
+      <div class="nav-wrapper">
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a href="https://ace.c9.io/#nav=higlighter">设置语法高亮</a></li>
+          <li><a href="https://github.com/nitin-nizhawan/cool2js">核心代码</a></li>
+          <li><a href="http://www.cnblogs.com/pinkman/archive/2013/03/12/2954902.html">中文教程</a></li>
+          <li><a href="http://sist.shanghaitech.edu.cn/faculty/songfu/course/spring2017/cs131/">课程主页</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="card-panel grey lighten-5 z-depth-2">
+      <label>Source:</label>
+      <div class="card-content code editor" id="editor">
+      </div>
+    </div>
+    <div class="card-panel grey lighten-5 z-depth-1">
+      <span class="card-title">Input:</span>
+      <textarea class="card-content code input" id="input"></textarea>
+    </div>
+    <div class="card-panel grey lighten-5 z-depth-1">
+      <span class="card-title">Output:</span>
+      <textarea class="card-content code output" id="output"></textarea>
+      <a class="waves-effect waves-light btn" onclick="runit()">
+        Run
+      </a>
+    </div>
+</body>
+<script src="https://cdn.bootcss.com/ace/1.2.6/ace.js"></script>
+
+<script>
+  // Initialize editor
+  const editor = ace.edit("editor");
+  editor.setTheme("ace/theme/iplastic");
+  editor.setShowPrintMargin(false);
+  
+  editor.getSession().setMode("ace/mode/rust");
+
+  // Load code from localsorage or use example code
+  const storage = window.localStorage;
+  const userSavedCode = storage.getItem("code");
+
+  if (userSavedCode) {
+    editor.setValue(userSavedCode);
+  } else {
+    const exampleCode =
+      `class Main inherits IO {
+    main() : SELF_TYPE {{
+        let input: Int <- in_int() in
+        {
+            out_string("The factorial of ");
+            out_int(input);
+            out_string(" is ");
+            out_int(func(input));
+            out_string(" ");
+        };
+    }};
+
+    func(n: Int) : Int {{
+        let sum: Int <- 1 in
+        {
+            while 0 < n loop
+            {
+                sum <- sum * n;
+                n <- n - 1;
+            }
+            pool;
+            sum;
+        };
+    }};
+};`;
+    editor.setValue(exampleCode);
+  }
+  function runit() {
+    const sourceCode = editor.getValue();
+    const input = document.getElementById("input").value.split(" ");
+    const outputDiv = document.getElementById("output");
+    outputDiv.value = "";
+    const parser = new cool.Parser();
+
+    parser.parse(sourceCode);
+
+    // Save code to localstorage
+    const storage = window.localStorage;
+    storage.setItem("code", sourceCode);
+  }
+
+</script>
+
+</html>
