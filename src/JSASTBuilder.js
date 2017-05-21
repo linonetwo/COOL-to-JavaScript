@@ -60,16 +60,20 @@ export class ASTBuilder extends ASTStack {
     return newBinaryExpression;
   }
 
-  static iief(ast: any, functionName: string): JSASTNode {
+  static iief(ast: any, functionName: string, statementInsertBefore: Array<JSASTNode>): JSASTNode {
     // 1. if it is a code block, which in JS is a IIEF, or it's a function call
     if (t.isExpression(ast)) {
       const buildIIEF = template(`
-        (function ${functionName}() {return null}())
+        (function ${functionName}() {return null}.bind(this)())
       `);
       const IIEF = buildIIEF({
       }).expression;
-      // set return value
-      IIEF.callee.body.body[0].argument = ast;
+      // 1.1 set return value
+      IIEF.callee.callee.object.body.body[0].argument = ast;
+      // 1.2 set statements before return
+      if (statementInsertBefore) {
+        IIEF.callee.callee.object.body.body = [...statementInsertBefore, ...IIEF.callee.callee.object.body.body];
+      }
       return IIEF;
     } else
     // 2. if it is a single assignment, how can a humen do this?
@@ -211,8 +215,7 @@ export default class JSASTBuilder extends ASTBuilder {
     // 2.1 get lastExpression out
     const lastExpression = expressions.pop();
     // 2.2 get IIEF with 'return lastExpression'
-    const IIEF = ASTBuilder.iief(lastExpression, 'codeBlock');
-    IIEF.callee.body.body = [...expressions, ...IIEF.callee.body.body];
+    const IIEF = ASTBuilder.iief(lastExpression, 'codeBlock', expressions.map(expression => t.expressionStatement(expression)));
     this.push(IIEF);
   }
 
