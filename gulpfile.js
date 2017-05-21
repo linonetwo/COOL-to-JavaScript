@@ -20,7 +20,7 @@ gulp.task('build-compiler', async function () {
 });
 
 gulp.task('build-js', ['clean'], function () {
-  return run('npm run build').exec();
+  return run('webpack --config webpack.config.js').exec();
 });
 
 gulp.task('inline', ['build-js'], function () {
