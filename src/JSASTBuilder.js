@@ -60,7 +60,7 @@ export class ASTBuilder extends ASTStack {
     return newBinaryExpression;
   }
 
-  static iief(ast: any, functionName: string, statementInsertBefore: ?Array<JSASTNode>): JSASTNode {
+  static iief(ast: any, functionName: string, statementInsertBefore: ?Array<JSASTNode>, formalNames: ?Array<string>, paramExpressions: ?Array<JSASTNode>): JSASTNode {
     // 1. if it is a expression, which in JS is a IIEF, or it's a function call
     const buildIIEF = template(`
       (function ${functionName}() {return null}.bind(this)())
@@ -77,6 +77,13 @@ export class ASTBuilder extends ASTStack {
     // 2. set statements before return
     if (statementInsertBefore) {
       IIEF.callee.callee.object.body.body = [...statementInsertBefore, ...IIEF.callee.callee.object.body.body];
+    }
+    // 3. set formal and actual argument
+    if (formalNames) {
+      IIEF.arguments = formalNames.map(name => t.identifier(name));
+    }
+    if (paramExpressions) {
+      IIEF.callee.callee.object.params = paramExpressions;
     }
     return IIEF;
   }
@@ -207,6 +214,15 @@ export default class JSASTBuilder extends ASTBuilder {
     this.push(JSASTBuilder.iief(ifElseStatementWithReturn, 'caseStatement'));
   }
 
+  LetIn(IDs: Array<string>, types: Array<string>): void {
+    const body = this.pop(1);
+    const assignmentLength = IDs.length;
+    // 1. assignments are arguments apply to formals in IIEF
+    const argumentList = this.pop(assignmentLength, true);
+    const IIEF = ASTBuilder.iief(body, 'letIn', null, IDs, argumentList);
+    this.push(IIEF);
+  }
+
   Block(bodyLength: number): void {
     // 1. If there were only one or less expression, with or without this is the same
     if (bodyLength <= 1) return;
@@ -215,7 +231,7 @@ export default class JSASTBuilder extends ASTBuilder {
     // 2.1 get lastExpression out
     const lastExpression = expressions.pop();
     // 2.2 get IIEF with 'return lastExpression'
-    const IIEF = ASTBuilder.iief(lastExpression, 'codeBlock', expressions.map(expression => t.expressionStatement(expression)));
+    const IIEF = ASTBuilder.iief(lastExpression, 'codeBlock', expressions.map(expression => t.isVariableDeclaration ? expression : t.expressionStatement(expression)));
     this.push(IIEF);
   }
 

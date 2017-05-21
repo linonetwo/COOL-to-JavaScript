@@ -120,6 +120,13 @@ export default class GenerateJSListener extends COOLListener {
   }
 
   @override
+  exitLetIn(context: COOLParser.LetInContext): void {
+    const IDs = context.OBJECTID().filter(i => i).map(item => item.symbol.text);
+    const types = context.TYPEID().filter(i => i).map(item => item.symbol.text);
+    this.jsAST.LetIn(IDs, types);
+  }
+
+  @override
   exitBlock(context: COOLParser.BlockContext): void {
     // This is a multi-diverse non-terminal, we should pop it's several sub-ASTs from stack
     const bodyLength = context.expression().length;
