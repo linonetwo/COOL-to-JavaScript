@@ -64,7 +64,7 @@ export class ASTBuilder extends ASTStack {
     // 1. if it is a code block, which in JS is a IIEF, or it's a function call
     if (t.isExpression(ast)) {
       const buildIIEF = template(`
-        (function ${functionName}() {return null})()
+        (function ${functionName}() {return null}())
       `);
       const IIEF = buildIIEF({
       }).expression;
@@ -75,7 +75,7 @@ export class ASTBuilder extends ASTStack {
     // 2. if it is a single assignment, how can a humen do this?
     if (t.isVariableDeclaration(ast)) {
       const buildIIEF = template(`
-        (function ${functionName}() {STATEMENT})()
+        (function ${functionName}() {STATEMENT}())
       `);
       const IIEF = buildIIEF({
         STATEMENT: ast
@@ -246,9 +246,10 @@ export default class JSASTBuilder extends ASTBuilder {
     // superClassName currently unavailable
     const functionArguments = [...this.pop(argumentLength, true)];
     const calleeObject = this.pop(1);
-    const buildMethodCall = template(`
-      CALLEE.FUNCTION()
-    `);
+    // if callee is something like (new A()) them it don't need this. , else do
+    const buildMethodCall = t.isIdentifier(calleeObject)
+      ? template(`this.CALLEE.FUNCTION()`)
+      : template(`CALLEE.FUNCTION()`);
     const methodCall = buildMethodCall({
       CALLEE: calleeObject,
       FUNCTION: t.identifier(functionName)
@@ -303,10 +304,11 @@ export default class JSASTBuilder extends ASTBuilder {
   }
 
   Program(): void {
+    // 1. put runtime on the front
     const runtimeBuilder = template(`
       class IO {
         out_string(content: ?string) {
-          string ? console.log(content) : console.log();
+          content ? console.log(content) : console.log();
         }
       }
     `, {
@@ -315,5 +317,10 @@ export default class JSASTBuilder extends ASTBuilder {
       ]
     });
     this.jsProgramAST.program.body.unshift(runtimeBuilder({}));
+    // 2. put Main class executing statement on the back
+    const mainRunBuilder = template(`
+      (new Main()).main();
+    `);
+    this.jsProgramAST.program.body.push(mainRunBuilder({}));
   }
 }
