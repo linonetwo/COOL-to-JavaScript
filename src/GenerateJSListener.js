@@ -217,7 +217,7 @@ export default class GenerateJSListener extends COOLListener {
   }
 
   generateJS(): string {
-    const output: GeneratedOutput = generate(this.jsAST.jsProgramAST, { quotes: 'single', auxiliaryCommentBefore: ' @flow ' });
+    const output: GeneratedOutput = generate(this.jsAST.jsProgramAST, { quotes: 'single', auxiliaryCommentBefore: ' @flow @ts-check ' });
     return output.code;
   }
 }
